@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EarnMoney - Telegram Mini App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --primary: #4361ee;
@@ -193,6 +194,7 @@
             border-radius: 16px;
             padding: 20px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 60px;
         }
 
         .progress-title {
@@ -759,9 +761,9 @@
 
         // User data
         let userData = {
-            id: tg.initDataUnsafe.user.id || 12345,
-            name: tg.initDataUnsafe.user.first_name || 'User',
-            photo: tg.initDataUnsafe.user.photo_url || 'https://randomuser.me/api/portraits/men/1.jpg',
+            id: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 12345,
+            name: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : 'User',
+            photo: tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url ? tg.initDataUnsafe.user.photo_url : 'https://randomuser.me/api/portraits/men/1.jpg',
             balance: 0.00,
             watchedAds: 0,
             clicks: 0,
@@ -878,13 +880,30 @@
             adSection.textContent = 'Your Ad Here - Special Offer!';
             fullWidthCard.appendChild(adSection);
             
+            // Add featured ad task card
+            const featuredAdTask = document.createElement('div');
+            featuredAdTask.className = 'task-item';
+            featuredAdTask.innerHTML = `
+                <div class="task-info">
+                    <div class="task-icon ad-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="task-details">
+                        <h4>Featured Ad</h4>
+                        <p>Watch our premium advertisement</p>
+                    </div>
+                </div>
+                <div class="task-reward">$0.10</div>
+                <button class="task-btn" data-task="featured-ad">Watch Now</button>
+            `;
+            fullWidthCard.appendChild(featuredAdTask);
+            
             // Add social tasks container
             const socialTasksContainer = document.createElement('div');
             socialTasksContainer.className = 'social-tasks';
             
             // Social tasks
             const socialTasks = [
-                { id: 'youtube', name: 'Follow YouTube', desc: 'Subscribe to our YouTube channel', reward: 0.20, icon: 'fab fa-youtube' },
                 { id: 'telegram', name: 'Follow Telegram', desc: 'Join our Telegram channel', reward: 0.20, icon: 'fab fa-telegram' },
                 { id: 'facebook', name: 'Follow Facebook', desc: 'Like our Facebook page', reward: 0.15, icon: 'fab fa-facebook-f' }
             ];
@@ -960,13 +979,16 @@
             // Simulate task completion
             let reward = 0;
             
-            if (taskId.startsWith('ad-')) {
+            if (taskId === 'featured-ad') {
+                reward = 0.10;
+                userData.watchedAds++;
+                userData.adsWatchedToday++;
+                userData.clicks++;
+            } else if (taskId.startsWith('ad-')) {
                 reward = 0.05;
                 userData.watchedAds++;
                 userData.adsWatchedToday++;
                 userData.clicks++;
-            } else if (taskId === 'social-youtube') {
-                reward = 0.20;
             } else if (taskId === 'social-telegram') {
                 reward = 0.20;
             } else if (taskId === 'social-facebook') {
