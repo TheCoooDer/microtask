@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EarnCash - Telegram Mini App</title>
+    <title>EarnMoney - Telegram Mini App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4F46E5;
-            --primary-dark: #4338CA;
-            --secondary: #10B981;
-            --secondary-dark: #059669;
-            --background: #F9FAFB;
-            --surface: #FFFFFF;
-            --text: #1F2937;
-            --text-light: #6B7280;
-            --border: #E5E7EB;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #06ffa5;
+            --danger: #ff006e;
+            --warning: #ffbe0b;
+            --dark: #1d3557;
+            --light: #f8f9fa;
+            --gray: #6c757d;
         }
 
         * {
@@ -28,74 +25,71 @@
         }
 
         body {
-            background-color: var(--background);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .app-container {
-            max-width: 100%;
+            max-width: 500px;
             margin: 0 auto;
-            flex: 1;
+            min-height: 100vh;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
             display: flex;
             flex-direction: column;
-            position: relative;
         }
 
-        /* Header Styles */
-        .header {
-            background-color: var(--surface);
-            padding: 1rem;
-            box-shadow: var(--shadow);
+        /* Top Bar */
+        .top-bar {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .user-info {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 12px;
         }
 
         .user-avatar {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
+            border: 2px solid white;
             object-fit: cover;
-            border: 2px solid var(--primary);
         }
 
-        .user-details h2 {
-            font-size: 1.25rem;
+        .user-name {
             font-weight: 600;
-        }
-
-        .balance-container {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
+            font-size: 16px;
         }
 
         .balance {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .currency {
-            font-size: 1rem;
-            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         /* Main Content */
         .main-content {
             flex: 1;
-            padding: 1.5rem;
-            padding-bottom: 5rem;
+            padding: 20px;
+            padding-bottom: 80px;
             overflow-y: auto;
         }
 
@@ -105,306 +99,409 @@
 
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.3s ease-in-out;
         }
 
-        /* Dashboard Styles */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard */
+        .dashboard-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .dashboard-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
         .dashboard {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .stat-card {
-            background-color: var(--surface);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
         }
 
-        .stat-title {
-            font-size: 0.875rem;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 3px 0 0 3px;
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 12px;
+            font-weight: 500;
         }
 
         .stat-value {
-            font-size: 1.5rem;
+            font-size: 28px;
             font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-icon {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 36px;
+            opacity: 0.1;
             color: var(--primary);
         }
 
-        .ad-limit {
-            margin-top: 1.5rem;
-            background-color: var(--surface);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            box-shadow: var(--shadow);
+        .progress-container {
+            margin-top: 25px;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         }
 
-        .ad-limit-header {
+        .progress-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .progress-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.75rem;
-        }
-
-        .ad-limit-title {
-            font-weight: 600;
+            margin-bottom: 8px;
         }
 
         .progress-bar {
-            height: 10px;
-            background-color: var(--border);
-            border-radius: 5px;
+            height: 12px;
+            background-color: #e9ecef;
+            border-radius: 10px;
             overflow: hidden;
         }
 
-        .progress {
+        .progress-fill {
             height: 100%;
-            background-color: var(--secondary);
-            border-radius: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
             transition: width 0.5s ease;
         }
 
-        /* Tasks Styles */
-        .task-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
+        /* Tasks */
         .task-list {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 15px;
         }
 
         .task-item {
-            background-color: var(--surface);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            box-shadow: var(--shadow);
+            background: white;
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             transition: transform 0.2s;
         }
 
         .task-item:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .task-item.full-width {
+            flex-direction: column;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .ad-section {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ad-section::before {
+            content: 'ADVERTISEMENT';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+
+        .social-tasks {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .task-info {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 12px;
         }
 
         .task-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 22px;
+            color: white;
         }
 
-        .task-details h3 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
+        .ad-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .social-icon {
+            background: linear-gradient(135deg, var(--danger), #ff4081);
+        }
+
+        .task-details h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .task-details p {
+            font-size: 14px;
+            color: var(--gray);
         }
 
         .task-reward {
-            font-size: 0.875rem;
-            color: var(--text-light);
+            font-weight: 700;
+            color: var(--success);
+            margin-right: 10px;
         }
 
         .task-btn {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border: none;
-            border-radius: 0.5rem;
-            padding: 0.5rem 1rem;
+            padding: 10px 18px;
+            border-radius: 25px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s;
         }
 
         .task-btn:hover {
-            background-color: var(--primary-dark);
+            transform: scale(1.05);
         }
 
         .task-btn:disabled {
-            background-color: var(--border);
-            color: var(--text-light);
+            background: var(--gray);
             cursor: not-allowed;
+            transform: none;
         }
 
-        .social-tasks {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        /* Support Styles */
+        /* Support */
         .support-card {
-            background-color: var(--surface);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
         }
 
-        .support-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s;
+        .support-card h3 {
+            margin-bottom: 20px;
+            color: var(--dark);
+            font-size: 22px;
+            text-align: center;
         }
 
-        .support-item:hover {
-            background-color: var(--background);
-        }
-
-        .support-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .support-details h3 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
+        .support-card p {
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--gray);
         }
 
         .support-link {
-            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 15px;
             text-decoration: none;
-            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.2s;
         }
 
-        /* Withdraw Styles */
-        .withdraw-card {
-            background-color: var(--surface);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
+        .support-link:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .support-link i {
+            font-size: 24px;
+        }
+
+        .telegram { color: #0088cc; }
+        .facebook { color: #1877f2; }
+        .youtube { color: #ff0000; }
+
+        /* Withdraw */
+        .withdraw-container {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .withdraw-container h2 {
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--dark);
         }
 
         .withdraw-info {
-            margin-bottom: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
         }
 
-        .withdraw-info p {
-            margin-bottom: 0.75rem;
-            line-height: 1.5;
+        .withdraw-info h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 18px;
         }
 
-        .withdraw-requirements {
-            background-color: #FEF3C7;
-            border-left: 4px solid #F59E0B;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1.5rem;
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e9ecef;
         }
 
-        .withdraw-requirements h3 {
-            color: #92400E;
-            margin-bottom: 0.5rem;
+        .info-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
         }
 
-        .withdraw-requirements ul {
-            color: #92400E;
-            padding-left: 1.5rem;
-        }
-
-        .withdraw-requirements li {
-            margin-bottom: 0.25rem;
+        .withdraw-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .form-group {
-            margin-bottom: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
             font-weight: 600;
+            color: var(--dark);
         }
 
-        .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            transition: border-color 0.2s;
+        .form-group select,
+        .form-group input {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
         }
 
-        .form-control:focus {
-            outline: none;
+        .form-group select:focus,
+        .form-group input:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            outline: none;
         }
 
         .withdraw-btn {
-            background-color: var(--secondary);
+            background: linear-gradient(135deg, var(--success), #00d084);
             color: white;
             border: none;
-            border-radius: 0.5rem;
-            padding: 0.75rem 1.5rem;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            width: 100%;
-            transition: background-color 0.2s;
+            transition: all 0.3s;
         }
 
         .withdraw-btn:hover {
-            background-color: var(--secondary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(6, 255, 165, 0.3);
         }
 
         .withdraw-btn:disabled {
-            background-color: var(--border);
-            color: var(--text-light);
+            background: var(--gray);
             cursor: not-allowed;
+            transform: none;
         }
 
-        /* Navigation */
+        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: var(--surface);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
             display: flex;
             justify-content: space-around;
-            padding: 0.75rem 0;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
             z-index: 100;
         }
 
@@ -412,590 +509,558 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.25rem;
-            color: var(--text-light);
+            gap: 5px;
+            color: var(--gray);
             text-decoration: none;
-            transition: color 0.2s;
+            padding: 5px 15px;
+            border-radius: 8px;
+            transition: all 0.2s;
             cursor: pointer;
-            padding: 0.25rem;
         }
 
         .nav-item.active {
             color: var(--primary);
+            background: rgba(67, 97, 238, 0.1);
         }
 
         .nav-item i {
-            font-size: 1.5rem;
+            font-size: 22px;
         }
 
         .nav-item span {
-            font-size: 0.75rem;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         /* Notification */
         .notification {
             position: fixed;
             top: 80px;
-            right: 20px;
-            background-color: var(--surface);
-            border-left: 4px solid var(--secondary);
-            padding: 1rem;
-            border-radius: 0.5rem;
-            box-shadow: var(--shadow-lg);
-            max-width: 300px;
-            transform: translateX(120%);
-            transition: transform 0.3s ease;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             z-index: 200;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            max-width: 90%;
         }
 
         .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
+            animation: slideDown 0.3s ease-out;
         }
 
-        .notification-title {
-            font-weight: 600;
-            color: var(--secondary);
+        @keyframes slideDown {
+            from { transform: translate(-50%, -100%); }
+            to { transform: translate(-50%, 0); }
         }
 
-        .notification-close {
-            background: none;
-            border: none;
-            color: var(--text-light);
-            cursor: pointer;
-            font-size: 1.25rem;
+        .notification.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .notification.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .notification i {
+            font-size: 20px;
+        }
+
+        .notification.success i {
+            color: var(--success);
+        }
+
+        .notification.error i {
+            color: var(--danger);
         }
 
         /* Responsive */
-        @media (min-width: 768px) {
+        @media (max-width: 500px) {
             .app-container {
-                max-width: 768px;
-                margin: 0 auto;
-                box-shadow: var(--shadow-lg);
-            }
-
-            .dashboard {
-                grid-template-columns: repeat(4, 1fr);
-            }
-
-            .social-tasks {
-                grid-template-columns: repeat(4, 1fr);
+                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <!-- Header -->
-        <header class="header">
+        <!-- Top Bar -->
+        <div class="top-bar">
             <div class="user-info">
-                <img id="userAvatar" src="https://via.placeholder.com/50" alt="User Avatar" class="user-avatar">
-                <div class="user-details">
-                    <h2 id="userName">Loading...</h2>
-                    <div class="balance-container">
-                        <span class="balance" id="userBalance">$0.00</span>
-                        <span class="currency">USD</span>
-                    </div>
-                </div>
+                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User" class="user-avatar" id="userAvatar">
+                <div class="user-name" id="userName">Loading...</div>
             </div>
-        </header>
+            <div class="balance">
+                <i class="fas fa-dollar-sign"></i>
+                <span id="userBalance">0.00</span>
+            </div>
+        </div>
 
         <!-- Main Content -->
-        <main class="main-content">
+        <div class="main-content">
             <!-- Home Tab -->
-            <div id="home" class="tab-content active">
+            <div class="tab-content active" id="home-tab">
+                <h2 class="dashboard-title">Dashboard</h2>
                 <div class="dashboard">
                     <div class="stat-card">
-                        <div class="stat-title">Watched Ads</div>
+                        <h3>Watched Ads</h3>
                         <div class="stat-value" id="watchedAds">0</div>
+                        <i class="fas fa-ad stat-icon"></i>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-title">Clicks</div>
+                        <h3>Clicks</h3>
                         <div class="stat-value" id="clicks">0</div>
+                        <i class="fas fa-mouse-pointer stat-icon"></i>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-title">Total Earning</div>
-                        <div class="stat-value" id="totalEarning">$0.00</div>
+                        <h3>Total Earning</h3>
+                        <div class="stat-value">$<span id="totalEarning">0.00</span></div>
+                        <i class="fas fa-dollar-sign stat-icon"></i>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-title">Total Refers</div>
+                        <h3>Total Refers</h3>
                         <div class="stat-value" id="totalRefers">0</div>
+                        <i class="fas fa-users stat-icon"></i>
                     </div>
                 </div>
 
-                <div class="ad-limit">
-                    <div class="ad-limit-header">
-                        <div class="ad-limit-title">Daily Ad Limit</div>
-                        <div id="adLimitText">0 of 20</div>
+                <div class="progress-container">
+                    <h3 class="progress-title">Daily Ad Limit</h3>
+                    <div class="progress-header">
+                        <span>Progress</span>
+                        <span id="adLimitText">0 of 20</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress" id="adProgress" style="width: 0%"></div>
+                        <div class="progress-fill" id="adProgress" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
 
             <!-- Tasks Tab -->
-            <div id="tasks" class="tab-content">
-                <div class="task-section">
-                    <h2 class="section-title">
-                        <i class="fas fa-ad"></i> Watch Ads & Earn
-                    </h2>
-                    <div class="task-list" id="adsList">
-                        <!-- Ads will be dynamically generated -->
-                    </div>
-                </div>
-
-                <div class="task-section">
-                    <h2 class="section-title">
-                        <i class="fas fa-tasks"></i> Social Tasks
-                    </h2>
-                    <div class="social-tasks">
-                        <div class="task-item">
-                            <div class="task-info">
-                                <div class="task-icon">
-                                    <i class="fab fa-youtube"></i>
-                                </div>
-                                <div class="task-details">
-                                    <h3>Follow YouTube</h3>
-                                    <div class="task-reward">Reward: $0.20</div>
-                                </div>
-                            </div>
-                            <button class="task-btn" id="youtubeTask">Follow</button>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-info">
-                                <div class="task-icon">
-                                    <i class="fab fa-facebook"></i>
-                                </div>
-                                <div class="task-details">
-                                    <h3>Follow Facebook</h3>
-                                    <div class="task-reward">Reward: $0.15</div>
-                                </div>
-                            </div>
-                            <button class="task-btn" id="facebookTask">Follow</button>
-                        </div>
-                    </div>
+            <div class="tab-content" id="tasks-tab">
+                <h2 class="dashboard-title">Daily Tasks</h2>
+                <div class="task-list" id="taskList">
+                    <!-- Tasks will be generated by JavaScript -->
                 </div>
             </div>
 
             <!-- Support Tab -->
-            <div id="support" class="tab-content">
+            <div class="tab-content" id="support-tab">
                 <div class="support-card">
-                    <h2 class="section-title">
-                        <i class="fas fa-headset"></i> Contact Support
-                    </h2>
-                    <div class="support-item">
-                        <div class="support-icon">
-                            <i class="fab fa-telegram"></i>
+                    <h3>Support Center</h3>
+                    <p>If you have any questions or issues, please contact us through:</p>
+                    
+                    <a href="https://t.me/yourtelegram" class="support-link" target="_blank">
+                        <i class="fab fa-telegram telegram"></i>
+                        <div>
+                            <div>Telegram Support</div>
+                            <small>@yourtelegram</small>
                         </div>
-                        <div class="support-details">
-                            <h3>Telegram Support</h3>
-                            <a href="https://t.me/yourtelegram" class="support-link" target="_blank">@yourtelegram</a>
+                    </a>
+                    
+                    <a href="https://facebook.com/yourfacebook" class="support-link" target="_blank">
+                        <i class="fab fa-facebook facebook"></i>
+                        <div>
+                            <div>Facebook Page</div>
+                            <small>fb.com/yourfacebook</small>
                         </div>
-                    </div>
-                    <div class="support-item">
-                        <div class="support-icon">
-                            <i class="fab fa-facebook"></i>
-                        </div>
-                        <div class="support-details">
-                            <h3>Facebook Page</h3>
-                            <a href="https://facebook.com/yourfacebook" class="support-link" target="_blank">facebook.com/yourfacebook</a>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
             <!-- Withdraw Tab -->
-            <div id="withdraw" class="tab-content">
-                <div class="withdraw-card">
-                    <h2 class="section-title">
-                        <i class="fas fa-money-bill-wave"></i> Withdraw Earnings
-                    </h2>
+            <div class="tab-content" id="withdraw-tab">
+                <div class="withdraw-container">
+                    <h2>Withdraw Funds</h2>
                     
                     <div class="withdraw-info">
-                        <p>Your current balance: <span id="withdrawBalance" style="font-weight: 700; color: var(--primary);">$0.00</span></p>
-                        <p>Total referrals: <span id="withdrawRefers" style="font-weight: 700;">0</span></p>
+                        <h3>Withdrawal Information</h3>
+                        <div class="info-item">
+                            <span>Current Balance:</span>
+                            <span>$<span id="currentBalance">0.00</span></span>
+                        </div>
+                        <div class="info-item">
+                            <span>Minimum Withdrawal:</span>
+                            <span>$20.00</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Referral Requirement:</span>
+                            <span id="referralRequirement">30 referrals needed</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Processing Time:</span>
+                            <span>48 hours</span>
+                        </div>
                     </div>
-
-                    <div class="withdraw-requirements">
-                        <h3>Withdrawal Requirements</h3>
-                        <ul>
-                            <li>Minimum withdrawal amount: $20.00</li>
-                            <li>For first withdrawal: 30 referrals required</li>
-                            <li>Subsequent withdrawals: no referral requirement</li>
-                            <li>Withdrawals will be processed within 48 hours</li>
-                        </ul>
-                    </div>
-
-                    <form id="withdrawForm">
+                    
+                    <form class="withdraw-form" id="withdrawForm">
                         <div class="form-group">
-                            <label for="bankMethod">Select Bank Method</label>
-                            <select id="bankMethod" class="form-control">
-                                <option value="">-- Select Bank --</option>
-                                <option value="bKash">bKash</option>
-                                <option value="Nagad">Nagad</option>
-                                <option value="Rocket">Rocket</option>
-                                <option value="Dutch-Bangla">Dutch-Bangla Bank</option>
+                            <label for="withdrawMethod">Withdrawal Method</label>
+                            <select id="withdrawMethod">
+                                <option value="bkash">bKash</option>
+                                <option value="nagad">Nagad</option>
+                                <option value="rocket">Rocket</option>
+                                <option value="binance">Binance</option>
                             </select>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="accountNumber">Account Number</label>
-                            <input type="text" id="accountNumber" class="form-control" placeholder="Enter your account number">
+                            <label for="accountNumber" id="accountLabel">Account Number</label>
+                            <input type="text" id="accountNumber" placeholder="Enter your account number" required>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="amount">Amount (USD)</label>
-                            <input type="number" id="amount" class="form-control" placeholder="Enter amount to withdraw" min="20" step="0.01">
+                            <label for="withdrawAmount">Amount ($)</label>
+                            <input type="number" id="withdrawAmount" min="20" step="0.01" placeholder="Enter amount" required>
                         </div>
-                        <button type="submit" class="withdraw-btn" id="withdrawBtn">Withdraw Now</button>
+                        
+                        <button type="submit" class="withdraw-btn" id="withdrawBtn">Withdraw Funds</button>
                     </form>
                 </div>
             </div>
-        </main>
+        </div>
 
         <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <a class="nav-item active" data-tab="home">
+        <div class="bottom-nav">
+            <div class="nav-item active" data-tab="home" onclick="openTab('home')">
                 <i class="fas fa-home"></i>
                 <span>Home</span>
-            </a>
-            <a class="nav-item" data-tab="tasks">
+            </div>
+            <div class="nav-item" data-tab="tasks" onclick="openTab('tasks')">
                 <i class="fas fa-tasks"></i>
                 <span>Tasks</span>
-            </a>
-            <a class="nav-item" data-tab="support">
+            </div>
+            <div class="nav-item" data-tab="support" onclick="openTab('support')">
                 <i class="fas fa-headset"></i>
                 <span>Support</span>
-            </a>
-            <a class="nav-item" data-tab="withdraw">
+            </div>
+            <div class="nav-item" data-tab="withdraw" onclick="openTab('withdraw')">
                 <i class="fas fa-money-bill-wave"></i>
                 <span>Withdraw</span>
-            </a>
-        </nav>
+            </div>
+        </div>
 
         <!-- Notification -->
         <div class="notification" id="notification">
-            <div class="notification-header">
-                <div class="notification-title" id="notificationTitle">Success</div>
-                <button class="notification-close" id="notificationClose">&times;</button>
-            </div>
-            <div id="notificationMessage">Your action was successful!</div>
+            <i class="fas fa-check-circle"></i>
+            <span id="notificationText">Success!</span>
         </div>
     </div>
 
     <script>
         // Initialize Telegram Web App
-        const tg = window.Telegram.WebApp;
+        let tg = window.Telegram.WebApp;
         tg.expand();
 
-        // App state
-        const state = {
-            user: {
-                id: null,
-                name: 'User',
-                avatar: 'https://via.placeholder.com/50',
-                balance: 0.00,
-                watchedAds: 0,
-                totalEarnings: 0.00,
-                clicks: 0,
-                referrals: 0,
-                youtubeTask: false,
-                facebookTask: false,
-                withdrawals: []
-            },
-            ads: [],
-            adLimit: 20
+        // User data
+        let userData = {
+            id: tg.initDataUnsafe.user.id || 12345,
+            name: tg.initDataUnsafe.user.first_name || 'User',
+            photo: tg.initDataUnsafe.user.photo_url || 'https://randomuser.me/api/portraits/men/1.jpg',
+            balance: 0.00,
+            watchedAds: 0,
+            clicks: 0,
+            totalEarning: 0.00,
+            totalRefers: 0,
+            adsWatchedToday: 0,
+            lastAdDate: null,
+            hasWithdrawnBefore: false,
+            completedTasks: []
         };
 
-        // Initialize app
-        function initApp() {
-            // Load user data from Telegram
-            if (tg.initDataUnsafe.user) {
-                state.user.id = tg.initDataUnsafe.user.id;
-                state.user.name = `${tg.initDataUnsafe.user.first_name} ${tg.initDataUnsafe.user.last_name || ''}`;
-                state.user.avatar = tg.initDataUnsafe.user.photo_url || 'https://via.placeholder.com/50';
+        // Load user data from localStorage
+        function loadUserData() {
+            const savedData = localStorage.getItem('earnMoneyUserData');
+            if (savedData) {
+                userData = JSON.parse(savedData);
             }
-
-            // Load state from localStorage if available
-            const savedState = localStorage.getItem('earnCashState');
-            if (savedState) {
-                const parsedState = JSON.parse(savedState);
-                // Merge with Telegram user data
-                state.user = { ...state.user, ...parsedState.user };
-                state.ads = parsedState.ads || [];
-            }
-
-            // Generate ads if not already generated
-            if (state.ads.length === 0) {
-                generateAds();
-            }
-
-            // Update UI
             updateUI();
-            
-            // Setup event listeners
-            setupEventListeners();
         }
 
-        // Generate ads
-        function generateAds() {
-            state.ads = [];
-            for (let i = 1; i <= 20; i++) {
-                state.ads.push({
-                    id: i,
-                    title: `Advertisement ${i}`,
-                    reward: 0.05,
-                    watched: false
-                });
-            }
-            saveState();
+        // Save user data to localStorage
+        function saveUserData() {
+            localStorage.setItem('earnMoneyUserData', JSON.stringify(userData));
         }
 
-        // Save state to localStorage
-        function saveState() {
-            localStorage.setItem('earnCashState', JSON.stringify(state));
-        }
-
-        // Update UI
+        // Update UI with user data
         function updateUI() {
-            // Update header
-            document.getElementById('userAvatar').src = state.user.avatar;
-            document.getElementById('userName').textContent = state.user.name;
-            document.getElementById('userBalance').textContent = `$${state.user.balance.toFixed(2)}`;
-
-            // Update dashboard
-            document.getElementById('watchedAds').textContent = state.user.watchedAds;
-            document.getElementById('clicks').textContent = state.user.clicks;
-            document.getElementById('totalEarning').textContent = `$${state.user.totalEarnings.toFixed(2)}`;
-            document.getElementById('totalRefers').textContent = state.user.referrals;
-
-            // Update ad limit progress
-            const adLimitText = document.getElementById('adLimitText');
-            const adProgress = document.getElementById('adProgress');
-            const progress = (state.user.watchedAds / state.adLimit) * 100;
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userAvatar').src = userData.photo;
+            document.getElementById('userBalance').textContent = userData.balance.toFixed(2);
+            document.getElementById('watchedAds').textContent = userData.watchedAds;
+            document.getElementById('clicks').textContent = userData.clicks;
+            document.getElementById('totalEarning').textContent = userData.totalEarning.toFixed(2);
+            document.getElementById('totalRefers').textContent = userData.totalRefers;
+            document.getElementById('currentBalance').textContent = userData.balance.toFixed(2);
             
-            adLimitText.textContent = `${state.user.watchedAds} of ${state.adLimit}`;
-            adProgress.style.width = `${progress}%`;
-
-            // Update tasks tab
-            updateAdsList();
-            updateSocialTasks();
-
-            // Update withdraw tab
-            document.getElementById('withdrawBalance').textContent = `$${state.user.balance.toFixed(2)}`;
-            document.getElementById('withdrawRefers').textContent = state.user.referrals;
-        }
-
-        // Update ads list
-        function updateAdsList() {
-            const adsList = document.getElementById('adsList');
-            adsList.innerHTML = '';
-
-            state.ads.forEach(ad => {
-                const adItem = document.createElement('div');
-                adItem.className = 'task-item';
-                
-                adItem.innerHTML = `
-                    <div class="task-info">
-                        <div class="task-icon">
-                            <i class="fas fa-ad"></i>
-                        </div>
-                        <div class="task-details">
-                            <h3>${ad.title}</h3>
-                            <div class="task-reward">Reward: $${ad.reward.toFixed(2)}</div>
-                        </div>
-                    </div>
-                    <button class="task-btn" ${ad.watched ? 'disabled' : ''} onclick="watchAd(${ad.id})">
-                        ${ad.watched ? 'Watched' : 'Watch Ad'}
-                    </button>
-                `;
-                
-                adsList.appendChild(adItem);
-            });
-        }
-
-        // Update social tasks
-        function updateSocialTasks() {
-            const youtubeTask = document.getElementById('youtubeTask');
-            const facebookTask = document.getElementById('facebookTask');
-
-            if (state.user.youtubeTask) {
-                youtubeTask.textContent = 'Completed';
-                youtubeTask.disabled = true;
+            // Update ad progress
+            const today = new Date().toDateString();
+            if (userData.lastAdDate !== today) {
+                userData.adsWatchedToday = 0;
+                userData.lastAdDate = today;
             }
-
-            if (state.user.facebookTask) {
-                facebookTask.textContent = 'Completed';
-                facebookTask.disabled = true;
+            
+            document.getElementById('adLimitText').textContent = `${userData.adsWatchedToday} of 20`;
+            document.getElementById('adProgress').style.width = `${(userData.adsWatchedToday / 20) * 100}%`;
+            
+            // Update referral requirement
+            if (userData.hasWithdrawnBefore) {
+                document.getElementById('referralRequirement').textContent = 'No referral requirement';
+            } else {
+                document.getElementById('referralRequirement').textContent = `${userData.totalRefers}/30 referrals needed`;
             }
-        }
-
-        // Watch ad
-        function watchAd(adId) {
-            const ad = state.ads.find(a => a.id === adId);
-            if (ad && !ad.watched) {
-                ad.watched = true;
-                state.user.watchedAds++;
-                state.user.clicks++;
-                state.user.balance += ad.reward;
-                state.user.totalEarnings += ad.reward;
-                
-                saveState();
-                updateUI();
-                
-                showNotification('Ad Watched', `You earned $${ad.reward.toFixed(2)}!`);
-            }
-        }
-
-        // Setup event listeners
-        function setupEventListeners() {
-            // Tab navigation
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const tabId = item.getAttribute('data-tab');
-                    switchTab(tabId);
-                });
-            });
-
-            // Social tasks
-            document.getElementById('youtubeTask').addEventListener('click', () => {
-                if (!state.user.youtubeTask) {
-                    state.user.youtubeTask = true;
-                    state.user.balance += 0.20;
-                    state.user.totalEarnings += 0.20;
-                    
-                    saveState();
-                    updateUI();
-                    
-                    showNotification('Task Completed', 'You earned $0.20 for following YouTube!');
-                }
-            });
-
-            document.getElementById('facebookTask').addEventListener('click', () => {
-                if (!state.user.facebookTask) {
-                    state.user.facebookTask = true;
-                    state.user.balance += 0.15;
-                    state.user.totalEarnings += 0.15;
-                    
-                    saveState();
-                    updateUI();
-                    
-                    showNotification('Task Completed', 'You earned $0.15 for following Facebook!');
-                }
-            });
-
-            // Withdraw form
-            document.getElementById('withdrawForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                processWithdrawal();
-            });
-
-            // Notification close
-            document.getElementById('notificationClose').addEventListener('click', () => {
-                hideNotification();
-            });
-        }
-
-        // Switch tab
-        function switchTab(tabId) {
-            // Hide all tabs
-            const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Show selected tab
-            document.getElementById(tabId).classList.add('active');
-
-            // Update nav items
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('data-tab') === tabId) {
-                    item.classList.add('active');
-                }
-            });
-        }
-
-        // Process withdrawal
-        function processWithdrawal() {
-            const bankMethod = document.getElementById('bankMethod').value;
-            const accountNumber = document.getElementById('accountNumber').value;
-            const amount = parseFloat(document.getElementById('amount').value);
-
-            // Validate inputs
-            if (!bankMethod) {
-                showNotification('Error', 'Please select a bank method');
-                return;
-            }
-
-            if (!accountNumber) {
-                showNotification('Error', 'Please enter your account number');
-                return;
-            }
-
-            if (isNaN(amount) || amount < 20) {
-                showNotification('Error', 'Minimum withdrawal amount is $20.00');
-                return;
-            }
-
-            if (amount > state.user.balance) {
-                showNotification('Error', 'Insufficient balance');
-                return;
-            }
-
-            // Check if it's the first withdrawal
-            const isFirstWithdrawal = state.user.withdrawals.length === 0;
-            if (isFirstWithdrawal && state.user.referrals < 30) {
-                showNotification('Error', 'You need at least 30 referrals for your first withdrawal');
-                return;
-            }
-
-            // Process withdrawal
-            state.user.balance -= amount;
-            state.user.withdrawals.push({
-                date: new Date().toISOString(),
-                amount,
-                bankMethod,
-                accountNumber,
-                status: 'pending'
-            });
-
-            saveState();
-            updateUI();
-
-            // Reset form
-            document.getElementById('withdrawForm').reset();
-
-            showNotification('Withdrawal Requested', `Your withdrawal of $${amount.toFixed(2)} will be processed within 48 hours`);
+            
+            // Update withdraw button
+            updateWithdrawButton();
         }
 
         // Show notification
-        function showNotification(title, message) {
-            document.getElementById('notificationTitle').textContent = title;
-            document.getElementById('notificationMessage').textContent = message;
-            document.getElementById('notification').classList.add('show');
-
-            // Auto hide after 5 seconds
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            const icon = notification.querySelector('i');
+            
+            notificationText.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else {
+                icon.className = 'fas fa-exclamation-circle';
+            }
+            
             setTimeout(() => {
-                hideNotification();
-            }, 5000);
+                notification.classList.remove('show');
+            }, 3000);
         }
 
-        // Hide notification
-        function hideNotification() {
-            document.getElementById('notification').classList.remove('show');
+        // Tab switching function
+        function openTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            // Remove active class from all nav items
+            const navItems = document.getElementsByClassName('nav-item');
+            for (let i = 0; i < navItems.length; i++) {
+                navItems[i].classList.remove('active');
+            }
+            
+            // Show the selected tab content
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Add active class to the clicked nav item
+            const clickedNavItem = document.querySelector(`.nav-item[data-tab="${tabName}"]`);
+            if (clickedNavItem) {
+                clickedNavItem.classList.add('active');
+            }
         }
 
-        // Initialize app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initApp);
+        // Generate tasks
+        function generateTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+            
+            // Create full-width card with ad and social tasks
+            const fullWidthCard = document.createElement('div');
+            fullWidthCard.className = 'task-item full-width';
+            
+            // Add ad section
+            const adSection = document.createElement('div');
+            adSection.className = 'ad-section';
+            adSection.textContent = 'Your Ad Here - Special Offer!';
+            fullWidthCard.appendChild(adSection);
+            
+            // Add social tasks container
+            const socialTasksContainer = document.createElement('div');
+            socialTasksContainer.className = 'social-tasks';
+            
+            // Social tasks
+            const socialTasks = [
+                { id: 'youtube', name: 'Follow YouTube', desc: 'Subscribe to our YouTube channel', reward: 0.20, icon: 'fab fa-youtube' },
+                { id: 'telegram', name: 'Follow Telegram', desc: 'Join our Telegram channel', reward: 0.20, icon: 'fab fa-telegram' },
+                { id: 'facebook', name: 'Follow Facebook', desc: 'Like our Facebook page', reward: 0.15, icon: 'fab fa-facebook-f' }
+            ];
+            
+            socialTasks.forEach(task => {
+                const taskId = `social-${task.id}`;
+                const isCompleted = userData.completedTasks.includes(taskId);
+                
+                const taskItem = document.createElement('div');
+                taskItem.className = 'task-item';
+                taskItem.innerHTML = `
+                    <div class="task-info">
+                        <div class="task-icon social-icon">
+                            <i class="${task.icon}"></i>
+                        </div>
+                        <div class="task-details">
+                            <h4>${task.name}</h4>
+                            <p>${task.desc}</p>
+                        </div>
+                    </div>
+                    <div class="task-reward">$${task.reward.toFixed(2)}</div>
+                    <button class="task-btn" data-task="${taskId}" ${isCompleted ? 'disabled' : ''}>
+                        ${isCompleted ? 'Completed' : 'Follow'}
+                    </button>
+                `;
+                
+                socialTasksContainer.appendChild(taskItem);
+            });
+            
+            fullWidthCard.appendChild(socialTasksContainer);
+            taskList.appendChild(fullWidthCard);
+            
+            // Ad tasks
+            for (let i = 1; i <= 20; i++) {
+                const taskId = `ad-${i}`;
+                const isCompleted = userData.completedTasks.includes(taskId);
+                
+                const taskItem = document.createElement('div');
+                taskItem.className = 'task-item';
+                taskItem.innerHTML = `
+                    <div class="task-info">
+                        <div class="task-icon ad-icon">
+                            <i class="fas fa-ad"></i>
+                        </div>
+                        <div class="task-details">
+                            <h4>Watch Ad ${i}</h4>
+                            <p>Watch a short advertisement</p>
+                        </div>
+                    </div>
+                    <div class="task-reward">$0.05</div>
+                    <button class="task-btn" data-task="${taskId}" ${isCompleted ? 'disabled' : ''}>
+                        ${isCompleted ? 'Completed' : 'Watch Ad'}
+                    </button>
+                `;
+                
+                taskList.appendChild(taskItem);
+            }
+            
+            // Add event listeners to task buttons
+            document.querySelectorAll('.task-btn').forEach(btn => {
+                btn.addEventListener('click', handleTaskClick);
+            });
+        }
+
+        // Handle task click
+        function handleTaskClick(e) {
+            const taskId = e.target.getAttribute('data-task');
+            
+            if (userData.completedTasks.includes(taskId)) {
+                return;
+            }
+            
+            // Simulate task completion
+            let reward = 0;
+            
+            if (taskId.startsWith('ad-')) {
+                reward = 0.05;
+                userData.watchedAds++;
+                userData.adsWatchedToday++;
+                userData.clicks++;
+            } else if (taskId === 'social-youtube') {
+                reward = 0.20;
+            } else if (taskId === 'social-telegram') {
+                reward = 0.20;
+            } else if (taskId === 'social-facebook') {
+                reward = 0.15;
+            }
+            
+            userData.balance += reward;
+            userData.totalEarning += reward;
+            userData.completedTasks.push(taskId);
+            
+            saveUserData();
+            updateUI();
+            
+            // Update button
+            e.target.disabled = true;
+            e.target.textContent = 'Completed';
+            
+            showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
+        }
+
+        // Update withdraw button
+        function updateWithdrawButton() {
+            const withdrawBtn = document.getElementById('withdrawBtn');
+            const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
+            
+            if (userData.balance < 20) {
+                withdrawBtn.disabled = true;
+                withdrawBtn.textContent = 'Insufficient Balance';
+            } else if (!userData.hasWithdrawnBefore && userData.totalRefers < 30) {
+                withdrawBtn.disabled = true;
+                withdrawBtn.textContent = 'Referral Requirement Not Met';
+            } else if (amount < 20 || amount > userData.balance) {
+                withdrawBtn.disabled = true;
+                withdrawBtn.textContent = 'Invalid Amount';
+            } else {
+                withdrawBtn.disabled = false;
+                withdrawBtn.textContent = 'Withdraw Funds';
+            }
+        }
+
+        // Handle withdraw form submission
+        document.getElementById('withdrawForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const method = document.getElementById('withdrawMethod').value;
+            const accountNumber = document.getElementById('accountNumber').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            
+            if (amount < 20 || amount > userData.balance) {
+                showNotification('Invalid withdrawal amount.', 'error');
+                return;
+            }
+            
+            if (!userData.hasWithdrawnBefore && userData.totalRefers < 30) {
+                showNotification('You need 30 referrals for your first withdrawal.', 'error');
+                return;
+            }
+            
+            // Process withdrawal
+            userData.balance -= amount;
+            userData.hasWithdrawnBefore = true;
+            
+            saveUserData();
+            updateUI();
+            
+            // Reset form
+            document.getElementById('withdrawForm').reset();
+            updateWithdrawButton();
+            
+            showNotification(`Withdrawal request of $${amount.toFixed(2)} submitted! It will be processed within 48 hours.`);
+        });
+
+        // Update withdraw button when amount changes
+        document.getElementById('withdrawAmount').addEventListener('input', updateWithdrawButton);
+
+        // BINANCE UID FUNCTIONALITY
+        document.getElementById('withdrawMethod').addEventListener('change', function() {
+            const accountLabel = document.getElementById('accountLabel');
+            const accountInput = document.getElementById('accountNumber');
+            
+            if (this.value === 'binance') {
+                accountLabel.textContent = 'Binance UID or Email';
+                accountInput.placeholder = 'Enter your Binance UID or email';
+            } else {
+                accountLabel.textContent = 'Account Number';
+                accountInput.placeholder = 'Enter your account number';
+            }
+        });
+
+        // Initialize app
+        window.onload = function() {
+            loadUserData();
+            generateTasks();
+        };
     </script>
 </body>
 </html>
