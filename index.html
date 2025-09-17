@@ -231,120 +231,148 @@
             gap: 15px;
         }
 
-        .task-item {
-            background: white;
+        .featured-task {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 16px;
-            padding: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: transform 0.2s;
-        }
-
-        .task-item:hover {
-            transform: translateY(-3px);
-        }
-
-        .task-item.full-width {
-            flex-direction: column;
-            align-items: stretch;
-            width: 100%;
-        }
-
-        .ad-section {
-            width: 100%;
-            height: 120px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             color: white;
-            font-weight: 600;
-            font-size: 18px;
-            margin-bottom: 15px;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .ad-section::before {
-            content: 'ADVERTISEMENT';
+        .featured-task::before {
+            content: '';
             position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 10px;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
         }
 
-        .social-tasks {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .featured-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        .task-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .featured-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
-        .task-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            color: white;
-        }
-
-        .ad-icon {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
-        .social-icon {
-            background: linear-gradient(135deg, var(--danger), #ff4081);
-        }
-
-        .task-details h4 {
+        .featured-description {
             font-size: 16px;
-            margin-bottom: 4px;
+            margin-bottom: 25px;
+            opacity: 0.9;
         }
 
-        .task-details p {
+        .featured-reward {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--success);
+        }
+
+        .featured-btn {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .featured-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .featured-btn:disabled {
+            background: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Referral */
+        .referral-container {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .referral-link-container {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .referral-link {
+            flex: 1;
+            margin-right: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
             font-size: 14px;
             color: var(--gray);
+            word-break: break-all;
         }
 
-        .task-reward {
-            font-weight: 700;
-            color: var(--success);
-            margin-right: 10px;
-        }
-
-        .task-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .copy-btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-weight: 600;
+            padding: 10px 15px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .task-btn:hover {
-            transform: scale(1.05);
+        .copy-btn:hover {
+            background: var(--secondary);
         }
 
-        .task-btn:disabled {
-            background: var(--gray);
-            cursor: not-allowed;
-            transform: none;
+        .referral-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .referral-stat {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .referral-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .referral-stat-label {
+            font-size: 14px;
+            color: var(--gray);
         }
 
         /* Support */
@@ -393,7 +421,6 @@
 
         .telegram { color: #0088cc; }
         .facebook { color: #1877f2; }
-        .youtube { color: #ff0000; }
 
         /* Withdraw */
         .withdraw-container {
@@ -581,6 +608,83 @@
             color: var(--danger);
         }
 
+        /* Ad Timer Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .timer {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .modal-description {
+            margin-bottom: 25px;
+            color: var(--gray);
+        }
+
+        .modal-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .modal-btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .countdown {
+            font-weight: 700;
+            color: var(--warning);
+        }
+
         /* Responsive */
         @media (max-width: 500px) {
             .app-container {
@@ -640,6 +744,9 @@
                     <div class="progress-bar">
                         <div class="progress-fill" id="adProgress" style="width: 0%"></div>
                     </div>
+                    <div class="countdown-container">
+                        Next reset in: <span class="countdown" id="countdown">--:--:--</span>
+                    </div>
                 </div>
             </div>
 
@@ -647,7 +754,45 @@
             <div class="tab-content" id="tasks-tab">
                 <h2 class="dashboard-title">Daily Tasks</h2>
                 <div class="task-list" id="taskList">
-                    <!-- Tasks will be generated by JavaScript -->
+                    <!-- Featured task will be generated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Referral Tab -->
+            <div class="tab-content" id="referral-tab">
+                <div class="referral-container">
+                    <h2>Referral Program</h2>
+                    <p style="text-align: center; margin-bottom: 20px; color: var(--gray);">
+                        Invite friends and earn $0.50 for each referral!
+                    </p>
+                    
+                    <div class="referral-link-container">
+                        <div class="referral-link" id="referralLink">Generating...</div>
+                        <button class="copy-btn" id="copyBtn">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="referral-stats">
+                        <div class="referral-stat">
+                            <div class="referral-stat-value" id="referralCount">0</div>
+                            <div class="referral-stat-label">Total Referrals</div>
+                        </div>
+                        <div class="referral-stat">
+                            <div class="referral-stat-value">$<span id="referralEarnings">0.00</span></div>
+                            <div class="referral-stat-label">Referral Earnings</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="support-card">
+                    <h3>How It Works</h3>
+                    <ul style="padding-left: 20px; color: var(--gray);">
+                        <li>Share your referral link with friends</li>
+                        <li>They must join and complete at least 5 tasks</li>
+                        <li>You'll earn $0.50 for each qualified referral</li>
+                        <li>No limit on how many you can refer!</li>
+                    </ul>
                 </div>
             </div>
 
@@ -737,6 +882,10 @@
                 <i class="fas fa-tasks"></i>
                 <span>Tasks</span>
             </div>
+            <div class="nav-item" data-tab="referral" onclick="openTab('referral')">
+                <i class="fas fa-user-friends"></i>
+                <span>Referral</span>
+            </div>
             <div class="nav-item" data-tab="support" onclick="openTab('support')">
                 <i class="fas fa-headset"></i>
                 <span>Support</span>
@@ -751,6 +900,16 @@
         <div class="notification" id="notification">
             <i class="fas fa-check-circle"></i>
             <span id="notificationText">Success!</span>
+        </div>
+
+        <!-- Ad Timer Modal -->
+        <div class="modal" id="adModal">
+            <div class="modal-content">
+                <h3 class="modal-title">Watching Advertisement</h3>
+                <div class="timer" id="adTimer">30</div>
+                <p class="modal-description">Please wait while the advertisement is playing...</p>
+                <button class="modal-btn" id="skipAdBtn" disabled>Skip Ad</button>
+            </div>
         </div>
     </div>
 
@@ -772,8 +931,22 @@
             adsWatchedToday: 0,
             lastAdDate: null,
             hasWithdrawnBefore: false,
-            completedTasks: []
+            completedTasks: [],
+            referralCode: '',
+            referralEarnings: 0.00,
+            withdrawalHistory: []
         };
+
+        // Generate unique referral code
+        function generateReferralCode() {
+            if (!userData.referralCode) {
+                // Generate a unique code based on user ID and random string
+                const randomStr = Math.random().toString(36).substring(2, 8);
+                userData.referralCode = `REF${userData.id}${randomStr}`.toUpperCase();
+                saveUserData();
+            }
+            return userData.referralCode;
+        }
 
         // Load user data from localStorage
         function loadUserData() {
@@ -781,6 +954,14 @@
             if (savedData) {
                 userData = JSON.parse(savedData);
             }
+            
+            // Generate referral code if not exists
+            generateReferralCode();
+            
+            // Update referral link
+            const botUsername = 'yourbot'; // Replace with your bot username
+            document.getElementById('referralLink').textContent = `https://t.me/${botUsername}?start=${userData.referralCode}`;
+            
             updateUI();
         }
 
@@ -799,12 +980,15 @@
             document.getElementById('totalEarning').textContent = userData.totalEarning.toFixed(2);
             document.getElementById('totalRefers').textContent = userData.totalRefers;
             document.getElementById('currentBalance').textContent = userData.balance.toFixed(2);
+            document.getElementById('referralCount').textContent = userData.totalRefers;
+            document.getElementById('referralEarnings').textContent = userData.referralEarnings.toFixed(2);
             
             // Update ad progress
             const today = new Date().toDateString();
             if (userData.lastAdDate !== today) {
                 userData.adsWatchedToday = 0;
                 userData.lastAdDate = today;
+                saveUserData();
             }
             
             document.getElementById('adLimitText').textContent = `${userData.adsWatchedToday} of 20`;
@@ -870,102 +1054,27 @@
             const taskList = document.getElementById('taskList');
             taskList.innerHTML = '';
             
-            // Create full-width card with ad and social tasks
-            const fullWidthCard = document.createElement('div');
-            fullWidthCard.className = 'task-item full-width';
+            // Add featured ad task card with full-width button
+            const isCompleted = userData.completedTasks.includes('featured-ad');
             
-            // Add ad section
-            const adSection = document.createElement('div');
-            adSection.className = 'ad-section';
-            adSection.textContent = 'Your Ad Here - Special Offer!';
-            fullWidthCard.appendChild(adSection);
-            
-            // Add featured ad task card
-            const featuredAdTask = document.createElement('div');
-            featuredAdTask.className = 'task-item';
-            featuredAdTask.innerHTML = `
-                <div class="task-info">
-                    <div class="task-icon ad-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="task-details">
-                        <h4>Featured Ad</h4>
-                        <p>Watch our premium advertisement</p>
-                    </div>
+            const featuredTask = document.createElement('div');
+            featuredTask.className = 'featured-task';
+            featuredTask.innerHTML = `
+                <div class="featured-icon">
+                    <i class="fas fa-star"></i>
                 </div>
-                <div class="task-reward">$0.10</div>
-                <button class="task-btn" data-task="featured-ad">Watch Now</button>
+                <div class="featured-title">Featured Ad</div>
+                <div class="featured-description">Watch our premium advertisement (30 seconds)</div>
+                <div class="featured-reward">Reward: $0.10</div>
+                <button class="featured-btn" data-task="featured-ad" ${isCompleted ? 'disabled' : ''}>
+                    ${isCompleted ? 'Completed' : 'Watch Now'}
+                </button>
             `;
-            fullWidthCard.appendChild(featuredAdTask);
+            taskList.appendChild(featuredTask);
             
-            // Add social tasks container
-            const socialTasksContainer = document.createElement('div');
-            socialTasksContainer.className = 'social-tasks';
-            
-            // Social tasks
-            const socialTasks = [
-                { id: 'telegram', name: 'Follow Telegram', desc: 'Join our Telegram channel', reward: 0.20, icon: 'fab fa-telegram' },
-                { id: 'facebook', name: 'Follow Facebook', desc: 'Like our Facebook page', reward: 0.15, icon: 'fab fa-facebook-f' }
-            ];
-            
-            socialTasks.forEach(task => {
-                const taskId = `social-${task.id}`;
-                const isCompleted = userData.completedTasks.includes(taskId);
-                
-                const taskItem = document.createElement('div');
-                taskItem.className = 'task-item';
-                taskItem.innerHTML = `
-                    <div class="task-info">
-                        <div class="task-icon social-icon">
-                            <i class="${task.icon}"></i>
-                        </div>
-                        <div class="task-details">
-                            <h4>${task.name}</h4>
-                            <p>${task.desc}</p>
-                        </div>
-                    </div>
-                    <div class="task-reward">$${task.reward.toFixed(2)}</div>
-                    <button class="task-btn" data-task="${taskId}" ${isCompleted ? 'disabled' : ''}>
-                        ${isCompleted ? 'Completed' : 'Follow'}
-                    </button>
-                `;
-                
-                socialTasksContainer.appendChild(taskItem);
-            });
-            
-            fullWidthCard.appendChild(socialTasksContainer);
-            taskList.appendChild(fullWidthCard);
-            
-            // Ad tasks
-            for (let i = 1; i <= 20; i++) {
-                const taskId = `ad-${i}`;
-                const isCompleted = userData.completedTasks.includes(taskId);
-                
-                const taskItem = document.createElement('div');
-                taskItem.className = 'task-item';
-                taskItem.innerHTML = `
-                    <div class="task-info">
-                        <div class="task-icon ad-icon">
-                            <i class="fas fa-ad"></i>
-                        </div>
-                        <div class="task-details">
-                            <h4>Watch Ad ${i}</h4>
-                            <p>Watch a short advertisement</p>
-                        </div>
-                    </div>
-                    <div class="task-reward">$0.05</div>
-                    <button class="task-btn" data-task="${taskId}" ${isCompleted ? 'disabled' : ''}>
-                        ${isCompleted ? 'Completed' : 'Watch Ad'}
-                    </button>
-                `;
-                
-                taskList.appendChild(taskItem);
-            }
-            
-            // Add event listeners to task buttons
-            document.querySelectorAll('.task-btn').forEach(btn => {
-                btn.addEventListener('click', handleTaskClick);
-            });
+            // Add event listener to the featured button
+            const featuredBtn = featuredTask.querySelector('.featured-btn');
+            featuredBtn.addEventListener('click', handleTaskClick);
         }
 
         // Handle task click
@@ -976,7 +1085,50 @@
                 return;
             }
             
-            // Simulate task completion
+            // Check if it's an ad task and daily limit reached
+            if (taskId === 'featured-ad' && userData.adsWatchedToday >= 20) {
+                showNotification('Daily ad limit reached. Try again tomorrow.', 'error');
+                return;
+            }
+            
+            // Show the timer modal
+            showAdModal(taskId);
+        }
+
+        // Show ad modal with timer
+        function showAdModal(taskId) {
+            const modal = document.getElementById('adModal');
+            const timerElement = document.getElementById('adTimer');
+            const skipBtn = document.getElementById('skipAdBtn');
+            
+            let timeLeft = 30;
+            timerElement.textContent = timeLeft;
+            skipBtn.disabled = true;
+            
+            modal.style.display = 'flex';
+            
+            const countdown = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    completeTask(taskId);
+                    modal.style.display = 'none';
+                } else if (timeLeft <= 5) {
+                    skipBtn.disabled = false;
+                }
+            }, 1000);
+            
+            skipBtn.onclick = () => {
+                clearInterval(countdown);
+                completeTask(taskId);
+                modal.style.display = 'none';
+            };
+        }
+
+        // Complete task
+        function completeTask(taskId) {
             let reward = 0;
             
             if (taskId === 'featured-ad') {
@@ -984,15 +1136,6 @@
                 userData.watchedAds++;
                 userData.adsWatchedToday++;
                 userData.clicks++;
-            } else if (taskId.startsWith('ad-')) {
-                reward = 0.05;
-                userData.watchedAds++;
-                userData.adsWatchedToday++;
-                userData.clicks++;
-            } else if (taskId === 'social-telegram') {
-                reward = 0.20;
-            } else if (taskId === 'social-facebook') {
-                reward = 0.15;
             }
             
             userData.balance += reward;
@@ -1003,8 +1146,11 @@
             updateUI();
             
             // Update button
-            e.target.disabled = true;
-            e.target.textContent = 'Completed';
+            const button = document.querySelector(`[data-task="${taskId}"]`);
+            if (button) {
+                button.disabled = true;
+                button.textContent = 'Completed';
+            }
             
             showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
         }
@@ -1051,6 +1197,18 @@
             userData.balance -= amount;
             userData.hasWithdrawnBefore = true;
             
+            // Add to withdrawal history
+            const withdrawal = {
+                id: Date.now(),
+                amount: amount,
+                method: method,
+                accountNumber: accountNumber,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            userData.withdrawalHistory.push(withdrawal);
+            
             saveUserData();
             updateUI();
             
@@ -1061,7 +1219,7 @@
             showNotification(`Withdrawal request of $${amount.toFixed(2)} submitted! It will be processed within 48 hours.`);
         });
 
-        // Update withdraw button when amount changes
+        // Update withdrawal button when amount changes
         document.getElementById('withdrawAmount').addEventListener('input', updateWithdrawButton);
 
         // BINANCE UID FUNCTIONALITY
@@ -1078,10 +1236,40 @@
             }
         });
 
+        // Copy referral link
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            const referralLink = document.getElementById('referralLink').textContent;
+            navigator.clipboard.writeText(referralLink).then(() => {
+                showNotification('Referral link copied to clipboard!');
+            }).catch(err => {
+                showNotification('Failed to copy referral link.', 'error');
+            });
+        });
+
+        // Countdown timer for daily reset
+        function updateCountdown() {
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            
+            const diff = tomorrow - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
         // Initialize app
         window.onload = function() {
             loadUserData();
             generateTasks();
+            
+            // Update countdown every second
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
         };
     </script>
 </body>
