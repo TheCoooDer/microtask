@@ -904,7 +904,7 @@
                 <div class="referral-container">
                     <div class="referral-header">
                         <h2>Referral Program</h2>
-                        <p>Invite friends and earn $0.50 for each qualified referral!</p>
+                        <p>Invite friends and earn $0.30 for each qualified referral!</p>
                     </div>
                     
                     <div class="referral-link-container">
@@ -931,7 +931,7 @@
                         <ul>
                             <li>Share your unique referral link with friends</li>
                             <li>They must join using your link and complete at least 5 tasks</li>
-                            <li>You'll earn $0.50 for each qualified referral</li>
+                            <li>You'll earn $0.30 for each qualified referral</li>
                             <li>No limit on how many you can refer!</li>
                         </ul>
                         <div class="referral-badge">
@@ -1393,7 +1393,7 @@
             // Check if user completed 5 tasks and was referred
             if (userData.completedTasks.length === 5 && userData.referredBy) {
                 setTimeout(() => {
-                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
+                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.30!`, 'success');
                 }, 1000);
             }
         }
@@ -1517,3 +1517,4 @@
     </script>
 </body>
 </html>
+
