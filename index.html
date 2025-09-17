@@ -305,6 +305,72 @@
             transform: none;
         }
 
+        /* Ad Containers */
+        .ad-container {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ad-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .ad-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .ad-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .ad-description {
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: var(--gray);
+        }
+
+        .ad-reward {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--success);
+        }
+
+        .ad-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .ad-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .ad-btn:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* Referral */
         .referral-container {
             background: white;
@@ -312,6 +378,22 @@
             padding: 25px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
             margin-bottom: 20px;
+        }
+
+        .referral-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .referral-header h2 {
+            font-size: 22px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .referral-header p {
+            color: var(--gray);
+            font-size: 14px;
         }
 
         .referral-link-container {
@@ -343,6 +425,9 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .copy-btn:hover {
@@ -373,6 +458,40 @@
         .referral-stat-label {
             font-size: 14px;
             color: var(--gray);
+        }
+
+        .referral-info {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .referral-info h3 {
+            font-size: 16px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .referral-info ul {
+            padding-left: 20px;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .referral-info li {
+            margin-bottom: 5px;
+        }
+
+        .referral-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
         }
 
         /* Support */
@@ -417,6 +536,20 @@
 
         .support-link i {
             font-size: 24px;
+        }
+
+        .support-link-details {
+            flex: 1;
+        }
+
+        .support-link-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .support-link-subtitle {
+            font-size: 12px;
+            color: var(--gray);
         }
 
         .telegram { color: #0088cc; }
@@ -596,6 +729,10 @@
             border-left: 4px solid var(--danger);
         }
 
+        .notification.info {
+            border-left: 4px solid var(--primary);
+        }
+
         .notification i {
             font-size: 20px;
         }
@@ -606,6 +743,10 @@
 
         .notification.error i {
             color: var(--danger);
+        }
+
+        .notification.info i {
+            color: var(--primary);
         }
 
         /* Ad Timer Modal */
@@ -761,15 +902,16 @@
             <!-- Referral Tab -->
             <div class="tab-content" id="referral-tab">
                 <div class="referral-container">
-                    <h2>Referral Program</h2>
-                    <p style="text-align: center; margin-bottom: 20px; color: var(--gray);">
-                        Invite friends and earn $0.30 for each referral!
-                    </p>
+                    <div class="referral-header">
+                        <h2>Referral Program</h2>
+                        <p>Invite friends and earn $0.50 for each qualified referral!</p>
+                    </div>
                     
                     <div class="referral-link-container">
                         <div class="referral-link" id="referralLink">Generating...</div>
                         <button class="copy-btn" id="copyBtn">
                             <i class="fas fa-copy"></i>
+                            <span>Copy</span>
                         </button>
                     </div>
                     
@@ -783,15 +925,27 @@
                             <div class="referral-stat-label">Referral Earnings</div>
                         </div>
                     </div>
+                    
+                    <div class="referral-info">
+                        <h3>How It Works</h3>
+                        <ul>
+                            <li>Share your unique referral link with friends</li>
+                            <li>They must join using your link and complete at least 5 tasks</li>
+                            <li>You'll earn $0.50 for each qualified referral</li>
+                            <li>No limit on how many you can refer!</li>
+                        </ul>
+                        <div class="referral-badge">
+                            <i class="fas fa-star"></i> Premium Referrer
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="support-card">
-                    <h3>How It Works</h3>
+                    <h3>Referral Benefits</h3>
                     <ul style="padding-left: 20px; color: var(--gray);">
-                        <li>Share your referral link with friends</li>
-                        <li>They must join and complete at least 5 tasks</li>
-                        <li>You'll earn $0.30 for each qualified referral</li>
-                        <li>No limit on how many you can refer!</li>
+                        <li>Higher withdrawal priority for referrers</li>
+                        <li>Exclusive bonuses for top referrers</li>
+                        <li>Lifetime earnings from your referrals</li>
                     </ul>
                 </div>
             </div>
@@ -799,24 +953,39 @@
             <!-- Support Tab -->
             <div class="tab-content" id="support-tab">
                 <div class="support-card">
-                    <h3>Support Center</h3>
-                    <p>If you have any questions or issues, please contact us through:</p>
+                    <h3>Developer & Support</h3>
+                    <p>Connect with the developer for support and updates</p>
                     
                     <a href="https://t.me/sufyanthedev" class="support-link" target="_blank">
                         <i class="fab fa-telegram telegram"></i>
-                        <div>
-                            <div>Telegram Support</div>
-                            <small>telegram</small>
+                        <div class="support-link-details">
+                            <div class="support-link-title">Telegram Developer</div>
+                            <div class="support-link-subtitle">@sufyanthedev</div>
                         </div>
                     </a>
                     
-                    <a href="https://facebook.com/sufyanThePro" class="support-link" target="_blank">
+                    <a href="https://www.facebook.com/SufYanThePro" class="support-link" target="_blank">
                         <i class="fab fa-facebook facebook"></i>
-                        <div>
-                            <div>Facebook Page</div>
-                            <small>facebook</small>
+                        <div class="support-link-details">
+                            <div class="support-link-title">Facebook Page</div>
+                            <div class="support-link-subtitle">SufYan The Pro</div>
                         </div>
                     </a>
+                </div>
+                
+                <div class="support-card">
+                    <h3>App Information</h3>
+                    <div style="padding: 15px; background: #f8f9fa; border-radius: 12px;">
+                        <p style="margin-bottom: 10px; color: var(--gray); font-size: 14px;">
+                            <strong>Version:</strong> 1.0.0
+                        </p>
+                        <p style="margin-bottom: 10px; color: var(--gray); font-size: 14px;">
+                            <strong>Developer:</strong> SufYan The Pro
+                        </p>
+                        <p style="color: var(--gray); font-size: 14px;">
+                            <strong>Last Updated:</strong> <span id="lastUpdated"></span>
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -933,19 +1102,40 @@
             hasWithdrawnBefore: false,
             completedTasks: [],
             referralCode: '',
+            referredBy: '',
             referralEarnings: 0.00,
-            withdrawalHistory: []
+            withdrawalHistory: [],
+            joinedAt: new Date().toISOString()
         };
 
-        // Generate unique referral code
+        // Generate smart referral code
         function generateReferralCode() {
             if (!userData.referralCode) {
-                // Generate a unique code based on user ID and random string
-                const randomStr = Math.random().toString(36).substring(2, 8);
-                userData.referralCode = `REF${userData.id}${randomStr}`.toUpperCase();
+                // Create a smart referral code that includes user ID and a timestamp
+                const timestamp = Date.now().toString(36);
+                const randomStr = Math.random().toString(36).substring(2, 6);
+                const userId = userData.id.toString().slice(-4);
+                userData.referralCode = `EM${userId}${timestamp}${randomStr}`.toUpperCase();
                 saveUserData();
             }
             return userData.referralCode;
+        }
+
+        // Check if user was referred
+        function checkReferral() {
+            // Check if user came from a referral link
+            if (tg.initDataUnsafe && tg.initDataUnsafe.start_param) {
+                const referralCode = tg.initDataUnsafe.start_param;
+                if (referralCode && !userData.referredBy) {
+                    userData.referredBy = referralCode;
+                    saveUserData();
+                    
+                    // Show welcome message for referred users
+                    setTimeout(() => {
+                        showNotification(`Welcome! You were referred by ${referralCode}`, 'info');
+                    }, 1000);
+                }
+            }
         }
 
         // Load user data from localStorage
@@ -955,12 +1145,20 @@
                 userData = JSON.parse(savedData);
             }
             
+            // Check for referral
+            checkReferral();
+            
             // Generate referral code if not exists
             generateReferralCode();
             
             // Update referral link
             const botUsername = 'yourbot'; // Replace with your bot username
             document.getElementById('referralLink').textContent = `https://t.me/${botUsername}?start=${userData.referralCode}`;
+            
+            // Update last updated date
+            const now = new Date();
+            const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+            document.getElementById('lastUpdated').textContent = formattedDate;
             
             updateUI();
         }
@@ -1016,8 +1214,10 @@
             
             if (type === 'success') {
                 icon.className = 'fas fa-check-circle';
-            } else {
+            } else if (type === 'error') {
                 icon.className = 'fas fa-exclamation-circle';
+            } else if (type === 'info') {
+                icon.className = 'fas fa-info-circle';
             }
             
             setTimeout(() => {
@@ -1055,7 +1255,7 @@
             taskList.innerHTML = '';
             
             // Add featured ad task card with full-width button
-            const isCompleted = userData.completedTasks.includes('featured-ad');
+            const isFeaturedCompleted = userData.completedTasks.includes('featured-ad');
             
             const featuredTask = document.createElement('div');
             featuredTask.className = 'featured-task';
@@ -1066,8 +1266,8 @@
                 <div class="featured-title">Featured Ad</div>
                 <div class="featured-description">Watch our premium advertisement (30 seconds)</div>
                 <div class="featured-reward">Reward: $0.10</div>
-                <button class="featured-btn" data-task="featured-ad" ${isCompleted ? 'disabled' : ''}>
-                    ${isCompleted ? 'Completed' : 'Watch Now'}
+                <button class="featured-btn" data-task="featured-ad" ${isFeaturedCompleted ? 'disabled' : ''}>
+                    ${isFeaturedCompleted ? 'Completed' : 'Watch Now'}
                 </button>
             `;
             taskList.appendChild(featuredTask);
@@ -1075,6 +1275,36 @@
             // Add event listener to the featured button
             const featuredBtn = featuredTask.querySelector('.featured-btn');
             featuredBtn.addEventListener('click', handleTaskClick);
+            
+            // Add three ad containers
+            const adContainers = [
+                { id: 'ad-container-1', icon: 'fas fa-play-circle', title: 'Video Ad', description: 'Watch a short video advertisement', reward: 0.05 },
+                { id: 'ad-container-2', icon: 'fas fa-banner', title: 'Banner Ad', description: 'View a banner advertisement', reward: 0.03 },
+                { id: 'ad-container-3', icon: 'fas fa-film', title: 'Promotional Video', description: 'Watch a promotional video', reward: 0.07 }
+            ];
+            
+            adContainers.forEach(container => {
+                const isCompleted = userData.completedTasks.includes(container.id);
+                
+                const adContainer = document.createElement('div');
+                adContainer.className = 'ad-container';
+                adContainer.innerHTML = `
+                    <div class="ad-icon">
+                        <i class="${container.icon}"></i>
+                    </div>
+                    <div class="ad-title">${container.title}</div>
+                    <div class="ad-description">${container.description} (30 seconds)</div>
+                    <div class="ad-reward">Reward: $${container.reward.toFixed(2)}</div>
+                    <button class="ad-btn" data-task="${container.id}" ${isCompleted ? 'disabled' : ''}>
+                        ${isCompleted ? 'Completed' : 'Watch Now'}
+                    </button>
+                `;
+                taskList.appendChild(adContainer);
+                
+                // Add event listener to the ad button
+                const adBtn = adContainer.querySelector('.ad-btn');
+                adBtn.addEventListener('click', handleTaskClick);
+            });
         }
 
         // Handle task click
@@ -1086,7 +1316,7 @@
             }
             
             // Check if it's an ad task and daily limit reached
-            if (taskId === 'featured-ad' && userData.adsWatchedToday >= 20) {
+            if ((taskId === 'featured-ad' || taskId.startsWith('ad-container-')) && userData.adsWatchedToday >= 20) {
                 showNotification('Daily ad limit reached. Try again tomorrow.', 'error');
                 return;
             }
@@ -1133,13 +1363,19 @@
             
             if (taskId === 'featured-ad') {
                 reward = 0.10;
-                userData.watchedAds++;
-                userData.adsWatchedToday++;
-                userData.clicks++;
+            } else if (taskId === 'ad-container-1') {
+                reward = 0.05;
+            } else if (taskId === 'ad-container-2') {
+                reward = 0.03;
+            } else if (taskId === 'ad-container-3') {
+                reward = 0.07;
             }
             
             userData.balance += reward;
             userData.totalEarning += reward;
+            userData.watchedAds++;
+            userData.adsWatchedToday++;
+            userData.clicks++;
             userData.completedTasks.push(taskId);
             
             saveUserData();
@@ -1153,6 +1389,13 @@
             }
             
             showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
+            
+            // Check if user completed 5 tasks and was referred
+            if (userData.completedTasks.length === 5 && userData.referredBy) {
+                setTimeout(() => {
+                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
+                }, 1000);
+            }
         }
 
         // Update withdraw button
@@ -1240,7 +1483,7 @@
         document.getElementById('copyBtn').addEventListener('click', () => {
             const referralLink = document.getElementById('referralLink').textContent;
             navigator.clipboard.writeText(referralLink).then(() => {
-                showNotification('Referral link copied to clipboard!');
+                showNotification('Referral link copied to clipboard!', 'success');
             }).catch(err => {
                 showNotification('Failed to copy referral link.', 'error');
             });
@@ -1274,7 +1517,3 @@
     </script>
 </body>
 </html>
-
-
-
-
