@@ -338,21 +338,20 @@
             font-weight: 700;
             color: #ffffff;
         }
-
         .checkin-btn {
-            background: white;
-            color: var(--checkin);
-            border: none;
-            padding: 10px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            white-space: nowrap;
+        background: white;
+        color: var(--checkin);
+        border: none;
+        padding: 15px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
+        z-index: 0;
         }
-
         .checkin-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
@@ -423,18 +422,19 @@
             color: var(--success);
         }
 
-        .featured-btn {
-            background: white;
-            color: var(--primary);
-            border: none;
-            padding: 10px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            white-space: nowrap;
+            .featured-btn {
+        background: white;
+        color: var(--primary);
+        border: none;
+        padding: 15px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
+        z-index: 0;
         }
 
         .featured-btn:hover {
@@ -1090,9 +1090,9 @@
                 <h2 class="dashboard-title">Dashboard</h2>
                 <div class="dashboard">
                     <div class="stat-card">
-                        <h3>Watched Ads</h3>
-                        <div class="stat-value" id="watchedAds">0</div>
-                        <i class="fas fa-ad stat-icon"></i>
+                        <h3>Tasks Done</h3>
+                        <div class="stat-value" id="tasksDone">0</div>
+                        <i class="fas fa-tasks stat-icon"></i>
                     </div>
                     <div class="stat-card">
                         <h3>Clicks</h3>
@@ -1113,20 +1113,20 @@
 
                 <!-- Progress Container -->
                 <div class="progress-container">
-                    <h3 class="progress-title">Daily Ad Limit</h3>
+                    <h3 class="progress-title">Daily Task Limit</h3>
                     <div class="progress-header">
                         <span>Progress</span>
-                        <span id="adLimitText">0 of 35</span>
+                        <span id="taskLimitText">0 of 35</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" id="adProgress" style="width: 0%"></div>
+                        <div class="progress-fill" id="taskProgress" style="width: 0%"></div>
                     </div>
                     
                     <!-- Enhanced Countdown Timer -->
                     <div class="countdown-container" id="countdownContainer">
                         <div class="countdown-label">
                             <i class="fas fa-clock countdown-icon"></i>
-                            Watch button available in:
+                            Tasks available in:
                         </div>
                         <div class="countdown" id="countdown">--:--:--</div>
                     </div>
@@ -1734,24 +1734,24 @@
     </div>
 
     <script>
-
-
-
-        
-            function ShowAds(){
-                // Rewarded interstitial
-
-                show_9891560().then(() => {
-                    // You need to add your user reward function here, which will be executed after the user watches the ad.
-                    // For more details, please refer to the detailed instructions.
-                    alert('You have seen an ad!');
-                })
-
+        function ShowAds(){
+            // Check daily task limit
+            if (userData.tasksDoneToday >= 35) {
+                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
+                return;
             }
-
-        
-
-
+            
+            // Rewarded interstitial
+            show_9891560().then(() => {
+                // You need to add your user reward function here, which will be executed after the user watches the ad.
+                // For more details, please refer to the detailed instructions.
+                addReward(0.04);
+                showNotification('You have earned $0.04!');
+            }).catch(error => {
+                showNotification('Failed to load ad. Please try again later.', 'error');
+                console.error('Ad error:', error);
+            })
+        }
 
         // Initialize Telegram Web App
         let tg = window.Telegram.WebApp;
@@ -1763,12 +1763,10 @@
             name: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : 'User',
             photo: tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url ? tg.initDataUnsafe.user.photo_url : 'https://randomuser.me/api/portraits/men/1.jpg',
             balance: 0.00,
-            watchedAds: 0,
+            tasksDoneToday: 0,
             clicks: 0,
             totalEarning: 0.00,
             totalRefers: 0,
-            adsWatchedToday: 0,
-            limitReachedTime: null, // Timestamp when limit was reached
             hasWithdrawnBefore: false,
             completedTasks: [],
             referralCode: '',
@@ -1776,7 +1774,8 @@
             referralEarnings: 0.00,
             withdrawalHistory: [],
             joinedAt: new Date().toISOString(),
-            lastCheckIn: null // Store last check-in date (YYYY-MM-DD format)
+            lastCheckIn: null, // Store last check-in date (YYYY-MM-DD format)
+            lastTaskReset: null // Store last task reset date (YYYY-MM-DD format)
         };
 
         // Daily Check In function
@@ -1789,16 +1788,24 @@
                 return;
             }
             
+            // Check daily task limit
+            if (userData.tasksDoneToday >= 35) {
+                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
+                return;
+            }
+            
             // Add reward for daily check-in
             const reward = 0.10;
             userData.balance += reward;
             userData.totalEarning += reward;
             userData.clicks++;
+            userData.tasksDoneToday++;
             userData.lastCheckIn = today; // Set last check-in to today
             
             saveUserData();
             updateUI();
             updateCheckInButton();
+            updateTaskLimit();
             
             showNotification(`Daily check-in successful! $${reward.toFixed(2)} added to your balance.`);
         }
@@ -1818,32 +1825,9 @@
         }
 
         function Watched() {
-            // Check if user has reached the limit
-            if (userData.limitReachedTime) {
-                const now = new Date().getTime();
-                const limitTime = new Date(userData.limitReachedTime).getTime();
-                const twentyFourHours = 24 * 60 * 60 * 1000;
-                
-                if (now < limitTime + twentyFourHours) {
-                    showNotification('Daily ad limit reached. Try again later.', 'error');
-                    return;
-                } else {
-                    // Reset the limit
-                    userData.adsWatchedToday = 0;
-                    userData.limitReachedTime = null;
-                    saveUserData();
-                }
-            }
-            
-            // Check if user has reached 35 ads today
-            if (userData.adsWatchedToday >= 35) {
-                // Set limit reached time if not already set
-                if (!userData.limitReachedTime) {
-                    userData.limitReachedTime = new Date().toISOString();
-                    saveUserData();
-                }
-                showNotification('Daily ad limit reached. Try again in 24 hours.', 'error');
-                updateAdLimit();
+            // Check daily task limit
+            if (userData.tasksDoneToday >= 35) {
+                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
             }
             
@@ -1862,18 +1846,12 @@
         function addReward(amount) {
             userData.balance += amount;
             userData.totalEarning += amount;
-            userData.watchedAds++;
-            userData.adsWatchedToday++;
+            userData.tasksDoneToday++;
             userData.clicks++;
-            
-            // Check if reached limit
-            if (userData.adsWatchedToday >= 35 && !userData.limitReachedTime) {
-                userData.limitReachedTime = new Date().toISOString();
-            }
             
             saveUserData();
             updateUI();
-            updateAdLimit();
+            updateTaskLimit();
         }
 
         // Function to watch ad task
@@ -1884,32 +1862,9 @@
                 return;
             }
             
-            // Check if user has reached the limit
-            if (userData.limitReachedTime) {
-                const now = new Date().getTime();
-                const limitTime = new Date(userData.limitReachedTime).getTime();
-                const twentyFourHours = 24 * 60 * 60 * 1000;
-                
-                if (now < limitTime + twentyFourHours) {
-                    showNotification('Daily ad limit reached. Try again later.', 'error');
-                    return;
-                } else {
-                    // Reset the limit
-                    userData.adsWatchedToday = 0;
-                    userData.limitReachedTime = null;
-                    saveUserData();
-                }
-            }
-            
-            // Check if user has reached 35 ads today
-            if (userData.adsWatchedToday >= 35) {
-                // Set limit reached time if not already set
-                if (!userData.limitReachedTime) {
-                    userData.limitReachedTime = new Date().toISOString();
-                    saveUserData();
-                }
-                showNotification('Daily ad limit reached. Try again in 24 hours.', 'error');
-                updateAdLimit();
+            // Check daily task limit
+            if (userData.tasksDoneToday >= 35) {
+                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
             }
             
@@ -1919,25 +1874,19 @@
                 const reward = 0.04; // Correct reward for regular ad tasks
                 userData.balance += reward;
                 userData.totalEarning += reward;
-                userData.watchedAds++;
-                userData.adsWatchedToday++;
+                userData.tasksDoneToday++;
                 userData.clicks++;
                 userData.completedTasks.push(taskId); // Only mark this specific task as completed
                 
-                // Check if reached limit
-                if (userData.adsWatchedToday >= 35 && !userData.limitReachedTime) {
-                    userData.limitReachedTime = new Date().toISOString();
-                }
-                
                 saveUserData();
                 updateUI();
-                updateAdLimit();
                 updateTaskButton(taskId); // Update only the specific button
+                updateTaskLimit();
                 
                 showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
                 
                 // Check if user completed 5 tasks and was referred
-                if (userData.watchedAds === 5 && userData.referredBy) {
+                if (userData.tasksDoneToday === 5 && userData.referredBy) {
                     setTimeout(() => {
                         showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
                     }, 1000);
@@ -1957,19 +1906,13 @@
                     button.disabled = true;
                     button.textContent = 'Completed';
                 } else {
-                    // Only enable if not at limit
-                    if (userData.adsWatchedToday >= 35) {
-                        button.disabled = true;
-                        button.textContent = 'Limit Reached';
-                    } else {
-                        button.disabled = false;
-                        button.textContent = 'Watch Ad';
-                    }
+                    button.disabled = false;
+                    button.textContent = 'Watch Ad';
                 }
             }
         }
 
-        // Function to open external link
+        // Function to open external link - NO LIMITATION
         function openExternalLink(taskId, link) {
             // Check if task is already completed
             if (userData.completedTasks.includes(taskId)) {
@@ -1994,7 +1937,7 @@
             showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
             
             // Check if user completed 5 tasks and was referred
-            if (userData.watchedAds === 5 && userData.referredBy) {
+            if (userData.tasksDoneToday === 5 && userData.referredBy) {
                 setTimeout(() => {
                     showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
                 }, 1000);
@@ -2031,20 +1974,15 @@
             }
         }
 
-        // Check if ad limit has expired
-        function checkAdLimitExpiry() {
-            if (userData.limitReachedTime) {
-                const now = new Date().getTime();
-                const limitTime = new Date(userData.limitReachedTime).getTime();
-                const twentyFourHours = 24 * 60 * 60 * 1000;
-                
-                if (now >= limitTime + twentyFourHours) {
-                    // Reset the limit
-                    userData.adsWatchedToday = 0;
-                    userData.limitReachedTime = null;
-                    saveUserData();
-                    return true;
-                }
+        // Check if task limit needs to be reset
+        function checkTaskLimitReset() {
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (userData.lastTaskReset !== today) {
+                userData.tasksDoneToday = 0;
+                userData.lastTaskReset = today;
+                saveUserData();
+                return true;
             }
             return false;
         }
@@ -2059,8 +1997,8 @@
             // Check for referral
             checkReferral();
             
-            // Check if ad limit has expired
-            checkAdLimitExpiry();
+            // Check if task limit needs to be reset
+            checkTaskLimitReset();
             
             // Generate referral code if not exists
             generateReferralCode();
@@ -2081,7 +2019,7 @@
             updateCheckInButton();
             
             updateUI();
-            updateAdLimit();
+            updateTaskLimit();
         }
 
         // Save user data to localStorage
@@ -2094,7 +2032,7 @@
             document.getElementById('userName').textContent = userData.name;
             document.getElementById('userAvatar').src = userData.photo;
             document.getElementById('userBalance').textContent = userData.balance.toFixed(2);
-            document.getElementById('watchedAds').textContent = userData.watchedAds;
+            document.getElementById('tasksDone').textContent = userData.tasksDoneToday;
             document.getElementById('clicks').textContent = userData.clicks;
             document.getElementById('totalEarning').textContent = userData.totalEarning.toFixed(2);
             document.getElementById('totalRefers').textContent = userData.totalRefers;
@@ -2113,28 +2051,28 @@
             updateWithdrawButton();
         }
 
-        // Update ad limit progress and countdown
-        function updateAdLimit() {
-            const progressFill = document.getElementById('adProgress');
-            const adLimitText = document.getElementById('adLimitText');
+        // Update task limit progress
+        function updateTaskLimit() {
+            const progressFill = document.getElementById('taskProgress');
+            const taskLimitText = document.getElementById('taskLimitText');
             const countdownContainer = document.getElementById('countdownContainer');
             const countdown = document.getElementById('countdown');
             
             // Update progress
-            const progress = (userData.adsWatchedToday / 35) * 100;
+            const progress = (userData.tasksDoneToday / 35) * 100;
             progressFill.style.width = `${progress}%`;
-            adLimitText.textContent = `${userData.adsWatchedToday} of 35`;
+            taskLimitText.textContent = `${userData.tasksDoneToday} of 35`;
             
             // Check if limit is reached
-            if (userData.limitReachedTime) {
+            if (userData.tasksDoneToday >= 35) {
                 // Show countdown
                 countdownContainer.style.display = 'block';
                 
-                // Calculate remaining time
-                const now = new Date().getTime();
-                const limitTime = new Date(userData.limitReachedTime).getTime();
-                const endTime = limitTime + 24 * 60 * 60 * 1000; // 24 hours from limit reached
-                const remaining = endTime - now;
+                // Calculate remaining time until midnight
+                const now = new Date();
+                const midnight = new Date();
+                midnight.setHours(24, 0, 0, 0); // Set to midnight tonight
+                const remaining = midnight - now;
                 
                 if (remaining > 0) {
                     const hours = Math.floor(remaining / (1000 * 60 * 60));
@@ -2142,69 +2080,91 @@
                     const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
                     
                     countdown.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    
-                    // Disable featured ad button
-                    const featuredBtn = document.getElementById('featuredAdBtn');
-                    featuredBtn.disabled = true;
-                    featuredBtn.textContent = 'Limit Reached';
-                    
-                    // Disable all ad task buttons
-                    document.querySelectorAll('.watch-ad-btn').forEach(btn => {
-                        if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
-                            btn.disabled = true;
-                            btn.textContent = 'Limit Reached';
-                        }
-                    });
-                } else {
-                    // Limit expired
-                    countdownContainer.style.display = 'none';
-                    userData.adsWatchedToday = 0;
-                    userData.limitReachedTime = null;
-                    saveUserData();
-                    
-                    // Re-enable featured ad button
-                    const featuredBtn = document.getElementById('featuredAdBtn');
-                    featuredBtn.disabled = false;
-                    featuredBtn.textContent = 'Watch Now';
-                    
-                    // Re-enable ad task buttons that aren't completed
-                    document.querySelectorAll('.watch-ad-btn').forEach(btn => {
-                        if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
-                            btn.disabled = false;
-                            btn.textContent = 'Watch Ad';
-                        }
-                    });
                 }
+                
+                // Disable all task buttons that aren't completed, EXCEPT external link buttons
+                disableLimitedTaskButtons();
             } else {
                 // Hide countdown
                 countdownContainer.style.display = 'none';
                 
-                // Enable featured ad button if not at limit
-                const featuredBtn = document.getElementById('featuredAdBtn');
-                if (userData.adsWatchedToday >= 35) {
-                    featuredBtn.disabled = true;
-                    featuredBtn.textContent = 'Limit Reached';
-                } else {
-                    featuredBtn.disabled = false;
-                    featuredBtn.textContent = 'Watch Now';
-                }
-                
-                // Enable ad task buttons if not at limit and not completed
-                document.querySelectorAll('.watch-ad-btn').forEach(btn => {
-                    const taskId = btn.getAttribute('data-task');
-                    if (userData.adsWatchedToday >= 35) {
-                        if (!userData.completedTasks.includes(taskId)) {
-                            btn.disabled = true;
-                            btn.textContent = 'Limit Reached';
-                        }
-                    } else {
-                        if (!userData.completedTasks.includes(taskId)) {
-                            btn.disabled = false;
-                            btn.textContent = 'Watch Ad';
-                        }
-                    }
-                });
+                // Enable all task buttons that aren't completed
+                enableTaskButtons();
             }
+        }
+
+        // Disable limited task buttons (all except external link buttons)
+        function disableLimitedTaskButtons() {
+            // Check-in button
+            const checkInBtn = document.getElementById('checkinBtn');
+            const today = new Date().toISOString().split('T')[0];
+            if (userData.lastCheckIn !== today) {
+                checkInBtn.disabled = true;
+                checkInBtn.textContent = 'Limit Reached';
+            }
+            
+            // Featured ad button
+            const featuredBtn = document.getElementById('featuredAdBtn');
+            featuredBtn.disabled = true;
+            featuredBtn.textContent = 'Limit Reached';
+            
+            // Social task buttons
+            document.querySelectorAll('.complete-social-btn').forEach(btn => {
+                if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
+                    btn.disabled = true;
+                    btn.textContent = 'Limit Reached';
+                }
+            });
+            
+            // Ad task buttons
+            document.querySelectorAll('.watch-ad-btn').forEach(btn => {
+                if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
+                    btn.disabled = true;
+                    btn.textContent = 'Limit Reached';
+                }
+            });
+            
+            // Note: External link buttons are NOT disabled here
+        }
+
+        // Enable task buttons that aren't completed
+        function enableTaskButtons() {
+            // Check-in button
+            const checkInBtn = document.getElementById('checkinBtn');
+            const today = new Date().toISOString().split('T')[0];
+            if (userData.lastCheckIn !== today) {
+                checkInBtn.disabled = false;
+                checkInBtn.textContent = 'Check In';
+            }
+            
+            // Featured ad button
+            const featuredBtn = document.getElementById('featuredAdBtn');
+            featuredBtn.disabled = false;
+            featuredBtn.textContent = 'Watch Now';
+            
+            // Social task buttons
+            document.querySelectorAll('.complete-social-btn').forEach(btn => {
+                if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
+                    btn.disabled = false;
+                    btn.textContent = 'Done';
+                }
+            });
+            
+            // Ad task buttons
+            document.querySelectorAll('.watch-ad-btn').forEach(btn => {
+                if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
+                    btn.disabled = false;
+                    btn.textContent = 'Watch Ad';
+                }
+            });
+            
+            // External link buttons are always enabled
+            document.querySelectorAll('.open-link-btn').forEach(btn => {
+                if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
+                    btn.disabled = false;
+                    btn.textContent = 'Watch Ad';
+                }
+            });
         }
 
         // Update task buttons based on completion status
@@ -2236,18 +2196,12 @@
                     btn.disabled = true;
                     btn.textContent = 'Completed';
                 } else {
-                    // Only enable if not at limit
-                    if (userData.adsWatchedToday >= 35) {
-                        btn.disabled = true;
-                        btn.textContent = 'Limit Reached';
-                    } else {
-                        btn.disabled = false;
-                        btn.textContent = 'Watch Ad';
-                    }
+                    btn.disabled = false;
+                    btn.textContent = 'Watch Ad';
                 }
             });
             
-            // External link tasks
+            // External link tasks - always enabled unless completed
             document.querySelectorAll('.open-link-btn').forEach(btn => {
                 const taskId = btn.getAttribute('data-task');
                 if (userData.completedTasks.includes(taskId)) {
@@ -2313,14 +2267,22 @@
                 return;
             }
             
+            // Check daily task limit
+            if (userData.tasksDoneToday >= 35) {
+                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
+                return;
+            }
+            
             userData.balance += reward;
             userData.totalEarning += reward;
+            userData.tasksDoneToday++;
             userData.clicks++;
             userData.completedTasks.push(taskId);
             
             saveUserData();
             updateUI();
             updateTaskButtons();
+            updateTaskLimit();
             
             showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
         }
@@ -2454,7 +2416,7 @@
             });
         });
 
-        // External link button click
+        // External link button click - NO LIMITATION
         document.querySelectorAll('.open-link-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const taskId = e.target.getAttribute('data-task');
@@ -2469,8 +2431,8 @@
             
             // Update countdown every second
             setInterval(() => {
-                if (userData.limitReachedTime) {
-                    updateAdLimit();
+                if (userData.tasksDoneToday >= 35) {
+                    updateTaskLimit();
                 }
             }, 1000);
         };
