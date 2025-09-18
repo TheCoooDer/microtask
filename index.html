@@ -1324,7 +1324,7 @@
                     <div class="ad-title">${container.title}</div>
                     <div class="ad-description">${container.description} (30 seconds)</div>
                     <div class="ad-reward">Reward: $${container.reward.toFixed(2)}</div>
-                    <button class="ad-btn" data-task="${container.id}" ${isCompleted ? 'disabled' : ''}>
+                    <button  onclick="showAd()" class="ad-btn" data-task="${container.id}" ${isCompleted ? 'disabled' : ''}>
                         ${isCompleted ? 'Completed' : 'Watch Now'}
                     </button>
                 `;
@@ -1547,7 +1547,6 @@
     </script>
 </body>
 </html>
-
 
 
 
