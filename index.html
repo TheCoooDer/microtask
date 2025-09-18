@@ -21,6 +21,7 @@
             --social: #8e44ad;
             --external: #6f42c1;
             --checkin: #10ac84;
+            --link: #0066ff;
         }
 
         * {
@@ -418,6 +419,7 @@
 
         .featured-reward {
             font-size: 14px;
+            color:white;
             font-weight: 700;
             color: var(--success);
         }
@@ -550,13 +552,13 @@
             transform: none;
         }
 
-        /* New Task Cards - COMPACT VERSION */
-        .task-card {
-            background: white;
+        /* Link Task Cards - BLUE AND WHITE */
+        .link-task {
+            background: linear-gradient(135deg, var(--link), #0052cc);
             border-radius: 12px;
             padding: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 102, 255, 0.15);
+            color: white;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -564,121 +566,73 @@
             justify-content: space-between;
         }
 
-        .task-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
-        }
-
-        .task-card.ad-task {
-            border-left: 4px solid var(--success);
-        }
-
-        .task-card::before {
+        .link-task::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
         }
 
-        .task-card.ad-task::before {
-            background: var(--success);
-        }
-
-        .task-card.external-link-task {
-            border-left: 4px solid var(--external);
-        }
-
-        .task-card.external-link-task::before {
-            background: var(--external);
-        }
-
-        .task-left {
+        .link-left {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .task-icon {
+        .link-icon {
             font-size: 28px;
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        .task-card.ad-task .task-icon {
-            color: var(--success);
-        }
-
-        .task-card.external-link-task .task-icon {
-            color: var(--external);
-        }
-
-        .task-info {
+        .link-info {
             text-align: left;
         }
 
-        .task-title {
+        .link-title {
             font-size: 16px;
             font-weight: 700;
             margin-bottom: 4px;
-            color: var(--dark);
         }
 
-        .task-description {
+        .link-description {
             font-size: 12px;
+            opacity: 0.9;
             margin-bottom: 6px;
-            color: var(--gray);
         }
 
-        .task-reward {
+        .link-reward {
             font-size: 13px;
             font-weight: 700;
-            color: var(--success);
+            color: white;
         }
 
-        .task-card.external-link-task .task-reward {
-            color: var(--external);
-        }
-
-        .task-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            align-items: flex-end;
-        }
-
-        .task-btn {
-            padding: 8px 14px;
-            border-radius: 18px;
-            font-size: 12px;
-            font-weight: 600;
+        .link-btn {
+            background: white;
+            color: var(--link);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             white-space: nowrap;
         }
 
-        .watch-ad-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+        .link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .watch-ad-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .watch-ad-btn:disabled {
-            background: var(--gray);
+        .link-btn:disabled {
+            background: rgba(255, 255, 255, 0.5);
             cursor: not-allowed;
             transform: none;
-        }
-
-        .open-link-btn {
-            background: linear-gradient(135deg, var(--external), #563d7c);
-            color: white;
-        }
-
-        .open-link-btn:hover {
-            transform: scale(1.05);
         }
 
         /* Referral */
@@ -1162,12 +1116,12 @@
                             </div>
                             <div class="featured-info">
                                 <div class="featured-title">Featured Ad</div>
-                                <div class="featured-description">Watch premium ad</div>
+                                <div class="featured-description">Watch premium ad (30/day limit)</div>
                                 <div class="featured-reward">Reward: $0.08</div>
                             </div>
                         </div>
                         <button onclick="Watched()" class="featured-btn" id="featuredAdBtn">
-                            Watch Now
+                            Watch Now (0/30)
                         </button>
                     </div>
                     
@@ -1215,347 +1169,85 @@
                         </div>
                     </div>
                     
-                    <!-- Regular Ad Tasks - COMPACT -->
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
+                    <!-- Link Tasks -->
+                    <div class="link-task">
+                        <div class="link-left">
+                            <div class="link-icon">
+                                <i class="fas fa-link"></i>
                             </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
+                            <div class="link-info">
+                                <div class="link-title">Visit Link 1</div>
+                                <div class="link-description">Open link in Telegram</div>
+                                <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-1" id="adTask1Btn">
-                                Watch Ad
-                            </button>
-                        </div>
+                        <button onclick="openLinkTask('link-task-1', 'https://shrinkme.top/rKbEDC')" class="link-btn" id="linkTask1Btn">
+                            Open Link
+                        </button>
                     </div>
                     
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
+                    <div class="link-task">
+                        <div class="link-left">
+                            <div class="link-icon">
+                                <i class="fas fa-link"></i>
                             </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
+                            <div class="link-info">
+                                <div class="link-title">Visit Link 2</div>
+                                <div class="link-description">Open link in Telegram</div>
+                                <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-2" id="adTask2Btn">
-                                Watch Ad
-                            </button>
-                        </div>
+                        <button onclick="openLinkTask('link-task-2', 'https://shrinkme.top/FhEPlc')" class="link-btn" id="linkTask2Btn">
+                            Open Link
+                        </button>
                     </div>
                     
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
+                    <div class="link-task">
+                        <div class="link-left">
+                            <div class="link-icon">
+                                <i class="fas fa-link"></i>
                             </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
+                            <div class="link-info">
+                                <div class="link-title">Visit Link 3</div>
+                                <div class="link-description">Open link in Telegram</div>
+                                <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-3" id="adTask3Btn">
-                                Watch Ad
-                            </button>
-                        </div>
+                        <button onclick="openLinkTask('link-task-3', 'https://shrinkme.top/H1HE')" class="link-btn" id="linkTask3Btn">
+                            Open Link
+                        </button>
                     </div>
                     
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
+                    <div class="link-task">
+                        <div class="link-left">
+                            <div class="link-icon">
+                                <i class="fas fa-link"></i>
                             </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
+                            <div class="link-info">
+                                <div class="link-title">Visit Link 4</div>
+                                <div class="link-description">Open link in Telegram</div>
+                                <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-4" id="adTask4Btn">
-                                Watch Ad
-                            </button>
-                        </div>
+                        <button onclick="openLinkTask('link-task-4', 'https://shrinkme.top/omUU80PH')" class="link-btn" id="linkTask4Btn">
+                            Open Link
+                        </button>
                     </div>
                     
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
+                    <div class="link-task">
+                        <div class="link-left">
+                            <div class="link-icon">
+                                <i class="fas fa-link"></i>
                             </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-5" id="adTask5Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
+                            <div class="link-info">
+                                <div class="link-title">Visit Link 5</div>
+                                <div class="link-description">Open link in Telegram</div>
+                                <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-6" id="adTask6Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-7" id="adTask7Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-8" id="adTask8Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-9" id="adTask9Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-10" id="adTask10Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Additional Ad Tasks (11-17) -->
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-11" id="adTask11Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-12" id="adTask12Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-13" id="adTask13Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-14" id="adTask14Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-15" id="adTask15Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-16" id="adTask16Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card ad-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Ad</div>
-                                <div class="task-reward">Reward: $0.04</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button onclick="ShowAds()" class="task-btn watch-ad-btn" data-task="ad-task-17" id="adTask17Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- External Link Tasks -->
-                    <div class="task-card external-link-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Browser Ads</div>
-                                <div class="task-reward">Get $0.06 Reward</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button class="task-btn open-link-btn" data-link="https://www.revenuecpmgate.com/abxysby62i?key=4061879b22a9fa181066a0f2c57ae72d" id="externalLink1Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card external-link-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Browser Ads</div>
-                                <div class="task-reward">Get $0.06 Reward</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button class="task-btn open-link-btn" data-link="https://www.revenuecpmgate.com/tqypp62y2w?key=74cc971fb77af7a1038cdccbafd2432f" id="externalLink2Btn">
-                                Watch Ad
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="task-card external-link-task">
-                        <div class="task-left">
-                            <div class="task-icon">
-                                <i class="fas fa-ad"></i>
-                            </div>
-                            <div class="task-info">
-                                <div class="task-title">Watch Browser Ads</div>
-                                <div class="task-reward">Get $0.06 Reward</div>
-                            </div>
-                        </div>
-                        <div class="task-buttons">
-                            <button class="task-btn open-link-btn" data-link="https://www.revenuecpmgate.com/tutkw1sahh?key=272554dae7b213c13d92f046080861a2" id="externalLink3Btn">
-                                Watch Ad
-                            </button>
-                        </div>
+                        <button onclick="openLinkTask('link-task-5', 'https://shrinkme.top/cwYDenBL')" class="link-btn" id="linkTask5Btn">
+                            Open Link
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1734,25 +1426,6 @@
     </div>
 
     <script>
-        function ShowAds(){
-            // Check daily task limit
-            if (userData.tasksDoneToday >= 35) {
-                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
-                return;
-            }
-            
-            // Rewarded interstitial
-            show_9891560().then(() => {
-                // You need to add your user reward function here, which will be executed after the user watches the ad.
-                // For more details, please refer to the detailed instructions.
-                addReward(0.04);
-                showNotification('You have earned $0.04!');
-            }).catch(error => {
-                showNotification('Failed to load ad. Please try again later.', 'error');
-                console.error('Ad error:', error);
-            })
-        }
-
         // Initialize Telegram Web App
         let tg = window.Telegram.WebApp;
         tg.expand();
@@ -1775,7 +1448,8 @@
             withdrawalHistory: [],
             joinedAt: new Date().toISOString(),
             lastCheckIn: null, // Store last check-in date (YYYY-MM-DD format)
-            lastTaskReset: null // Store last task reset date (YYYY-MM-DD format)
+            lastTaskReset: null, // Store last task reset date (YYYY-MM-DD format)
+            featuredAdsWatchedToday: 0 // Track featured ads watched today
         };
 
         // Daily Check In function
@@ -1825,6 +1499,12 @@
         }
 
         function Watched() {
+            // Check if user has reached the 30 ads limit for featured ads
+            if (userData.featuredAdsWatchedToday >= 30) {
+                showNotification('You have reached the daily limit of 30 featured ads. Try again tomorrow.', 'error');
+                return;
+            }
+            
             // Check daily task limit
             if (userData.tasksDoneToday >= 35) {
                 showNotification('Daily task limit reached. Try again tomorrow.', 'error');
@@ -1834,12 +1514,28 @@
             // Rewarded interstitial
             show_9891560().then(() => {
                 // Add reward after watching ad
+                userData.featuredAdsWatchedToday++; // Increment featured ads count
                 addReward(0.08);
+                updateFeaturedAdButton(); // Update button text and state
                 showNotification('Congratulations! You have earned $0.08', 'success');
             }).catch(error => {
                 showNotification('Failed to load ad. Please try again later.', 'error');
                 console.error('Ad error:', error);
             });
+        }
+
+        // Update featured ad button text and state
+        function updateFeaturedAdButton() {
+            const featuredBtn = document.getElementById('featuredAdBtn');
+            const watchedCount = userData.featuredAdsWatchedToday;
+            
+            if (watchedCount >= 30) {
+                featuredBtn.disabled = true;
+                featuredBtn.textContent = 'Limit Reached (30/30)';
+            } else {
+                featuredBtn.disabled = false;
+                featuredBtn.textContent = `Watch Now (${watchedCount}/30)`;
+            }
         }
 
         // Function to add reward and update UI
@@ -1854,8 +1550,8 @@
             updateTaskLimit();
         }
 
-        // Function to watch ad task
-        function watchAdTask(taskId) {
+        // Function to open link task
+        function openLinkTask(taskId, link) {
             // Check if task is already completed
             if (userData.completedTasks.includes(taskId)) {
                 showNotification('You have already completed this task.', 'error');
@@ -1868,71 +1564,21 @@
                 return;
             }
             
-            // Rewarded interstitial
-            show_9891560().then(() => {
-                // Add reward and mark task as completed
-                const reward = 0.04; // Correct reward for regular ad tasks
-                userData.balance += reward;
-                userData.totalEarning += reward;
-                userData.tasksDoneToday++;
-                userData.clicks++;
-                userData.completedTasks.push(taskId); // Only mark this specific task as completed
-                
-                saveUserData();
-                updateUI();
-                updateTaskButton(taskId); // Update only the specific button
-                updateTaskLimit();
-                
-                showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
-                
-                // Check if user completed 5 tasks and was referred
-                if (userData.tasksDoneToday === 5 && userData.referredBy) {
-                    setTimeout(() => {
-                        showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
-                    }, 1000);
-                }
-            }).catch(error => {
-                showNotification('Failed to load ad. Please try again later.', 'error');
-                console.error('Ad error:', error);
-            });
-        }
-
-        // Function to update a specific task button
-        function updateTaskButton(taskId) {
-            // Find the button with the specific task ID
-            const button = document.querySelector(`.watch-ad-btn[data-task="${taskId}"]`);
-            if (button) {
-                if (userData.completedTasks.includes(taskId)) {
-                    button.disabled = true;
-                    button.textContent = 'Completed';
-                } else {
-                    button.disabled = false;
-                    button.textContent = 'Watch Ad';
-                }
-            }
-        }
-
-        // Function to open external link - NO LIMITATION
-        function openExternalLink(taskId, link) {
-            // Check if task is already completed
-            if (userData.completedTasks.includes(taskId)) {
-                showNotification('You have already completed this task.', 'error');
-                return;
-            }
-            
-            // Open the link in a new tab
-            window.open(link, '_blank');
+            // Open the link in Telegram
+            tg.openLink(link);
             
             // Add reward and mark task as completed
-            const reward = 0.06;
+            const reward = 0.06; // Updated reward to $0.06
             userData.balance += reward;
             userData.totalEarning += reward;
+            userData.tasksDoneToday++;
             userData.clicks++;
             userData.completedTasks.push(taskId);
             
             saveUserData();
             updateUI();
-            updateTaskButton(taskId);
+            updateLinkTaskButton(taskId);
+            updateTaskLimit();
             
             showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
             
@@ -1941,6 +1587,21 @@
                 setTimeout(() => {
                     showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
                 }, 1000);
+            }
+        }
+
+        // Function to update a specific link task button
+        function updateLinkTaskButton(taskId) {
+            // Find the button with the specific task ID
+            const button = document.getElementById(`${taskId}Btn`);
+            if (button) {
+                if (userData.completedTasks.includes(taskId)) {
+                    button.disabled = true;
+                    button.textContent = 'Completed';
+                } else {
+                    button.disabled = false;
+                    button.textContent = 'Open Link';
+                }
             }
         }
 
@@ -1980,6 +1641,7 @@
             
             if (userData.lastTaskReset !== today) {
                 userData.tasksDoneToday = 0;
+                userData.featuredAdsWatchedToday = 0; // Reset featured ads counter
                 userData.lastTaskReset = today;
                 saveUserData();
                 return true;
@@ -2017,6 +1679,12 @@
             
             // Update check-in button
             updateCheckInButton();
+            
+            // Update featured ad button
+            updateFeaturedAdButton();
+            
+            // Update link task buttons
+            updateLinkTaskButtons();
             
             updateUI();
             updateTaskLimit();
@@ -2082,7 +1750,7 @@
                     countdown.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 }
                 
-                // Disable all task buttons that aren't completed, EXCEPT external link buttons
+                // Disable all task buttons that aren't completed
                 disableLimitedTaskButtons();
             } else {
                 // Hide countdown
@@ -2093,7 +1761,7 @@
             }
         }
 
-        // Disable limited task buttons (all except external link buttons)
+        // Disable limited task buttons
         function disableLimitedTaskButtons() {
             // Check-in button
             const checkInBtn = document.getElementById('checkinBtn');
@@ -2104,9 +1772,7 @@
             }
             
             // Featured ad button
-            const featuredBtn = document.getElementById('featuredAdBtn');
-            featuredBtn.disabled = true;
-            featuredBtn.textContent = 'Limit Reached';
+            updateFeaturedAdButton();
             
             // Social task buttons
             document.querySelectorAll('.complete-social-btn').forEach(btn => {
@@ -2116,15 +1782,15 @@
                 }
             });
             
-            // Ad task buttons
-            document.querySelectorAll('.watch-ad-btn').forEach(btn => {
-                if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
-                    btn.disabled = true;
-                    btn.textContent = 'Limit Reached';
+            // Link task buttons
+            for (let i = 1; i <= 5; i++) {
+                const taskId = `link-task-${i}`;
+                const button = document.getElementById(`${taskId}Btn`);
+                if (button && !userData.completedTasks.includes(taskId)) {
+                    button.disabled = true;
+                    button.textContent = 'Limit Reached';
                 }
-            });
-            
-            // Note: External link buttons are NOT disabled here
+            }
         }
 
         // Enable task buttons that aren't completed
@@ -2138,9 +1804,7 @@
             }
             
             // Featured ad button
-            const featuredBtn = document.getElementById('featuredAdBtn');
-            featuredBtn.disabled = false;
-            featuredBtn.textContent = 'Watch Now';
+            updateFeaturedAdButton();
             
             // Social task buttons
             document.querySelectorAll('.complete-social-btn').forEach(btn => {
@@ -2150,21 +1814,8 @@
                 }
             });
             
-            // Ad task buttons
-            document.querySelectorAll('.watch-ad-btn').forEach(btn => {
-                if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
-                    btn.disabled = false;
-                    btn.textContent = 'Watch Ad';
-                }
-            });
-            
-            // External link buttons are always enabled
-            document.querySelectorAll('.open-link-btn').forEach(btn => {
-                if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
-                    btn.disabled = false;
-                    btn.textContent = 'Watch Ad';
-                }
-            });
+            // Link task buttons
+            updateLinkTaskButtons();
         }
 
         // Update task buttons based on completion status
@@ -2188,30 +1839,23 @@
                 telegramCompleteBtn.disabled = false;
                 telegramCompleteBtn.textContent = 'Done';
             }
-            
-            // Ad tasks - update each button individually
-            document.querySelectorAll('.watch-ad-btn').forEach(btn => {
-                const taskId = btn.getAttribute('data-task');
-                if (userData.completedTasks.includes(taskId)) {
-                    btn.disabled = true;
-                    btn.textContent = 'Completed';
-                } else {
-                    btn.disabled = false;
-                    btn.textContent = 'Watch Ad';
+        }
+
+        // Update link task buttons based on completion status
+        function updateLinkTaskButtons() {
+            for (let i = 1; i <= 5; i++) {
+                const taskId = `link-task-${i}`;
+                const button = document.getElementById(`${taskId}Btn`);
+                if (button) {
+                    if (userData.completedTasks.includes(taskId)) {
+                        button.disabled = true;
+                        button.textContent = 'Completed';
+                    } else {
+                        button.disabled = false;
+                        button.textContent = 'Open Link';
+                    }
                 }
-            });
-            
-            // External link tasks - always enabled unless completed
-            document.querySelectorAll('.open-link-btn').forEach(btn => {
-                const taskId = btn.getAttribute('data-task');
-                if (userData.completedTasks.includes(taskId)) {
-                    btn.disabled = true;
-                    btn.textContent = 'Completed';
-                } else {
-                    btn.disabled = false;
-                    btn.textContent = 'Watch Ad';
-                }
-            });
+            }
         }
 
         // Show notification
@@ -2405,23 +2049,6 @@
                 } else if (taskId === 'telegram-join') {
                     completeSocialTask(taskId, 0.05);
                 }
-            });
-        });
-
-        // Ad task button click
-        document.querySelectorAll('.watch-ad-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const taskId = e.target.getAttribute('data-task');
-                watchAdTask(taskId);
-            });
-        });
-
-        // External link button click - NO LIMITATION
-        document.querySelectorAll('.open-link-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const taskId = e.target.getAttribute('data-task');
-                const link = e.target.getAttribute('data-link');
-                openExternalLink(taskId, link);
             });
         });
 
