@@ -1005,7 +1005,7 @@
                             <div class="featured-info">
                                 <div class="featured-title">Featured Ad</div>
                                 <div class="featured-description">Watch premium ad (30s)</div>
-                                <div class="featured-reward">Reward: $0.10</div>
+                                <div class="featured-reward">Reward: $0.05</div>
                             </div>
                         </div>
                         <button onclick="Watched()" class="featured-btn" id="featuredAdBtn">
@@ -1026,7 +1026,7 @@
                             </div>
                         </div>
                         <div class="task-buttons">
-                            <button class="task-btn open-btn" data-link="https://youtube.com/@yourchannel" data-task="youtube-subscribe">
+                            <button class="task-btn open-btn" data-link="https://www.youtube.com/@SufyanCircuit" data-task="youtube-subscribe">
                                 Open
                             </button>
                             <button class="task-btn complete-btn" data-task="youtube-subscribe" id="youtubeCompleteBtn" disabled>
@@ -1044,11 +1044,11 @@
                             <div class="task-info">
                                 <div class="task-title">Join Telegram</div>
                                 <div class="task-description">Join our channel</div>
-                                <div class="task-reward">Reward: $0.10</div>
+                                <div class="task-reward">Reward: $0.05</div>
                             </div>
                         </div>
                         <div class="task-buttons">
-                            <button class="task-btn open-btn" data-link="https://t.me/yourchannel" data-task="telegram-join">
+                            <button class="task-btn open-btn" data-link="https://t.me/EarnOnlineWithSufyan" data-task="telegram-join">
                                 Open
                             </button>
                             <button class="task-btn complete-btn" data-task="telegram-join" id="telegramCompleteBtn" disabled>
@@ -1583,7 +1583,7 @@
 
         // Complete featured ad task
         function completeTask() {
-            const reward = 0.10;
+            const reward = 0.05;
             
             userData.balance += reward;
             userData.totalEarning += reward;
@@ -1750,7 +1750,7 @@
                 if (taskId === 'youtube-subscribe') {
                     completeSocialTask(taskId, 0.15);
                 } else if (taskId === 'telegram-join') {
-                    completeSocialTask(taskId, 0.10);
+                    completeSocialTask(taskId, 0.05);
                 }
             });
         });
