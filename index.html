@@ -1156,7 +1156,7 @@
                             <div class="social-info">
                                 <div class="social-title">Join Telegram</div>
                                 <div class="social-description">Join our channel</div>
-                                <div class="social-reward">Reward: $0.05</div>
+                                <div class="social-reward">Reward: $0.04</div>
                             </div>
                         </div>
                         <div class="social-buttons">
@@ -1178,7 +1178,7 @@
                             <div class="link-info">
                                 <div class="link-title">Visit Link 1</div>
                                 <div class="link-description">Open link in Telegram</div>
-                                <div class="link-reward">Reward: $0.06</div>
+                                <div class="link-reward">Reward: $0.07</div>
                             </div>
                         </div>
                         <button onclick="openLinkTask('link-task-1', 'https://shrinkme.top/rKbEDC')" class="link-btn" id="linkTask1Btn">
@@ -1194,7 +1194,7 @@
                             <div class="link-info">
                                 <div class="link-title">Visit Link 2</div>
                                 <div class="link-description">Open link in Telegram</div>
-                                <div class="link-reward">Reward: $0.06</div>
+                                <div class="link-reward">Reward: $0.07</div>
                             </div>
                         </div>
                         <button onclick="openLinkTask('link-task-2', 'https://shrinkme.top/FhEPlc')" class="link-btn" id="linkTask2Btn">
@@ -1210,7 +1210,7 @@
                             <div class="link-info">
                                 <div class="link-title">Visit Link 3</div>
                                 <div class="link-description">Open link in Telegram</div>
-                                <div class="link-reward">Reward: $0.06</div>
+                                <div class="link-reward">Reward: $0.07</div>
                             </div>
                         </div>
                         <button onclick="openLinkTask('link-task-3', 'https://shrinkme.top/H1HE')" class="link-btn" id="linkTask3Btn">
@@ -1226,7 +1226,7 @@
                             <div class="link-info">
                                 <div class="link-title">Visit Link 4</div>
                                 <div class="link-description">Open link in Telegram</div>
-                                <div class="link-reward">Reward: $0.06</div>
+                                <div class="link-reward">Reward: $0.07</div>
                             </div>
                         </div>
                         <button onclick="openLinkTask('link-task-4', 'https://shrinkme.top/omUU80PH')" class="link-btn" id="linkTask4Btn">
@@ -1242,7 +1242,7 @@
                             <div class="link-info">
                                 <div class="link-title">Visit Link 5</div>
                                 <div class="link-description">Open link in Telegram</div>
-                                <div class="link-reward">Reward: $0.06</div>
+                                <div class="link-reward">Reward: $0.07</div>
                             </div>
                         </div>
                         <button onclick="openLinkTask('link-task-5', 'https://shrinkme.top/cwYDenBL')" class="link-btn" id="linkTask5Btn">
@@ -1257,7 +1257,7 @@
                 <div class="referral-container">
                     <div class="referral-header">
                         <h2>Referral Program</h2>
-                        <p>Invite friends and earn $0.50 for each qualified referral!</p>
+                        <p>Invite friends and earn $0.30 for each qualified referral!</p>
                     </div>
                     
                     <div class="referral-link-container">
@@ -1284,7 +1284,7 @@
                         <ul>
                             <li>Share your unique referral link with friends</li>
                             <li>They must join using your link and complete at least 5 tasks</li>
-                            <li>You'll earn $0.50 for each qualified referral</li>
+                            <li>You'll earn $0.30 for each qualified referral</li>
                             <li>No limit on how many you can refer!</li>
                         </ul>
                         <div class="referral-badge">
@@ -1568,7 +1568,7 @@
             tg.openLink(link);
             
             // Add reward and mark task as completed
-            const reward = 0.06; // Updated reward to $0.06
+            const reward = 0.07; // Updated reward to $0.07
             userData.balance += reward;
             userData.totalEarning += reward;
             userData.tasksDoneToday++;
@@ -1585,7 +1585,7 @@
             // Check if user completed 5 tasks and was referred
             if (userData.tasksDoneToday === 5 && userData.referredBy) {
                 setTimeout(() => {
-                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
+                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.30!`, 'success');
                 }, 1000);
             }
         }
@@ -2047,7 +2047,7 @@
                 if (taskId === 'youtube-subscribe') {
                     completeSocialTask(taskId, 0.15);
                 } else if (taskId === 'telegram-join') {
-                    completeSocialTask(taskId, 0.05);
+                    completeSocialTask(taskId, 0.04);
                 }
             });
         });
@@ -2066,3 +2066,4 @@
     </script>
 </body>
 </html>
+
