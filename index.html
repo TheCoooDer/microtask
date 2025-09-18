@@ -10,12 +10,14 @@
         :root {
             --primary: #4361ee;
             --secondary: #3f37c9;
-            --success: #06ffa5;
+            --success: #0080ff;
             --danger: #ff006e;
             --warning: #ffbe0b;
             --dark: #1d3557;
             --light: #f8f9fa;
             --gray: #6c757d;
+            --youtube: #FF0000;
+            --telegram: #0088cc;
         }
 
         * {
@@ -188,13 +190,13 @@
             color: var(--primary);
         }
 
+        /* Progress Container */
         .progress-container {
-            margin-top: 25px;
             background: white;
             border-radius: 16px;
             padding: 20px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            margin-bottom: 60px;
+            margin-bottom: 25px;
         }
 
         .progress-title {
@@ -215,6 +217,7 @@
             background-color: #e9ecef;
             border-radius: 10px;
             overflow: hidden;
+            margin-bottom: 15px;
         }
 
         .progress-fill {
@@ -224,22 +227,57 @@
             transition: width 0.5s ease;
         }
 
-        /* Tasks */
+        .countdown-container {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(255, 190, 11, 0.2);
+            display: none;
+        }
+
+        .countdown-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .countdown {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--warning);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown-icon {
+            font-size: 20px;
+            color: var(--warning);
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        /* Tasks - COMPACT VERSION */
         .task-list {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .featured-task {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 16px;
-            padding: 25px;
+            border-radius: 12px;
+            padding: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             color: white;
             text-align: center;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .featured-task::before {
@@ -253,28 +291,36 @@
             transform: rotate(45deg);
         }
 
+        .featured-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .featured-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
+            font-size: 32px;
             color: rgba(255, 255, 255, 0.9);
         }
 
+        .featured-info {
+            text-align: left;
+        }
+
         .featured-title {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
         }
 
         .featured-description {
-            font-size: 16px;
-            margin-bottom: 25px;
+            font-size: 12px;
             opacity: 0.9;
+            margin-bottom: 6px;
         }
 
         .featured-reward {
-            font-size: 20px;
+            font-size: 14px;
             font-weight: 700;
-            margin-bottom: 20px;
             color: var(--success);
         }
 
@@ -282,20 +328,18 @@
             background: white;
             color: var(--primary);
             border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-size: 18px;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
         }
 
         .featured-btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
@@ -305,67 +349,129 @@
             transform: none;
         }
 
-        /* Ad Containers */
-        .ad-container {
+        /* New Task Cards - COMPACT VERSION */
+        .task-card {
             background: white;
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .ad-container:hover {
-            transform: translateY(-5px);
+        .task-card:hover {
+            transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
         }
 
-        .ad-icon {
-            font-size: 36px;
-            margin-bottom: 15px;
-            color: var(--primary);
+        .task-card.youtube {
+            border-left: 4px solid var(--youtube);
         }
 
-        .ad-title {
-            font-size: 18px;
+        .task-card.telegram {
+            border-left: 4px solid var(--telegram);
+        }
+
+        .task-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+
+        .task-card.youtube::before {
+            background: var(--youtube);
+        }
+
+        .task-card.telegram::before {
+            background: var(--telegram);
+        }
+
+        .task-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .task-icon {
+            font-size: 28px;
+        }
+
+        .task-card.youtube .task-icon {
+            color: var(--youtube);
+        }
+
+        .task-card.telegram .task-icon {
+            color: var(--telegram);
+        }
+
+        .task-info {
+            text-align: left;
+        }
+
+        .task-title {
+            font-size: 16px;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
             color: var(--dark);
         }
 
-        .ad-description {
-            font-size: 14px;
-            margin-bottom: 15px;
+        .task-description {
+            font-size: 12px;
+            margin-bottom: 6px;
             color: var(--gray);
         }
 
-        .ad-reward {
-            font-size: 16px;
+        .task-reward {
+            font-size: 13px;
             font-weight: 700;
-            margin-bottom: 15px;
             color: var(--success);
         }
 
-        .ad-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 16px;
+        .task-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: flex-end;
+        }
+
+        .task-btn {
+            padding: 8px 14px;
+            border-radius: 18px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            width: 100%;
-            max-width: 200px;
-            margin: 0 auto;
+            border: none;
+            white-space: nowrap;
         }
 
-        .ad-btn:hover {
+        .open-btn {
+            background: #f0f2f5;
+            color: var(--dark);
+        }
+
+        .open-btn:hover {
+            background: #e9ecef;
             transform: scale(1.05);
         }
 
-        .ad-btn:disabled {
+        .complete-btn {
+            background: linear-gradient(135deg, var(--success), #0066cc);
+            color: white;
+        }
+
+        .complete-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .complete-btn:disabled {
             background: var(--gray);
             cursor: not-allowed;
             transform: none;
@@ -552,7 +658,7 @@
             color: var(--gray);
         }
 
-        .telegram { color: #0088cc; }
+        .telegram { color: var(--telegram); }
         .facebook { color: #1877f2; }
 
         /* Withdraw */
@@ -629,7 +735,7 @@
         }
 
         .withdraw-btn {
-            background: linear-gradient(135deg, var(--success), #00d084);
+            background: linear-gradient(135deg, var(--success), #0066cc);
             color: white;
             border: none;
             padding: 18px;
@@ -642,7 +748,7 @@
 
         .withdraw-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(6, 255, 165, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 128, 255, 0.3);
         }
 
         .withdraw-btn:disabled {
@@ -813,19 +919,6 @@
             transform: none;
         }
 
-        /* Countdown Timer */
-        .countdown-container {
-            margin-top: 15px;
-            text-align: center;
-            font-size: 14px;
-            color: var(--gray);
-        }
-
-        .countdown {
-            font-weight: 700;
-            color: var(--warning);
-        }
-
         /* Responsive */
         @media (max-width: 500px) {
             .app-container {
@@ -877,6 +970,7 @@
                     </div>
                 </div>
 
+                <!-- Progress Container -->
                 <div class="progress-container">
                     <h3 class="progress-title">Daily Ad Limit</h3>
                     <div class="progress-header">
@@ -886,8 +980,14 @@
                     <div class="progress-bar">
                         <div class="progress-fill" id="adProgress" style="width: 0%"></div>
                     </div>
-                    <div class="countdown-container">
-                        Next reset in: <span class="countdown" id="countdown">--:--:--</span>
+                    
+                    <!-- Enhanced Countdown Timer -->
+                    <div class="countdown-container" id="countdownContainer">
+                        <div class="countdown-label">
+                            <i class="fas fa-clock countdown-icon"></i>
+                            Watch button available in:
+                        </div>
+                        <div class="countdown" id="countdown">--:--:--</div>
                     </div>
                 </div>
             </div>
@@ -896,27 +996,66 @@
             <div class="tab-content" id="tasks-tab">
                 <h2 class="dashboard-title">Daily Tasks</h2>
                 <div class="task-list" id="taskList">
+                    <!-- Featured Ad Task - COMPACT -->
+                    <div class="featured-task">
+                        <div class="featured-left">
+                            <div class="featured-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="featured-info">
+                                <div class="featured-title">Featured Ad</div>
+                                <div class="featured-description">Watch premium ad (30s)</div>
+                                <div class="featured-reward">Reward: $0.10</div>
+                            </div>
+                        </div>
+                        <button onclick="Watched()" class="featured-btn" id="featuredAdBtn">
+                            Watch Now
+                        </button>
+                    </div>
                     
-                    <!-- Tasks will be generated by JavaScript -->
-                    <script>
-                        
-                            function showAd() {
-                                          
-
-                                                                // Rewarded interstitial
-                                show_9891560().then(() => {
-                                    // You need to add your user reward function here, which will be executed after the user watches the ad.
-                                    // For more details, please refer to the detailed instructions.
-                                    alert('You have seen an ad!');
-                                })
-
-                                        }
-                        // Rewarded interstitial
-                        
-                                
-
-                    </script>
-                    <!-- Tasks will be generated by JavaScript -->
+                    <!-- YouTube Subscribe Task - COMPACT -->
+                    <div class="task-card youtube">
+                        <div class="task-left">
+                            <div class="task-icon">
+                                <i class="fab fa-youtube"></i>
+                            </div>
+                            <div class="task-info">
+                                <div class="task-title">Subscribe YouTube</div>
+                                <div class="task-description">Subscribe to our channel</div>
+                                <div class="task-reward">Reward: $0.15</div>
+                            </div>
+                        </div>
+                        <div class="task-buttons">
+                            <button class="task-btn open-btn" data-link="https://youtube.com/@yourchannel" data-task="youtube-subscribe">
+                                Open
+                            </button>
+                            <button class="task-btn complete-btn" data-task="youtube-subscribe" id="youtubeCompleteBtn" disabled>
+                                Done
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Telegram Join Task - COMPACT -->
+                    <div class="task-card telegram">
+                        <div class="task-left">
+                            <div class="task-icon">
+                                <i class="fab fa-telegram-plane"></i>
+                            </div>
+                            <div class="task-info">
+                                <div class="task-title">Join Telegram</div>
+                                <div class="task-description">Join our channel</div>
+                                <div class="task-reward">Reward: $0.10</div>
+                            </div>
+                        </div>
+                        <div class="task-buttons">
+                            <button class="task-btn open-btn" data-link="https://t.me/yourchannel" data-task="telegram-join">
+                                Open
+                            </button>
+                            <button class="task-btn complete-btn" data-task="telegram-join" id="telegramCompleteBtn" disabled>
+                                Done
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1105,7 +1244,22 @@
 
     <script>
 
-        
+                    function Watched() {
+                        
+
+                        // Rewarded Popup
+
+                        show_9891560('pop').then(() => {
+                            // user watch ad till the end or close it in interstitial format
+                            // your code to reward user for rewarded format
+                        }).catch(e => {
+                            // user get error during playing ad
+                            // do nothing or whatever you want
+                        })
+
+                                
+
+            }
 
         // Initialize Telegram Web App
         let tg = window.Telegram.WebApp;
@@ -1122,7 +1276,7 @@
             totalEarning: 0.00,
             totalRefers: 0,
             adsWatchedToday: 0,
-            lastAdDate: null,
+            limitReachedTime: null, // Timestamp when limit was reached
             hasWithdrawnBefore: false,
             completedTasks: [],
             referralCode: '',
@@ -1162,6 +1316,24 @@
             }
         }
 
+        // Check if ad limit has expired
+        function checkAdLimitExpiry() {
+            if (userData.limitReachedTime) {
+                const now = new Date().getTime();
+                const limitTime = new Date(userData.limitReachedTime).getTime();
+                const twentyFourHours = 24 * 60 * 60 * 1000;
+                
+                if (now >= limitTime + twentyFourHours) {
+                    // Reset the limit
+                    userData.adsWatchedToday = 0;
+                    userData.limitReachedTime = null;
+                    saveUserData();
+                    return true;
+                }
+            }
+            return false;
+        }
+
         // Load user data from localStorage
         function loadUserData() {
             const savedData = localStorage.getItem('earnMoneyUserData');
@@ -1171,6 +1343,9 @@
             
             // Check for referral
             checkReferral();
+            
+            // Check if ad limit has expired
+            checkAdLimitExpiry();
             
             // Generate referral code if not exists
             generateReferralCode();
@@ -1184,7 +1359,11 @@
             const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
             document.getElementById('lastUpdated').textContent = formattedDate;
             
+            // Update task completion status
+            updateTaskButtons();
+            
             updateUI();
+            updateAdLimit();
         }
 
         // Save user data to localStorage
@@ -1205,17 +1384,6 @@
             document.getElementById('referralCount').textContent = userData.totalRefers;
             document.getElementById('referralEarnings').textContent = userData.referralEarnings.toFixed(2);
             
-            // Update ad progress
-            const today = new Date().toDateString();
-            if (userData.lastAdDate !== today) {
-                userData.adsWatchedToday = 0;
-                userData.lastAdDate = today;
-                saveUserData();
-            }
-            
-            document.getElementById('adLimitText').textContent = `${userData.adsWatchedToday} of 20`;
-            document.getElementById('adProgress').style.width = `${(userData.adsWatchedToday / 20) * 100}%`;
-            
             // Update referral requirement
             if (userData.hasWithdrawnBefore) {
                 document.getElementById('referralRequirement').textContent = 'No referral requirement';
@@ -1225,6 +1393,85 @@
             
             // Update withdraw button
             updateWithdrawButton();
+        }
+
+        // Update ad limit progress and countdown
+        function updateAdLimit() {
+            const progressFill = document.getElementById('adProgress');
+            const adLimitText = document.getElementById('adLimitText');
+            const countdownContainer = document.getElementById('countdownContainer');
+            const countdown = document.getElementById('countdown');
+            
+            // Update progress
+            const progress = (userData.adsWatchedToday / 20) * 100;
+            progressFill.style.width = `${progress}%`;
+            adLimitText.textContent = `${userData.adsWatchedToday} of 20`;
+            
+            // Check if limit is reached
+            if (userData.limitReachedTime) {
+                // Show countdown
+                countdownContainer.style.display = 'block';
+                
+                // Calculate remaining time
+                const now = new Date().getTime();
+                const limitTime = new Date(userData.limitReachedTime).getTime();
+                const endTime = limitTime + 24 * 60 * 60 * 1000; // 24 hours from limit reached
+                const remaining = endTime - now;
+                
+                if (remaining > 0) {
+                    const hours = Math.floor(remaining / (1000 * 60 * 60));
+                    const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+                    
+                    countdown.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    // Disable featured ad button
+                    const featuredBtn = document.getElementById('featuredAdBtn');
+                    featuredBtn.disabled = true;
+                    featuredBtn.textContent = 'Limit Reached';
+                } else {
+                    // Limit expired
+                    countdownContainer.style.display = 'none';
+                    userData.adsWatchedToday = 0;
+                    userData.limitReachedTime = null;
+                    saveUserData();
+                    
+                    // Re-enable featured ad button
+                    const featuredBtn = document.getElementById('featuredAdBtn');
+                    featuredBtn.disabled = false;
+                    featuredBtn.textContent = 'Watch Now';
+                }
+            } else {
+                // Hide countdown
+                countdownContainer.style.display = 'none';
+                
+                // Enable featured ad button if not at limit
+                const featuredBtn = document.getElementById('featuredAdBtn');
+                if (userData.adsWatchedToday >= 20) {
+                    featuredBtn.disabled = true;
+                    featuredBtn.textContent = 'Limit Reached';
+                } else {
+                    featuredBtn.disabled = false;
+                    featuredBtn.textContent = 'Watch Now';
+                }
+            }
+        }
+
+        // Update task buttons based on completion status
+        function updateTaskButtons() {
+            // YouTube task
+            const youtubeCompleteBtn = document.getElementById('youtubeCompleteBtn');
+            if (userData.completedTasks.includes('youtube-subscribe')) {
+                youtubeCompleteBtn.disabled = true;
+                youtubeCompleteBtn.textContent = 'Completed';
+            }
+            
+            // Telegram task
+            const telegramCompleteBtn = document.getElementById('telegramCompleteBtn');
+            if (userData.completedTasks.includes('telegram-join')) {
+                telegramCompleteBtn.disabled = true;
+                telegramCompleteBtn.textContent = 'Completed';
+            }
         }
 
         // Show notification
@@ -1271,91 +1518,39 @@
             if (clickedNavItem) {
                 clickedNavItem.classList.add('active');
             }
-            
-            // Generate tasks when tasks tab is opened
-            if (tabName === 'tasks') {
-                generateTasks();
-            }
-        }
-
-        // Generate tasks
-        function generateTasks() {
-            const taskList = document.getElementById('taskList');
-            taskList.innerHTML = '';
-            
-            // Add featured ad task card with full-width button
-            const isFeaturedCompleted = userData.completedTasks.includes('featured-ad');
-            
-            const featuredTask = document.createElement('div');
-            featuredTask.className = 'featured-task';
-            featuredTask.innerHTML = `
-                <div class="featured-icon">
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="featured-title">Featured Ad</div>
-                <div class="featured-description">Watch our premium advertisement (30 seconds)</div>
-                <div class="featured-reward">Reward: $0.10</div>
-                <button class="featured-btn" data-task="featured-ad" ${isFeaturedCompleted ? 'disabled' : ''}>
-                    ${isFeaturedCompleted ? 'Completed' : 'Watch Now'}
-                </button>
-            `;
-            taskList.appendChild(featuredTask);
-            
-            // Add event listener to the featured button
-            const featuredBtn = featuredTask.querySelector('.featured-btn');
-            featuredBtn.addEventListener('click', handleTaskClick);
-            
-            // Add three ad containers
-            const adContainers = [
-                { id: 'ad-container-1', icon: 'fas fa-play-circle', title: 'Video Ad', description: 'Watch a short video advertisement', reward: 0.05 },
-                { id: 'ad-container-2', icon: 'fas fa-banner', title: 'Banner Ad', description: 'View a banner advertisement', reward: 0.03 },
-                { id: 'ad-container-3', icon: 'fas fa-film', title: 'Promotional Video', description: 'Watch a promotional video', reward: 0.07 }
-            ];
-            
-            adContainers.forEach(container => {
-                const isCompleted = userData.completedTasks.includes(container.id);
-                
-                const adContainer = document.createElement('div');
-                adContainer.className = 'ad-container';
-                adContainer.innerHTML = `
-                    <div class="ad-icon">
-                        <i class="${container.icon}"></i>
-                    </div>
-                    <div class="ad-title">${container.title}</div>
-                    <div class="ad-description">${container.description} (30 seconds)</div>
-                    <div class="ad-reward">Reward: $${container.reward.toFixed(2)}</div>
-                    <button  onclick="showAd()" class="ad-btn" data-task="${container.id}" ${isCompleted ? 'disabled' : ''}>
-                        ${isCompleted ? 'Completed' : 'Watch Now'}
-                    </button>
-                `;
-                taskList.appendChild(adContainer);
-                
-                // Add event listener to the ad button
-                const adBtn = adContainer.querySelector('.ad-btn');
-                adBtn.addEventListener('click', handleTaskClick);
-            });
-        }
-
-        // Handle task click
-        function handleTaskClick(e) {
-            const taskId = e.target.getAttribute('data-task');
-            
-            if (userData.completedTasks.includes(taskId)) {
-                return;
-            }
-            
-            // Check if it's an ad task and daily limit reached
-            if ((taskId === 'featured-ad' || taskId.startsWith('ad-container-')) && userData.adsWatchedToday >= 20) {
-                showNotification('Daily ad limit reached. Try again tomorrow.', 'error');
-                return;
-            }
-            
-            // Show the timer modal
-            showAdModal(taskId);
         }
 
         // Show ad modal with timer
-        function showAdModal(taskId) {
+        function showAdModal() {
+            // Check if user has reached the limit
+            if (userData.limitReachedTime) {
+                const now = new Date().getTime();
+                const limitTime = new Date(userData.limitReachedTime).getTime();
+                const twentyFourHours = 24 * 60 * 60 * 1000;
+                
+                if (now < limitTime + twentyFourHours) {
+                    showNotification('Daily ad limit reached. Try again later.', 'error');
+                    return;
+                } else {
+                    // Reset the limit
+                    userData.adsWatchedToday = 0;
+                    userData.limitReachedTime = null;
+                    saveUserData();
+                }
+            }
+            
+            // Check if user has reached 20 ads today
+            if (userData.adsWatchedToday >= 20) {
+                // Set limit reached time if not already set
+                if (!userData.limitReachedTime) {
+                    userData.limitReachedTime = new Date().toISOString();
+                    saveUserData();
+                }
+                showNotification('Daily ad limit reached. Try again in 24 hours.', 'error');
+                updateAdLimit();
+                return;
+            }
+            
             const modal = document.getElementById('adModal');
             const timerElement = document.getElementById('adTimer');
             const skipBtn = document.getElementById('skipAdBtn');
@@ -1372,7 +1567,7 @@
                 
                 if (timeLeft <= 0) {
                     clearInterval(countdown);
-                    completeTask(taskId);
+                    completeTask();
                     modal.style.display = 'none';
                 } else if (timeLeft <= 5) {
                     skipBtn.disabled = false;
@@ -1381,50 +1576,57 @@
             
             skipBtn.onclick = () => {
                 clearInterval(countdown);
-                completeTask(taskId);
+                completeTask();
                 modal.style.display = 'none';
             };
         }
 
-        // Complete task
-        function completeTask(taskId) {
-            let reward = 0;
-            
-            if (taskId === 'featured-ad') {
-                reward = 0.10;
-            } else if (taskId === 'ad-container-1') {
-                reward = 0.05;
-            } else if (taskId === 'ad-container-2') {
-                reward = 0.03;
-            } else if (taskId === 'ad-container-3') {
-                reward = 0.07;
-            }
+        // Complete featured ad task
+        function completeTask() {
+            const reward = 0.10;
             
             userData.balance += reward;
             userData.totalEarning += reward;
             userData.watchedAds++;
             userData.adsWatchedToday++;
             userData.clicks++;
-            userData.completedTasks.push(taskId);
+            
+            // Check if reached limit
+            if (userData.adsWatchedToday >= 20 && !userData.limitReachedTime) {
+                userData.limitReachedTime = new Date().toISOString();
+            }
             
             saveUserData();
             updateUI();
-            
-            // Update button
-            const button = document.querySelector(`[data-task="${taskId}"]`);
-            if (button) {
-                button.disabled = true;
-                button.textContent = 'Completed';
-            }
+            updateAdLimit();
             
             showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
             
             // Check if user completed 5 tasks and was referred
-            if (userData.completedTasks.length === 5 && userData.referredBy) {
+            if (userData.watchedAds === 5 && userData.referredBy) {
                 setTimeout(() => {
                     showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
                 }, 1000);
             }
+        }
+
+        // Complete social media task
+        function completeSocialTask(taskId, reward) {
+            if (userData.completedTasks.includes(taskId)) {
+                showNotification('You have already completed this task.', 'error');
+                return;
+            }
+            
+            userData.balance += reward;
+            userData.totalEarning += reward;
+            userData.clicks++;
+            userData.completedTasks.push(taskId);
+            
+            saveUserData();
+            updateUI();
+            updateTaskButtons();
+            
+            showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
         }
 
         // Update withdraw button
@@ -1518,38 +1720,52 @@
             });
         });
 
-        // Countdown timer for daily reset
-        function updateCountdown() {
-            const now = new Date();
-            const tomorrow = new Date(now);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(0, 0, 0, 0);
-            
-            const diff = tomorrow - now;
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            document.getElementById('countdown').textContent = 
-                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
+        // Featured Ad button click
+        document.getElementById('featuredAdBtn').addEventListener('click', () => {
+            showAdModal();
+        });
+
+        // Open channel button click
+        document.querySelectorAll('.open-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const link = e.target.getAttribute('data-link');
+                const taskId = e.target.getAttribute('data-task');
+                
+                // Open the link
+                window.open(link, '_blank');
+                
+                // Enable the complete button
+                const completeBtn = document.querySelector(`.complete-btn[data-task="${taskId}"]`);
+                completeBtn.disabled = false;
+                
+                showNotification('Channel opened! Complete the action and mark as completed.', 'info');
+            });
+        });
+
+        // Complete social task button click
+        document.querySelectorAll('.complete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const taskId = e.target.getAttribute('data-task');
+                
+                if (taskId === 'youtube-subscribe') {
+                    completeSocialTask(taskId, 0.15);
+                } else if (taskId === 'telegram-join') {
+                    completeSocialTask(taskId, 0.10);
+                }
+            });
+        });
 
         // Initialize app
         window.onload = function() {
             loadUserData();
-            // Don't generate tasks here, they will be generated when the tab is opened
-            generateTasks(); // Generate tasks initially to ensure they're available
             
             // Update countdown every second
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
+            setInterval(() => {
+                if (userData.limitReachedTime) {
+                    updateAdLimit();
+                }
+            }, 1000);
         };
     </script>
 </body>
 </html>
-
-
-
-
-
-
