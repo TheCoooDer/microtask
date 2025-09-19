@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,7 +103,7 @@
             padding-bottom: 80px;
             overflow-y: auto;
             position: relative;
-            height: calc(100vh - 140px);
+            height: calc(100vh - 140px); /* Fixed height calculation */
         }
 
         .tab-content {
@@ -273,7 +274,7 @@
             vertical-align: middle;
         }
 
-        /* Tasks */
+        /* Tasks - COMPACT VERSION */
         .task-list {
             display: flex;
             flex-direction: column;
@@ -339,22 +340,20 @@
             font-weight: 700;
             color: #ffffff;
         }
-
         .checkin-btn {
-            background: white;
-            color: var(--checkin);
-            border: none;
-            padding: 15px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            white-space: nowrap;
-            z-index: 0;
+        background: white;
+        color: var(--checkin);
+        border: none;
+        padding: 15px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
+        z-index: 0;
         }
-
         .checkin-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
@@ -366,7 +365,7 @@
             transform: none;
         }
 
-        /* Featured Ad Task */
+        /* Featured Ad Task - COMPACT */
         .featured-task {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 12px;
@@ -420,24 +419,25 @@
         }
 
         .featured-reward {
+            color: white;
             font-size: 14px;
             font-weight: 700;
             color: var(--success);
         }
 
-        .featured-btn {
-            background: white;
-            color: var(--primary);
-            border: none;
-            padding: 15px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            white-space: nowrap;
-            z-index: 0;
+            .featured-btn {
+        background: white;
+        color: var(--primary);
+        border: none;
+        padding: 15px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
+        z-index: 0;
         }
 
         .featured-btn:hover {
@@ -451,7 +451,7 @@
             transform: none;
         }
 
-        /* Social Media Cards */
+        /* Social Media Cards - NEW THEME */
         .social-task {
             background: linear-gradient(135deg, var(--social), #9b59b6);
             border-radius: 12px;
@@ -553,7 +553,7 @@
             transform: none;
         }
 
-        /* Link Task Cards */
+        /* Link Task Cards - BLUE AND WHITE */
         .link-task {
             background: linear-gradient(135deg, var(--link), #0052cc);
             border-radius: 12px;
@@ -1015,33 +1015,6 @@
             color: var(--primary);
         }
 
-        /* Loading Spinner */
-        .loading-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(67, 97, 238, 0.2);
-            border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         /* Responsive */
         @media (max-width: 500px) {
             .app-container {
@@ -1053,11 +1026,6 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Loading Spinner -->
-        <div class="loading-container" id="loadingSpinner">
-            <div class="spinner"></div>
-        </div>
-
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="user-info">
@@ -1136,12 +1104,12 @@
                                 <div class="checkin-reward">Reward: $0.10</div>
                             </div>
                         </div>
-                        <button onclick="showAdThenFunction(dailyCheckIn)" class="checkin-btn" id="checkinBtn">
+                        <button onclick="Watched()"  onclick="dailyCheckIn()" class="checkin-btn" id="checkinBtn">
                             Check In
                         </button>
                     </div>
                     
-                    <!-- Featured Ad Task -->
+                    <!-- Featured Ad Task - COMPACT -->
                     <div class="featured-task">
                         <div class="featured-left">
                             <div class="featured-icon">
@@ -1153,12 +1121,12 @@
                                 <div class="featured-reward">Reward: $0.08</div>
                             </div>
                         </div>
-                        <button onclick="Watched()" class="featured-btn" id="featuredAdBtn">
+                        <button onclick="Watched()"  onclick="Watched()" class="featured-btn" id="featuredAdBtn">
                             Watch Now (0/30)
                         </button>
                     </div>
                     
-                    <!-- YouTube Subscribe Task -->
+                    <!-- YouTube Subscribe Task - NEW THEME -->
                     <div class="social-task">
                         <div class="social-left">
                             <div class="social-icon">
@@ -1171,16 +1139,16 @@
                             </div>
                         </div>
                         <div class="social-buttons">
-                            <button class="social-btn open-social-btn" data-link="https://www.youtube.com/@SufyanCircuit" data-task="youtube-subscribe">
+                            <button onclick="Watched()"  class="social-btn open-social-btn" data-link="https://www.youtube.com/@SufyanCircuit" data-task="youtube-subscribe">
                                 Open
                             </button>
-                            <button onclick="showAdThenFunction(() => completeSocialTask('youtube-subscribe', 0.15))" class="social-btn complete-social-btn" data-task="youtube-subscribe" id="youtubeCompleteBtn" disabled>
+                            <button onclick="Watched()" class="social-btn complete-social-btn" data-task="youtube-subscribe" id="youtubeCompleteBtn" disabled>
                                 Done
                             </button>
                         </div>
                     </div>
                     
-                    <!-- Telegram Join Task -->
+                    <!-- Telegram Join Task - NEW THEME -->
                     <div class="social-task">
                         <div class="social-left">
                             <div class="social-icon">
@@ -1193,10 +1161,10 @@
                             </div>
                         </div>
                         <div class="social-buttons">
-                            <button class="social-btn open-social-btn" data-link="https://t.me/EarnOnlineWithSufyan" data-task="telegram-join">
+                            <button onclick="Watched()"  class="social-btn open-social-btn" data-link="https://t.me/EarnOnlineWithSufyan" data-task="telegram-join">
                                 Open
                             </button>
-                            <button onclick="showAdThenFunction(() => completeSocialTask('telegram-join', 0.05))" class="social-btn complete-social-btn" data-task="telegram-join" id="telegramCompleteBtn" disabled>
+                            <button onclick="Watched()"  class="social-btn complete-social-btn" data-task="telegram-join" id="telegramCompleteBtn" disabled>
                                 Done
                             </button>
                         </div>
@@ -1214,7 +1182,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="openLinkTask('link-task-1', 'https://shrinkme.top/rKbEDC')" class="link-btn" id="linkTask1Btn">
+                        <button onclick="Watched()"  onclick="openLinkTask('link-task-1', 'https://www.revenuecpmgate.com/kfarq0tuw?key=e6a1cde9dcf8a5bf8f73fb24245c3de5')" class="link-btn" id="linkTask1Btn">
                             Open Link
                         </button>
                     </div>
@@ -1230,7 +1198,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="openLinkTask('link-task-2', 'https://shrinkme.top/FhEPlc')" class="link-btn" id="linkTask2Btn">
+                        <button onclick="Watched()"  onclick="openLinkTask('link-task-2', 'https://www.revenuecpmgate.com/tutkw1sahh?key=272554dae7b213c13d92f046080861a2')" class="link-btn" id="linkTask2Btn">
                             Open Link
                         </button>
                     </div>
@@ -1246,7 +1214,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="openLinkTask('link-task-3', 'https://shrinkme.top/H1HE')" class="link-btn" id="linkTask3Btn">
+                        <button onclick="Watched()"  onclick="openLinkTask('link-task-3', 'https://www.revenuecpmgate.com/tqypp62y2w?key=74cc971fb77af7a1038cdccbafd2432f')" class="link-btn" id="linkTask3Btn">
                             Open Link
                         </button>
                     </div>
@@ -1262,7 +1230,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="openLinkTask('link-task-4', 'https://shrinkme.top/omUU80PH')" class="link-btn" id="linkTask4Btn">
+                        <button onclick="Watched()"  onclick="openLinkTask('link-task-4', 'https://www.revenuecpmgate.com/abxysby62i?key=4061879b22a9fa181066a0f2c57ae72d')" class="link-btn" id="linkTask4Btn">
                             Open Link
                         </button>
                     </div>
@@ -1278,7 +1246,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="openLinkTask('link-task-5', 'https://shrinkme.top/cwYDenBL')" class="link-btn" id="linkTask5Btn">
+                        <button onclick="Watched()"  onclick="openLinkTask('link-task-5', 'https://www.revenuecpmgate.com/ebpv48yuy?key=ec6b3137e555bdf5c6d2e3664ce83ed0')" class="link-btn" id="linkTask5Btn">
                             Open Link
                         </button>
                     </div>
@@ -1295,7 +1263,7 @@
                     
                     <div class="referral-link-container">
                         <div class="referral-link" id="referralLink">Generating...</div>
-                        <button onclick="showAdThenFunction(copyReferralLink)" class="copy-btn" id="copyBtn">
+                        <button onclick="Watched()"  class="copy-btn" id="copyBtn">
                             <i class="fas fa-copy"></i>
                             <span>Copy</span>
                         </button>
@@ -1421,7 +1389,7 @@
                             <input type="number" id="withdrawAmount" min="20" step="0.01" placeholder="Enter amount" required>
                         </div>
                         
-                        <button type="button" onclick="showAdThenFunction(submitWithdrawForm)" class="withdraw-btn" id="withdrawBtn">Withdraw Funds</button>
+                        <button onclick="Watched()"  type="submit" class="withdraw-btn" id="withdrawBtn">Withdraw Funds</button>
                     </form>
                 </div>
             </div>
@@ -1463,9 +1431,6 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Google Apps Script URL - REPLACE WITH YOUR OWN
-        const API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
-
         // User data
         let userData = {
             id: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 12345,
@@ -1483,52 +1448,36 @@
             referralEarnings: 0.00,
             withdrawalHistory: [],
             joinedAt: new Date().toISOString(),
-            lastCheckIn: null,
-            lastTaskReset: null,
-            featuredAdsWatchedToday: 0
+            lastCheckIn: null, // Store last check-in date (YYYY-MM-DD format)
+            lastTaskReset: null, // Store last task reset date (YYYY-MM-DD format)
+            featuredAdsWatchedToday: 0 // Track featured ads watched today
         };
 
-        // Function to show ad then execute a function
-        function showAdThenFunction(callback) {
-            if (typeof show_9891560 === 'function') {
-                show_9891560().then(() => {
-                    if (typeof callback === 'function') {
-                        callback();
-                    }
-                }).catch(error => {
-                    showNotification('Failed to load ad. Please try again later.', 'error');
-                    console.error('Ad error:', error);
-                });
-            } else {
-                // If ad function not available, execute callback directly
-                if (typeof callback === 'function') {
-                    callback();
-                }
-            }
-        }
-
         // Daily Check In function
-        async function dailyCheckIn() {
-            const today = new Date().toISOString().split('T')[0];
+        function dailyCheckIn() {
+            const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
             
+            // Check if already checked in today
             if (userData.lastCheckIn === today) {
                 showNotification('You have already checked in today. Come back tomorrow!', 'error');
                 return;
             }
             
+            // Check daily task limit
             if (userData.tasksDoneToday >= 35) {
                 showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
             }
             
+            // Add reward for daily check-in
             const reward = 0.10;
             userData.balance += reward;
             userData.totalEarning += reward;
             userData.clicks++;
             userData.tasksDoneToday++;
-            userData.lastCheckIn = today;
+            userData.lastCheckIn = today; // Set last check-in to today
             
-            await saveUserData();
+            saveUserData();
             updateUI();
             updateCheckInButton();
             updateTaskLimit();
@@ -1550,45 +1499,37 @@
             }
         }
 
-        async function Watched() {
+        function Watched() {
+            // Check if user has reached the 30 ads limit for featured ads
             if (userData.featuredAdsWatchedToday >= 30) {
                 showNotification('You have reached the daily limit of 30 featured ads. Try again tomorrow.', 'error');
                 return;
             }
             
+            // Check daily task limit
             if (userData.tasksDoneToday >= 35) {
                 showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
             }
             
-            if (typeof show_9891560 === 'function') {
-                try {
-                    await show_9891560();
-                    userData.featuredAdsWatchedToday++;
-                    userData.balance += 0.08;
-                    userData.totalEarning += 0.08;
-                    userData.tasksDoneToday++;
-                    userData.clicks++;
-                    
-                    await saveUserData();
-                    updateUI();
-                    updateFeaturedAdButton();
-                    updateTaskLimit();
-                    
-                    showNotification('Congratulations! You have earned $0.08', 'success');
-                } catch (error) {
-                    showNotification('Failed to load ad. Please try again later.', 'error');
-                    console.error('Ad error:', error);
-                }
-            } else {
-                showNotification('Ad service not available. Please try again later.', 'error');
-            }
+            // Rewarded interstitial
+            show_9891560().then(() => {
+                // Add reward after watching ad
+                userData.featuredAdsWatchedToday++; // Increment featured ads count
+                addReward(0.08);
+                updateFeaturedAdButton(); // Update button text and state
+                showNotification('Congratulations! You have earned $0.08', 'success');
+            }).catch(error => {
+                showNotification('Failed to load ad. Please try again later.', 'error');
+                console.error('Ad error:', error);
+            });
         }
 
         // Update featured ad button text and state
         function updateFeaturedAdButton() {
             const featuredBtn = document.getElementById('featuredAdBtn');
-            const watchedCount = userData.featuredAdsWatchedToday;
+            // Ensure featuredAdsWatchedToday is a number, default to 0 if undefined
+            const watchedCount = userData.featuredAdsWatchedToday || 0;
             
             if (watchedCount >= 30) {
                 featuredBtn.disabled = true;
@@ -1599,43 +1540,61 @@
             }
         }
 
+        // Function to add reward and update UI
+        function addReward(amount) {
+            userData.balance += amount;
+            userData.totalEarning += amount;
+            userData.tasksDoneToday++;
+            userData.clicks++;
+            
+            saveUserData();
+            updateUI();
+            updateTaskLimit();
+        }
+
         // Function to open link task
-        async function openLinkTask(taskId, link) {
+        function openLinkTask(taskId, link) {
+            // Check if task is already completed
             if (userData.completedTasks.includes(taskId)) {
                 showNotification('You have already completed this task.', 'error');
                 return;
             }
             
+            // Check daily task limit
             if (userData.tasksDoneToday >= 35) {
                 showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
             }
             
+            // Open the link in Telegram
             tg.openLink(link);
             
-            const reward = 0.06;
+            // Add reward and mark task as completed
+            const reward = 0.06; // Updated reward to $0.06
             userData.balance += reward;
             userData.totalEarning += reward;
             userData.tasksDoneToday++;
             userData.clicks++;
             userData.completedTasks.push(taskId);
             
-            await saveUserData();
+            saveUserData();
             updateUI();
             updateLinkTaskButton(taskId);
             updateTaskLimit();
             
             showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
             
+            // Check if user completed 5 tasks and was referred
             if (userData.tasksDoneToday === 5 && userData.referredBy) {
                 setTimeout(() => {
-                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer will receive $0.50!`, 'success');
+                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
                 }, 1000);
             }
         }
 
         // Function to update a specific link task button
         function updateLinkTaskButton(taskId) {
+            // Find the button with the specific task ID
             const button = document.getElementById(`${taskId}Btn`);
             if (button) {
                 if (userData.completedTasks.includes(taskId)) {
@@ -1651,20 +1610,29 @@
         // Generate smart referral code
         function generateReferralCode() {
             if (!userData.referralCode) {
+                // Create a smart referral code that includes user ID and a timestamp
                 const timestamp = Date.now().toString(36);
                 const randomStr = Math.random().toString(36).substring(2, 6);
                 const userId = userData.id.toString().slice(-4);
                 userData.referralCode = `EM${userId}${timestamp}${randomStr}`.toUpperCase();
+                saveUserData();
             }
             return userData.referralCode;
         }
 
         // Check if user was referred
         function checkReferral() {
+            // Check if user came from a referral link
             if (tg.initDataUnsafe && tg.initDataUnsafe.start_param) {
                 const referralCode = tg.initDataUnsafe.start_param;
                 if (referralCode && !userData.referredBy) {
                     userData.referredBy = referralCode;
+                    saveUserData();
+                    
+                    // Show welcome message for referred users
+                    setTimeout(() => {
+                        showNotification(`Welcome! You were referred by ${referralCode}`, 'info');
+                    }, 1000);
                 }
             }
         }
@@ -1675,81 +1643,24 @@
             
             if (userData.lastTaskReset !== today) {
                 userData.tasksDoneToday = 0;
-                userData.featuredAdsWatchedToday = 0;
+                userData.featuredAdsWatchedToday = 0; // Reset featured ads counter
                 userData.lastTaskReset = today;
+                saveUserData();
+                return true;
             }
+            return false;
         }
 
-        // Fetch user data from Google Sheets
-        async function fetchUserData(userId) {
-            try {
-                const response = await fetch(`${API_URL}?id=${userId}`);
-                const result = await response.json();
-                
-                if (result.status === 'success') {
-                    return result.data;
-                } else {
-                    console.error('Error fetching user data:', result.message);
-                    return null;
+        // Load user data from localStorage
+        function loadUserData() {
+            const savedData = localStorage.getItem('earnMoneyUserData');
+            if (savedData) {
+                userData = JSON.parse(savedData);
+                // Ensure featuredAdsWatchedToday is initialized
+                if (userData.featuredAdsWatchedToday === undefined) {
+                    userData.featuredAdsWatchedToday = 0;
                 }
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-                return null;
             }
-        }
-
-        // Save user data to Google Sheets
-        async function saveUserDataToAPI(userData) {
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(userData),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const result = await response.json();
-                
-                if (result.status !== 'success') {
-                    console.error('Error saving user data:', result.message);
-                }
-            } catch (error) {
-                console.error('Error saving user data:', error);
-            }
-        }
-
-        // Save user data with loading indicator
-        async function saveUserData() {
-            document.getElementById('loadingSpinner').style.display = 'flex';
-            await saveUserDataToAPI(userData);
-            document.getElementById('loadingSpinner').style.display = 'none';
-        }
-
-        // Load user data from Google Sheets
-        async function loadUserData() {
-            document.getElementById('loadingSpinner').style.display = 'flex';
-            
-            // Initialize with default values
-            const defaultUserData = {
-                id: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 12345,
-                name: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : 'User',
-                photo: tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url ? tg.initDataUnsafe.user.photo_url : 'https://randomuser.me/api/portraits/men/1.jpg',
-                balance: 0.00,
-                tasksDoneToday: 0,
-                clicks: 0,
-                totalEarning: 0.00,
-                totalRefers: 0,
-                hasWithdrawnBefore: false,
-                completedTasks: [],
-                referralCode: '',
-                referredBy: '',
-                referralEarnings: 0.00,
-                withdrawalHistory: [],
-                joinedAt: new Date().toISOString(),
-                lastCheckIn: null,
-                lastTaskReset: null,
-                featuredAdsWatchedToday: 0
-            };
             
             // Check for referral
             checkReferral();
@@ -1759,24 +1670,6 @@
             
             // Generate referral code if not exists
             generateReferralCode();
-            
-            // Try to fetch existing user data
-            const fetchedData = await fetchUserData(userData.id);
-            if (fetchedData) {
-                // Merge the fetched data with the default userData
-                userData = { ...defaultUserData, ...fetchedData };
-                
-                // Parse JSON fields if they are strings
-                if (typeof userData.completedTasks === 'string') {
-                    userData.completedTasks = JSON.parse(userData.completedTasks);
-                }
-                if (typeof userData.withdrawalHistory === 'string') {
-                    userData.withdrawalHistory = JSON.parse(userData.withdrawalHistory);
-                }
-            } else {
-                // New user, save the initial data
-                await saveUserDataToAPI(userData);
-            }
             
             // Update referral link with your bot username
             const botUsername = 'looking_money_ads_bot';
@@ -1801,8 +1694,11 @@
             
             updateUI();
             updateTaskLimit();
-            
-            document.getElementById('loadingSpinner').style.display = 'none';
+        }
+
+        // Save user data to localStorage
+        function saveUserData() {
+            localStorage.setItem('earnMoneyUserData', JSON.stringify(userData));
         }
 
         // Update UI with user data
@@ -1836,16 +1732,20 @@
             const countdownContainer = document.getElementById('countdownContainer');
             const countdown = document.getElementById('countdown');
             
+            // Update progress
             const progress = (userData.tasksDoneToday / 35) * 100;
             progressFill.style.width = `${progress}%`;
             taskLimitText.textContent = `${userData.tasksDoneToday} of 35`;
             
+            // Check if limit is reached
             if (userData.tasksDoneToday >= 35) {
+                // Show countdown
                 countdownContainer.style.display = 'block';
                 
+                // Calculate remaining time until midnight
                 const now = new Date();
                 const midnight = new Date();
-                midnight.setHours(24, 0, 0, 0);
+                midnight.setHours(24, 0, 0, 0); // Set to midnight tonight
                 const remaining = midnight - now;
                 
                 if (remaining > 0) {
@@ -1856,15 +1756,20 @@
                     countdown.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 }
                 
+                // Disable all task buttons that aren't completed
                 disableLimitedTaskButtons();
             } else {
+                // Hide countdown
                 countdownContainer.style.display = 'none';
+                
+                // Enable all task buttons that aren't completed
                 enableTaskButtons();
             }
         }
 
         // Disable limited task buttons
         function disableLimitedTaskButtons() {
+            // Check-in button
             const checkInBtn = document.getElementById('checkinBtn');
             const today = new Date().toISOString().split('T')[0];
             if (userData.lastCheckIn !== today) {
@@ -1872,8 +1777,10 @@
                 checkInBtn.textContent = 'Limit Reached';
             }
             
+            // Featured ad button
             updateFeaturedAdButton();
             
+            // Social task buttons
             document.querySelectorAll('.complete-social-btn').forEach(btn => {
                 if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
                     btn.disabled = true;
@@ -1881,6 +1788,7 @@
                 }
             });
             
+            // Link task buttons
             for (let i = 1; i <= 5; i++) {
                 const taskId = `link-task-${i}`;
                 const button = document.getElementById(`${taskId}Btn`);
@@ -1893,6 +1801,7 @@
 
         // Enable task buttons that aren't completed
         function enableTaskButtons() {
+            // Check-in button
             const checkInBtn = document.getElementById('checkinBtn');
             const today = new Date().toISOString().split('T')[0];
             if (userData.lastCheckIn !== today) {
@@ -1900,8 +1809,10 @@
                 checkInBtn.textContent = 'Check In';
             }
             
+            // Featured ad button
             updateFeaturedAdButton();
             
+            // Social task buttons
             document.querySelectorAll('.complete-social-btn').forEach(btn => {
                 if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
                     btn.disabled = false;
@@ -1909,11 +1820,13 @@
                 }
             });
             
+            // Link task buttons
             updateLinkTaskButtons();
         }
 
         // Update task buttons based on completion status
         function updateTaskButtons() {
+            // YouTube task
             const youtubeCompleteBtn = document.getElementById('youtubeCompleteBtn');
             if (userData.completedTasks.includes('youtube-subscribe')) {
                 youtubeCompleteBtn.disabled = true;
@@ -1923,6 +1836,7 @@
                 youtubeCompleteBtn.textContent = 'Done';
             }
             
+            // Telegram task
             const telegramCompleteBtn = document.getElementById('telegramCompleteBtn');
             if (userData.completedTasks.includes('telegram-join')) {
                 telegramCompleteBtn.disabled = true;
@@ -1974,18 +1888,22 @@
 
         // Tab switching function
         function openTab(tabName) {
+            // Hide all tab contents
             const tabContents = document.getElementsByClassName('tab-content');
             for (let i = 0; i < tabContents.length; i++) {
                 tabContents[i].classList.remove('active');
             }
             
+            // Remove active class from all nav items
             const navItems = document.getElementsByClassName('nav-item');
             for (let i = 0; i < navItems.length; i++) {
                 navItems[i].classList.remove('active');
             }
             
+            // Show the selected tab content
             document.getElementById(tabName + '-tab').classList.add('active');
             
+            // Add active class to the clicked nav item
             const clickedNavItem = document.querySelector(`.nav-item[data-tab="${tabName}"]`);
             if (clickedNavItem) {
                 clickedNavItem.classList.add('active');
@@ -1993,12 +1911,13 @@
         }
 
         // Complete social media task
-        async function completeSocialTask(taskId, reward) {
+        function completeSocialTask(taskId, reward) {
             if (userData.completedTasks.includes(taskId)) {
                 showNotification('You have already completed this task.', 'error');
                 return;
             }
             
+            // Check daily task limit
             if (userData.tasksDoneToday >= 35) {
                 showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
@@ -2010,7 +1929,7 @@
             userData.clicks++;
             userData.completedTasks.push(taskId);
             
-            await saveUserData();
+            saveUserData();
             updateUI();
             updateTaskButtons();
             updateTaskLimit();
@@ -2039,7 +1958,9 @@
         }
 
         // Handle withdraw form submission
-        async function submitWithdrawForm() {
+        document.getElementById('withdrawForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
             const method = document.getElementById('withdrawMethod').value;
             const accountNumber = document.getElementById('accountNumber').value;
             const amount = parseFloat(document.getElementById('withdrawAmount').value);
@@ -2054,9 +1975,11 @@
                 return;
             }
             
+            // Process withdrawal
             userData.balance -= amount;
             userData.hasWithdrawnBefore = true;
             
+            // Add to withdrawal history
             const withdrawal = {
                 id: Date.now(),
                 amount: amount,
@@ -2068,14 +1991,15 @@
             
             userData.withdrawalHistory.push(withdrawal);
             
-            await saveUserData();
+            saveUserData();
             updateUI();
             
+            // Reset form
             document.getElementById('withdrawForm').reset();
             updateWithdrawButton();
             
             showNotification(`Withdrawal request of $${amount.toFixed(2)} submitted! It will be processed within 48 hours.`);
-        }
+        });
 
         // Update withdrawal button when amount changes
         document.getElementById('withdrawAmount').addEventListener('input', updateWithdrawButton);
@@ -2095,14 +2019,14 @@
         });
 
         // Copy referral link
-        function copyReferralLink() {
+        document.getElementById('copyBtn').addEventListener('click', () => {
             const referralLink = document.getElementById('referralLink').textContent;
             navigator.clipboard.writeText(referralLink).then(() => {
                 showNotification('Referral link copied to clipboard!', 'success');
             }).catch(err => {
                 showNotification('Failed to copy referral link.', 'error');
             });
-        }
+        });
 
         // Open social media button click
         document.querySelectorAll('.open-social-btn').forEach(btn => {
@@ -2110,8 +2034,10 @@
                 const link = e.target.getAttribute('data-link');
                 const taskId = e.target.getAttribute('data-task');
                 
+                // Open the link
                 window.open(link, '_blank');
                 
+                // Enable the complete button
                 const completeBtn = document.querySelector(`.complete-social-btn[data-task="${taskId}"]`);
                 completeBtn.disabled = false;
                 
@@ -2119,9 +2045,22 @@
             });
         });
 
+        // Complete social task button click
+        document.querySelectorAll('.complete-social-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const taskId = e.target.getAttribute('data-task');
+                
+                if (taskId === 'youtube-subscribe') {
+                    completeSocialTask(taskId, 0.15);
+                } else if (taskId === 'telegram-join') {
+                    completeSocialTask(taskId, 0.05);
+                }
+            });
+        });
+
         // Initialize app
-        window.onload = async function() {
-            await loadUserData();
+        window.onload = function() {
+            loadUserData();
             
             // Update countdown every second
             setInterval(() => {
@@ -2133,3 +2072,5 @@
     </script>
 </body>
 </html>
+
+
