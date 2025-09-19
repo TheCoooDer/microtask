@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +6,7 @@
     <title>EarnMoney - Telegram Mini App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
+     <style>
         :root {
             --primary: #4361ee;
             --secondary: #3f37c9;
@@ -1022,7 +1021,6 @@
             }
         }
     </style>
-    <script src='//libtl.com/sdk.js' data-zone='9891560' data-sdk='show_9891560'></script>
 </head>
 <body>
     <div class="app-container">
@@ -1104,12 +1102,12 @@
                                 <div class="checkin-reward">Reward: $0.10</div>
                             </div>
                         </div>
-                        <button onclick="Watched()"  onclick="dailyCheckIn()" class="checkin-btn" id="checkinBtn">
+                        <button onclick="dailyCheckIn()" class="checkin-btn" id="checkinBtn">
                             Check In
                         </button>
                     </div>
                     
-                    <!-- Featured Ad Task - COMPACT -->
+                    <!-- Featured Ad Task -->
                     <div class="featured-task">
                         <div class="featured-left">
                             <div class="featured-icon">
@@ -1121,12 +1119,12 @@
                                 <div class="featured-reward">Reward: $0.08</div>
                             </div>
                         </div>
-                        <button onclick="Watched()"  onclick="Watched()" class="featured-btn" id="featuredAdBtn">
+                        <button onclick="watchFeaturedAd()" class="featured-btn" id="featuredAdBtn">
                             Watch Now (0/30)
                         </button>
                     </div>
                     
-                    <!-- YouTube Subscribe Task - NEW THEME -->
+                    <!-- YouTube Subscribe Task -->
                     <div class="social-task">
                         <div class="social-left">
                             <div class="social-icon">
@@ -1139,16 +1137,16 @@
                             </div>
                         </div>
                         <div class="social-buttons">
-                            <button onclick="Watched()"  class="social-btn open-social-btn" data-link="https://www.youtube.com/@SufyanCircuit" data-task="youtube-subscribe">
+                            <button onclick="openSocialLink('https://www.youtube.com/@SufyanCircuit', 'youtube-subscribe')" class="social-btn open-social-btn">
                                 Open
                             </button>
-                            <button onclick="Watched()" class="social-btn complete-social-btn" data-task="youtube-subscribe" id="youtubeCompleteBtn" disabled>
+                            <button onclick="completeSocialTask('youtube-subscribe', 0.15)" class="social-btn complete-social-btn" id="youtubeCompleteBtn" disabled>
                                 Done
                             </button>
                         </div>
                     </div>
                     
-                    <!-- Telegram Join Task - NEW THEME -->
+                    <!-- Telegram Join Task -->
                     <div class="social-task">
                         <div class="social-left">
                             <div class="social-icon">
@@ -1161,10 +1159,10 @@
                             </div>
                         </div>
                         <div class="social-buttons">
-                            <button onclick="Watched()"  class="social-btn open-social-btn" data-link="https://t.me/EarnOnlineWithSufyan" data-task="telegram-join">
+                            <button onclick="openSocialLink('https://t.me/EarnOnlineWithSufyan', 'telegram-join')" class="social-btn open-social-btn">
                                 Open
                             </button>
-                            <button onclick="Watched()"  class="social-btn complete-social-btn" data-task="telegram-join" id="telegramCompleteBtn" disabled>
+                            <button onclick="completeSocialTask('telegram-join', 0.05)" class="social-btn complete-social-btn" id="telegramCompleteBtn" disabled>
                                 Done
                             </button>
                         </div>
@@ -1182,7 +1180,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="Watched()"  onclick="openLinkTask('link-task-1', 'https://www.revenuecpmgate.com/kfarq0tuw?key=e6a1cde9dcf8a5bf8f73fb24245c3de5')" class="link-btn" id="linkTask1Btn">
+                        <button onclick="openLinkTask('link-task-1', 'https://www.revenuecpmgate.com/kfarq0tuw?key=e6a1cde9dcf8a5bf8f73fb24245c3de5')" class="link-btn" id="linkTask1Btn">
                             Open Link
                         </button>
                     </div>
@@ -1198,7 +1196,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="Watched()"  onclick="openLinkTask('link-task-2', 'https://www.revenuecpmgate.com/tutkw1sahh?key=272554dae7b213c13d92f046080861a2')" class="link-btn" id="linkTask2Btn">
+                        <button onclick="openLinkTask('link-task-2', 'https://www.revenuecpmgate.com/tutkw1sahh?key=272554dae7b213c13d92f046080861a2')" class="link-btn" id="linkTask2Btn">
                             Open Link
                         </button>
                     </div>
@@ -1214,7 +1212,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="Watched()"  onclick="openLinkTask('link-task-3', 'https://www.revenuecpmgate.com/tqypp62y2w?key=74cc971fb77af7a1038cdccbafd2432f')" class="link-btn" id="linkTask3Btn">
+                        <button onclick="openLinkTask('link-task-3', 'https://www.revenuecpmgate.com/tqypp62y2w?key=74cc971fb77af7a1038cdccbafd2432f')" class="link-btn" id="linkTask3Btn">
                             Open Link
                         </button>
                     </div>
@@ -1230,7 +1228,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="Watched()"  onclick="openLinkTask('link-task-4', 'https://www.revenuecpmgate.com/abxysby62i?key=4061879b22a9fa181066a0f2c57ae72d')" class="link-btn" id="linkTask4Btn">
+                        <button onclick="openLinkTask('link-task-4', 'https://www.revenuecpmgate.com/abxysby62i?key=4061879b22a9fa181066a0f2c57ae72d')" class="link-btn" id="linkTask4Btn">
                             Open Link
                         </button>
                     </div>
@@ -1246,7 +1244,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="Watched()"  onclick="openLinkTask('link-task-5', 'https://www.revenuecpmgate.com/ebpv48yuy?key=ec6b3137e555bdf5c6d2e3664ce83ed0')" class="link-btn" id="linkTask5Btn">
+                        <button onclick="openLinkTask('link-task-5', 'https://www.revenuecpmgate.com/ebpv48yuy?key=ec6b3137e555bdf5c6d2e3664ce83ed0')" class="link-btn" id="linkTask5Btn">
                             Open Link
                         </button>
                     </div>
@@ -1263,7 +1261,7 @@
                     
                     <div class="referral-link-container">
                         <div class="referral-link" id="referralLink">Generating...</div>
-                        <button onclick="Watched()"  class="copy-btn" id="copyBtn">
+                        <button onclick="copyReferralLink()" class="copy-btn" id="copyBtn">
                             <i class="fas fa-copy"></i>
                             <span>Copy</span>
                         </button>
@@ -1389,7 +1387,7 @@
                             <input type="number" id="withdrawAmount" min="20" step="0.01" placeholder="Enter amount" required>
                         </div>
                         
-                        <button onclick="Watched()"  type="submit" class="withdraw-btn" id="withdrawBtn">Withdraw Funds</button>
+                        <button type="submit" class="withdraw-btn" id="withdrawBtn">Withdraw Funds</button>
                     </form>
                 </div>
             </div>
@@ -1427,6 +1425,11 @@
     </div>
 
     <script>
+        // Google Sheets Configuration
+        const SHEET_ID = '1GXsWvNejxBw1MQuqlbPZsP9NVmzSzma4GuSLJSNiT90';
+        const SHEET_NAME = 'Telegram_Mini App_Users'; // Change to your sheet name
+        const API_KEY = 'YOUR_API_KEY'; // Optional if your sheet is public
+        
         // Initialize Telegram Web App
         let tg = window.Telegram.WebApp;
         tg.expand();
@@ -1448,36 +1451,34 @@
             referralEarnings: 0.00,
             withdrawalHistory: [],
             joinedAt: new Date().toISOString(),
-            lastCheckIn: null, // Store last check-in date (YYYY-MM-DD format)
-            lastTaskReset: null, // Store last task reset date (YYYY-MM-DD format)
-            featuredAdsWatchedToday: 0 // Track featured ads watched today
+            lastCheckIn: null,
+            lastTaskReset: null,
+            featuredAdsWatchedToday: 0,
+            phoneNumber: '' // Added for withdrawal verification
         };
 
         // Daily Check In function
-        function dailyCheckIn() {
-            const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+        async function dailyCheckIn() {
+            const today = new Date().toISOString().split('T')[0];
             
-            // Check if already checked in today
             if (userData.lastCheckIn === today) {
                 showNotification('You have already checked in today. Come back tomorrow!', 'error');
                 return;
             }
             
-            // Check daily task limit
             if (userData.tasksDoneToday >= 35) {
                 showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
             }
             
-            // Add reward for daily check-in
             const reward = 0.10;
             userData.balance += reward;
             userData.totalEarning += reward;
             userData.clicks++;
             userData.tasksDoneToday++;
-            userData.lastCheckIn = today; // Set last check-in to today
+            userData.lastCheckIn = today;
             
-            saveUserData();
+            await saveUserData();
             updateUI();
             updateCheckInButton();
             updateTaskLimit();
@@ -1499,36 +1500,37 @@
             }
         }
 
-        function Watched() {
-            // Check if user has reached the 30 ads limit for featured ads
+        // Featured Ad function
+        async function watchFeaturedAd() {
             if (userData.featuredAdsWatchedToday >= 30) {
                 showNotification('You have reached the daily limit of 30 featured ads. Try again tomorrow.', 'error');
                 return;
             }
             
-            // Check daily task limit
             if (userData.tasksDoneToday >= 35) {
                 showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
             }
             
-            // Rewarded interstitial
-            show_9891560().then(() => {
-                // Add reward after watching ad
-                userData.featuredAdsWatchedToday++; // Increment featured ads count
-                addReward(0.08);
-                updateFeaturedAdButton(); // Update button text and state
+            try {
+                // Rewarded interstitial
+                if (typeof show_9891560 === 'function') {
+                    await show_9891560();
+                }
+                
+                userData.featuredAdsWatchedToday++;
+                addReward(0.08, 'featured-ad');
+                updateFeaturedAdButton();
                 showNotification('Congratulations! You have earned $0.08', 'success');
-            }).catch(error => {
+            } catch (error) {
                 showNotification('Failed to load ad. Please try again later.', 'error');
                 console.error('Ad error:', error);
-            });
+            }
         }
 
         // Update featured ad button text and state
         function updateFeaturedAdButton() {
             const featuredBtn = document.getElementById('featuredAdBtn');
-            // Ensure featuredAdsWatchedToday is a number, default to 0 if undefined
             const watchedCount = userData.featuredAdsWatchedToday || 0;
             
             if (watchedCount >= 30) {
@@ -1541,26 +1543,48 @@
         }
 
         // Function to add reward and update UI
-        function addReward(amount) {
+        async function addReward(amount, taskType = 'general') {
             userData.balance += amount;
             userData.totalEarning += amount;
             userData.tasksDoneToday++;
             userData.clicks++;
             
-            saveUserData();
+            // Add to completed tasks if not already there
+            if (!userData.completedTasks.includes(taskType)) {
+                userData.completedTasks.push(taskType);
+            }
+            
+            await saveUserData();
             updateUI();
             updateTaskLimit();
+            
+            // Check if user completed 5 tasks and was referred
+            if (userData.tasksDoneToday === 5 && userData.referredBy) {
+                setTimeout(() => {
+                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
+                    processReferralReward();
+                }, 1000);
+            }
+        }
+
+        // Process referral reward
+        async function processReferralReward() {
+            try {
+                // In a real implementation, you would call your backend to reward the referrer
+                // For this example, we'll just show a notification
+                showNotification('Referrer reward processed!', 'success');
+            } catch (error) {
+                console.error('Error processing referral reward:', error);
+            }
         }
 
         // Function to open link task
-        function openLinkTask(taskId, link) {
-            // Check if task is already completed
+        async function openLinkTask(taskId, link) {
             if (userData.completedTasks.includes(taskId)) {
                 showNotification('You have already completed this task.', 'error');
                 return;
             }
             
-            // Check daily task limit
             if (userData.tasksDoneToday >= 35) {
                 showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
@@ -1569,32 +1593,15 @@
             // Open the link in Telegram
             tg.openLink(link);
             
-            // Add reward and mark task as completed
-            const reward = 0.06; // Updated reward to $0.06
-            userData.balance += reward;
-            userData.totalEarning += reward;
-            userData.tasksDoneToday++;
-            userData.clicks++;
-            userData.completedTasks.push(taskId);
-            
-            saveUserData();
-            updateUI();
+            const reward = 0.06;
+            await addReward(reward, taskId);
             updateLinkTaskButton(taskId);
-            updateTaskLimit();
             
             showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
-            
-            // Check if user completed 5 tasks and was referred
-            if (userData.tasksDoneToday === 5 && userData.referredBy) {
-                setTimeout(() => {
-                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
-                }, 1000);
-            }
         }
 
         // Function to update a specific link task button
         function updateLinkTaskButton(taskId) {
-            // Find the button with the specific task ID
             const button = document.getElementById(`${taskId}Btn`);
             if (button) {
                 if (userData.completedTasks.includes(taskId)) {
@@ -1610,7 +1617,6 @@
         // Generate smart referral code
         function generateReferralCode() {
             if (!userData.referralCode) {
-                // Create a smart referral code that includes user ID and a timestamp
                 const timestamp = Date.now().toString(36);
                 const randomStr = Math.random().toString(36).substring(2, 6);
                 const userId = userData.id.toString().slice(-4);
@@ -1622,14 +1628,12 @@
 
         // Check if user was referred
         function checkReferral() {
-            // Check if user came from a referral link
             if (tg.initDataUnsafe && tg.initDataUnsafe.start_param) {
                 const referralCode = tg.initDataUnsafe.start_param;
                 if (referralCode && !userData.referredBy) {
                     userData.referredBy = referralCode;
                     saveUserData();
                     
-                    // Show welcome message for referred users
                     setTimeout(() => {
                         showNotification(`Welcome! You were referred by ${referralCode}`, 'info');
                     }, 1000);
@@ -1643,7 +1647,7 @@
             
             if (userData.lastTaskReset !== today) {
                 userData.tasksDoneToday = 0;
-                userData.featuredAdsWatchedToday = 0; // Reset featured ads counter
+                userData.featuredAdsWatchedToday = 0;
                 userData.lastTaskReset = today;
                 saveUserData();
                 return true;
@@ -1651,54 +1655,187 @@
             return false;
         }
 
-        // Load user data from localStorage
-        function loadUserData() {
-            const savedData = localStorage.getItem('earnMoneyUserData');
-            if (savedData) {
-                userData = JSON.parse(savedData);
-                // Ensure featuredAdsWatchedToday is initialized
-                if (userData.featuredAdsWatchedToday === undefined) {
-                    userData.featuredAdsWatchedToday = 0;
+        // Load user data from Google Sheets
+        async function loadUserData() {
+            try {
+                // Try to get user data from Google Sheets
+                const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`);
+                const data = await response.json();
+                
+                if (data.values && data.values.length > 0) {
+                    // Find user row by ID
+                    const userRow = data.values.find(row => row[0] == userData.id);
+                    
+                    if (userRow) {
+                        // Parse user data from sheet
+                        userData = {
+                            id: parseInt(userRow[0]) || userData.id,
+                            name: userRow[1] || userData.name,
+                            photo: userRow[2] || userData.photo,
+                            balance: parseFloat(userRow[3]) || 0,
+                            tasksDoneToday: parseInt(userRow[4]) || 0,
+                            clicks: parseInt(userRow[5]) || 0,
+                            totalEarning: parseFloat(userRow[6]) || 0,
+                            totalRefers: parseInt(userRow[7]) || 0,
+                            hasWithdrawnBefore: userRow[8] === 'true',
+                            completedTasks: userRow[9] ? userRow[9].split(',') : [],
+                            referralCode: userRow[10] || '',
+                            referredBy: userRow[11] || '',
+                            referralEarnings: parseFloat(userRow[12]) || 0,
+                            withdrawalHistory: userRow[13] ? JSON.parse(userRow[13]) : [],
+                            joinedAt: userRow[14] || new Date().toISOString(),
+                            lastCheckIn: userRow[15] || null,
+                            lastTaskReset: userRow[16] || null,
+                            featuredAdsWatchedToday: parseInt(userRow[17]) || 0,
+                            phoneNumber: userRow[18] || ''
+                        };
+                    } else {
+                        // Create new user in sheet
+                        await saveUserData();
+                    }
+                } else {
+                    // Sheet is empty, create new user
+                    await saveUserData();
                 }
+                
+                // Check for referral
+                checkReferral();
+                
+                // Check if task limit needs to be reset
+                checkTaskLimitReset();
+                
+                // Generate referral code if not exists
+                generateReferralCode();
+                
+                // Update referral link
+                const botUsername = 'looking_money_ads_bot';
+                document.getElementById('referralLink').textContent = `https://t.me/${botUsername}?start=${userData.referralCode}`;
+                
+                // Update last updated date
+                const now = new Date();
+                const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+                document.getElementById('lastUpdated').textContent = formattedDate;
+                
+                // Update task completion status
+                updateTaskButtons();
+                updateCheckInButton();
+                updateFeaturedAdButton();
+                updateLinkTaskButtons();
+                
+                updateUI();
+                updateTaskLimit();
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                // Fallback to localStorage if Google Sheets fails
+                const savedData = localStorage.getItem('earnMoneyUserData');
+                if (savedData) {
+                    userData = JSON.parse(savedData);
+                }
+                
+                checkReferral();
+                checkTaskLimitReset();
+                generateReferralCode();
+                
+                const botUsername = 'looking_money_ads_bot';
+                document.getElementById('referralLink').textContent = `https://t.me/${botUsername}?start=${userData.referralCode}`;
+                
+                const now = new Date();
+                const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+                document.getElementById('lastUpdated').textContent = formattedDate;
+                
+                updateTaskButtons();
+                updateCheckInButton();
+                updateFeaturedAdButton();
+                updateLinkTaskButtons();
+                
+                updateUI();
+                updateTaskLimit();
             }
-            
-            // Check for referral
-            checkReferral();
-            
-            // Check if task limit needs to be reset
-            checkTaskLimitReset();
-            
-            // Generate referral code if not exists
-            generateReferralCode();
-            
-            // Update referral link with your bot username
-            const botUsername = 'looking_money_ads_bot';
-            document.getElementById('referralLink').textContent = `https://t.me/${botUsername}?start=${userData.referralCode}`;
-            
-            // Update last updated date
-            const now = new Date();
-            const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
-            document.getElementById('lastUpdated').textContent = formattedDate;
-            
-            // Update task completion status
-            updateTaskButtons();
-            
-            // Update check-in button
-            updateCheckInButton();
-            
-            // Update featured ad button
-            updateFeaturedAdButton();
-            
-            // Update link task buttons
-            updateLinkTaskButtons();
-            
-            updateUI();
-            updateTaskLimit();
         }
 
-        // Save user data to localStorage
-        function saveUserData() {
-            localStorage.setItem('earnMoneyUserData', JSON.stringify(userData));
+        // Save user data to Google Sheets
+        async function saveUserData() {
+            try {
+                // Format data for Google Sheets
+                const rowData = [
+                    userData.id,
+                    userData.name,
+                    userData.photo,
+                    userData.balance,
+                    userData.tasksDoneToday,
+                    userData.clicks,
+                    userData.totalEarning,
+                    userData.totalRefers,
+                    userData.hasWithdrawnBefore,
+                    userData.completedTasks.join(','),
+                    userData.referralCode,
+                    userData.referredBy,
+                    userData.referralEarnings,
+                    JSON.stringify(userData.withdrawalHistory),
+                    userData.joinedAt,
+                    userData.lastCheckIn,
+                    userData.lastTaskReset,
+                    userData.featuredAdsWatchedToday,
+                    userData.phoneNumber
+                ];
+                
+                // Check if user exists in sheet
+                const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`);
+                const data = await response.json();
+                
+                if (data.values && data.values.length > 0) {
+                    // Find user row index
+                    let rowIndex = -1;
+                    for (let i = 0; i < data.values.length; i++) {
+                        if (data.values[i][0] == userData.id) {
+                            rowIndex = i + 1; // +1 because sheets are 1-indexed
+                            break;
+                        }
+                    }
+                    
+                    if (rowIndex !== -1) {
+                        // Update existing row
+                        await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A${rowIndex}:S${rowIndex}?valueInputOption=RAW&key=${API_KEY}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                values: [rowData]
+                            })
+                        });
+                    } else {
+                        // Append new row
+                        await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A1:S1?valueInputOption=RAW&key=${API_KEY}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                values: [rowData]
+                            })
+                        });
+                    }
+                } else {
+                    // Sheet is empty, append new row
+                    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}!A1:S1?valueInputOption=RAW&key=${API_KEY}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            values: [rowData]
+                        })
+                    });
+                }
+                
+                // Also save to localStorage as backup
+                localStorage.setItem('earnMoneyUserData', JSON.stringify(userData));
+            } catch (error) {
+                console.error('Error saving user data:', error);
+                // Fallback to localStorage
+                localStorage.setItem('earnMoneyUserData', JSON.stringify(userData));
+            }
         }
 
         // Update UI with user data
@@ -1745,7 +1882,7 @@
                 // Calculate remaining time until midnight
                 const now = new Date();
                 const midnight = new Date();
-                midnight.setHours(24, 0, 0, 0); // Set to midnight tonight
+                midnight.setHours(24, 0, 0, 0);
                 const remaining = midnight - now;
                 
                 if (remaining > 0) {
@@ -1911,30 +2048,32 @@
         }
 
         // Complete social media task
-        function completeSocialTask(taskId, reward) {
+        async function completeSocialTask(taskId, reward) {
             if (userData.completedTasks.includes(taskId)) {
                 showNotification('You have already completed this task.', 'error');
                 return;
             }
             
-            // Check daily task limit
             if (userData.tasksDoneToday >= 35) {
                 showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
             }
             
-            userData.balance += reward;
-            userData.totalEarning += reward;
-            userData.tasksDoneToday++;
-            userData.clicks++;
-            userData.completedTasks.push(taskId);
-            
-            saveUserData();
-            updateUI();
+            await addReward(reward, taskId);
             updateTaskButtons();
-            updateTaskLimit();
             
             showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
+        }
+
+        // Open social media link
+        function openSocialLink(link, taskId) {
+            window.open(link, '_blank');
+            
+            // Enable the complete button
+            const completeBtn = document.querySelector(`.complete-social-btn[data-task="${taskId}"]`);
+            completeBtn.disabled = false;
+            
+            showNotification('Channel opened! Complete the action and mark as completed.', 'info');
         }
 
         // Update withdraw button
@@ -1958,7 +2097,7 @@
         }
 
         // Handle withdraw form submission
-        document.getElementById('withdrawForm').addEventListener('submit', (e) => {
+        document.getElementById('withdrawForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const method = document.getElementById('withdrawMethod').value;
@@ -1991,7 +2130,7 @@
             
             userData.withdrawalHistory.push(withdrawal);
             
-            saveUserData();
+            await saveUserData();
             updateUI();
             
             // Reset form
@@ -2019,44 +2158,14 @@
         });
 
         // Copy referral link
-        document.getElementById('copyBtn').addEventListener('click', () => {
+        function copyReferralLink() {
             const referralLink = document.getElementById('referralLink').textContent;
             navigator.clipboard.writeText(referralLink).then(() => {
                 showNotification('Referral link copied to clipboard!', 'success');
             }).catch(err => {
                 showNotification('Failed to copy referral link.', 'error');
             });
-        });
-
-        // Open social media button click
-        document.querySelectorAll('.open-social-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const link = e.target.getAttribute('data-link');
-                const taskId = e.target.getAttribute('data-task');
-                
-                // Open the link
-                window.open(link, '_blank');
-                
-                // Enable the complete button
-                const completeBtn = document.querySelector(`.complete-social-btn[data-task="${taskId}"]`);
-                completeBtn.disabled = false;
-                
-                showNotification('Channel opened! Complete the action and mark as completed.', 'info');
-            });
-        });
-
-        // Complete social task button click
-        document.querySelectorAll('.complete-social-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const taskId = e.target.getAttribute('data-task');
-                
-                if (taskId === 'youtube-subscribe') {
-                    completeSocialTask(taskId, 0.15);
-                } else if (taskId === 'telegram-join') {
-                    completeSocialTask(taskId, 0.05);
-                }
-            });
-        });
+        }
 
         // Initialize app
         window.onload = function() {
@@ -2072,5 +2181,3 @@
     </script>
 </body>
 </html>
-
-
