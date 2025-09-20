@@ -102,7 +102,7 @@
             padding-bottom: 80px;
             overflow-y: auto;
             position: relative;
-            height: calc(100vh - 140px); /* Fixed height calculation */
+            height: calc(100vh - 140px);
         }
 
         .tab-content {
@@ -339,20 +339,22 @@
             font-weight: 700;
             color: #ffffff;
         }
+        
         .checkin-btn {
-        background: white;
-        color: var(--checkin);
-        border: none;
-        padding: 15px 20px;
-        border-radius: 20px;
-        font-size: 14px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        white-space: nowrap;
-        z-index: 0;
+            background: white;
+            color: var(--checkin);
+            border: none;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+            z-index: 0;
         }
+        
         .checkin-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
@@ -424,19 +426,20 @@
             color: var(--success);
         }
 
-            .featured-btn {
-        background: white;
-        color: var(--primary);
-        border: none;
-        padding: 15px 20px;
-        border-radius: 20px;
-        font-size: 14px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        white-space: nowrap;
-        z-index: 0;
+        .featured-btn {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+            z-index: 0;
+            position: relative;
         }
 
         .featured-btn:hover {
@@ -448,6 +451,36 @@
             background: rgba(255, 255, 255, 0.5);
             cursor: not-allowed;
             transform: none;
+        }
+
+        /* Ad loading overlay */
+        .ad-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+        }
+
+        .ad-loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Social Media Cards - NEW THEME */
@@ -622,6 +655,8 @@
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             white-space: nowrap;
+            position: relative;
+            z-index: 1;
         }
 
         .link-btn:hover {
@@ -717,6 +752,11 @@
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 5px;
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
         }
 
         .referral-stat-label {
@@ -1181,7 +1221,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="openLinkTask('link-task-1', 'https://www.revenuecpmgate.com/kfarq0tuw?key=e6a1cde9dcf8a5bf8f73fb24245c3de5')" class="link-btn" id="linkTask1Btn">
+                        <button class="link-btn" id="linkTask1Btn">
                             Open Link
                         </button>
                     </div>
@@ -1197,7 +1237,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="openLinkTask('link-task-2', 'https://www.revenuecpmgate.com/tutkw1sahh?key=272554dae7b213c13d92f046080861a2')" class="link-btn" id="linkTask2Btn">
+                        <button class="link-btn" id="linkTask2Btn">
                             Open Link
                         </button>
                     </div>
@@ -1213,7 +1253,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="openLinkTask('link-task-3', 'https://www.revenuecpmgate.com/tqypp62y2w?key=74cc971fb77af7a1038cdccbafd2432f')" class="link-btn" id="linkTask3Btn">
+                        <button class="link-btn" id="linkTask3Btn">
                             Open Link
                         </button>
                     </div>
@@ -1229,7 +1269,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="openLinkTask('link-task-4', 'https://www.revenuecpmgate.com/abxysby62i?key=4061879b22a9fa181066a0f2c57ae72d')" class="link-btn" id="linkTask4Btn">
+                        <button class="link-btn" id="linkTask4Btn">
                             Open Link
                         </button>
                     </div>
@@ -1245,7 +1285,7 @@
                                 <div class="link-reward">Reward: $0.06</div>
                             </div>
                         </div>
-                        <button onclick="openLinkTask('link-task-5', 'https://www.revenuecpmgate.com/ebpv48yuy?key=ec6b3137e555bdf5c6d2e3664ce83ed0')" class="link-btn" id="linkTask5Btn">
+                        <button class="link-btn" id="linkTask5Btn">
                             Open Link
                         </button>
                     </div>
@@ -1423,6 +1463,12 @@
             <i class="fas fa-check-circle"></i>
             <span id="notificationText">Success!</span>
         </div>
+
+        <!-- Ad Loading Overlay -->
+        <div class="ad-loading-overlay" id="adLoadingOverlay" style="display: none;">
+            <div class="ad-loading-spinner"></div>
+            <p>Loading ad, please wait...</p>
+        </div>
     </div>
 
     <script>
@@ -1447,9 +1493,18 @@
             referralEarnings: 0.00,
             withdrawalHistory: [],
             joinedAt: new Date().toISOString(),
-            lastCheckIn: null, // Store last check-in date (YYYY-MM-DD format)
-            lastTaskReset: null, // Store last task reset date (YYYY-MM-DD format)
-            featuredAdsWatchedToday: 0 // Track featured ads watched today
+            lastCheckIn: null,
+            lastTaskReset: null,
+            featuredAdsWatchedToday: 0
+        };
+
+        // Link task URLs
+        const linkTaskUrls = {
+            'linkTask1Btn': 'https://www.revenuecpmgate.com/kfarq0tuw?key=e6a1cde9dcf8a5bf8f73fb24245c3de5',
+            'linkTask2Btn': 'https://www.revenuecpmgate.com/tutkw1sahh?key=272554dae7b213c13d92f046080861a2',
+            'linkTask3Btn': 'https://www.revenuecpmgate.com/tqypp62y2w?key=74cc971fb77af7a1038cdccbafd2432f',
+            'linkTask4Btn': 'https://www.revenuecpmgate.com/abxysby62i?key=4061879b22a9fa181066a0f2c57ae72d',
+            'linkTask5Btn': 'https://www.revenuecpmgate.com/ebpv48yuy?key=ec6b3137e555bdf5c6d2e3664ce83ed0'
         };
 
         // Daily Check In function
@@ -1511,23 +1566,34 @@
                 return;
             }
             
+            const featuredBtn = document.getElementById('featuredAdBtn');
+            
+            // Show loading overlay
+            document.getElementById('adLoadingOverlay').style.display = 'flex';
+            
             // Rewarded interstitial
             show_9891560().then(() => {
+                // Hide loading overlay
+                document.getElementById('adLoadingOverlay').style.display = 'none';
+                
                 // Add reward after watching ad
                 userData.featuredAdsWatchedToday++; // Increment featured ads count
                 addReward(0.08);
                 updateFeaturedAdButton(); // Update button text and state
                 showNotification('Congratulations! You have earned $0.08', 'success');
             }).catch(error => {
+                // Hide loading overlay
+                document.getElementById('adLoadingOverlay').style.display = 'none';
+                
                 showNotification('Failed to load ad. Please try again later.', 'error');
                 console.error('Ad error:', error);
+                updateFeaturedAdButton(); // Restore button state
             });
         }
 
         // Update featured ad button text and state
         function updateFeaturedAdButton() {
             const featuredBtn = document.getElementById('featuredAdBtn');
-            // Ensure featuredAdsWatchedToday is a number, default to 0 if undefined
             const watchedCount = userData.featuredAdsWatchedToday || 0;
             
             if (watchedCount >= 30) {
@@ -1565,40 +1631,56 @@
                 return;
             }
             
+            // Get the button element
+            const button = document.getElementById(taskId);
+            
+            // Show loading state
+            button.disabled = true;
+            button.textContent = 'Opening...';
+            
             // Open the link in Telegram
-            tg.openLink(link);
-            
-            // Add reward and mark task as completed
-            const reward = 0.06; // Updated reward to $0.06
-            userData.balance += reward;
-            userData.totalEarning += reward;
-            userData.tasksDoneToday++;
-            userData.clicks++;
-            userData.completedTasks.push(taskId);
-            
-            saveUserData();
-            updateUI();
-            updateLinkTaskButton(taskId);
-            updateTaskLimit();
-            
-            showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
-            
-            // Check if user completed 5 tasks and was referred
-            if (userData.tasksDoneToday === 5 && userData.referredBy) {
-                setTimeout(() => {
-                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
-                }, 1000);
+            try {
+                tg.openLink(link);
+                
+                // Add reward and mark task as completed
+                const reward = 0.06; // Updated reward to $0.06
+                userData.balance += reward;
+                userData.totalEarning += reward;
+                userData.tasksDoneToday++;
+                userData.clicks++;
+                userData.completedTasks.push(taskId);
+                
+                saveUserData();
+                updateUI();
+                updateLinkTaskButton(taskId);
+                updateTaskLimit();
+                
+                showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
+                
+                // Check if user completed 5 tasks and was referred
+                if (userData.tasksDoneToday === 5 && userData.referredBy) {
+                    setTimeout(() => {
+                        showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
+                    }, 1000);
+                }
+            } catch (error) {
+                console.error('Error opening link:', error);
+                showNotification('Failed to open link. Please try again.', 'error');
+                button.disabled = false;
+                button.textContent = 'Open Link';
             }
         }
 
         // Function to update a specific link task button
         function updateLinkTaskButton(taskId) {
-            // Find the button with the specific task ID
-            const button = document.getElementById(`${taskId}Btn`);
+            const button = document.getElementById(taskId);
             if (button) {
                 if (userData.completedTasks.includes(taskId)) {
                     button.disabled = true;
                     button.textContent = 'Completed';
+                } else if (userData.tasksDoneToday >= 35) {
+                    button.disabled = true;
+                    button.textContent = 'Limit Reached';
                 } else {
                     button.disabled = false;
                     button.textContent = 'Open Link';
@@ -1654,11 +1736,38 @@
         function loadUserData() {
             const savedData = localStorage.getItem('earnMoneyUserData');
             if (savedData) {
-                userData = JSON.parse(savedData);
-                // Ensure featuredAdsWatchedToday is initialized
-                if (userData.featuredAdsWatchedToday === undefined) {
-                    userData.featuredAdsWatchedToday = 0;
+                try {
+                    const parsedData = JSON.parse(savedData);
+                    
+                    // Merge saved data with default values to ensure all properties exist
+                    userData = {
+                        id: parsedData.id || (tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 12345),
+                        name: parsedData.name || (tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : 'User'),
+                        photo: parsedData.photo || (tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url ? tg.initDataUnsafe.user.photo_url : 'https://randomuser.me/api/portraits/men/1.jpg'),
+                        balance: parsedData.balance || 0.00,
+                        tasksDoneToday: parsedData.tasksDoneToday || 0,
+                        clicks: parsedData.clicks || 0,
+                        totalEarning: parsedData.totalEarning || 0.00,
+                        totalRefers: parsedData.totalRefers || 0,
+                        hasWithdrawnBefore: parsedData.hasWithdrawnBefore || false,
+                        completedTasks: parsedData.completedTasks || [],
+                        referralCode: parsedData.referralCode || '',
+                        referredBy: parsedData.referredBy || '',
+                        referralEarnings: parsedData.referralEarnings || 0.00,
+                        withdrawalHistory: parsedData.withdrawalHistory || [],
+                        joinedAt: parsedData.joinedAt || new Date().toISOString(),
+                        lastCheckIn: parsedData.lastCheckIn || null,
+                        lastTaskReset: parsedData.lastTaskReset || null,
+                        featuredAdsWatchedToday: parsedData.featuredAdsWatchedToday || 0
+                    };
+                } catch (error) {
+                    console.error('Error parsing saved data:', error);
+                    // If there's an error, use default values
+                    initializeDefaultUserData();
                 }
+            } else {
+                // If no saved data, initialize with default values
+                initializeDefaultUserData();
             }
             
             // Check for referral
@@ -1695,33 +1804,82 @@
             updateTaskLimit();
         }
 
+        // Helper function to initialize default user data
+        function initializeDefaultUserData() {
+            userData = {
+                id: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 12345,
+                name: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : 'User',
+                photo: tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url ? tg.initDataUnsafe.user.photo_url : 'https://randomuser.me/api/portraits/men/1.jpg',
+                balance: 0.00,
+                tasksDoneToday: 0,
+                clicks: 0,
+                totalEarning: 0.00,
+                totalRefers: 0,
+                hasWithdrawnBefore: false,
+                completedTasks: [],
+                referralCode: '',
+                referredBy: '',
+                referralEarnings: 0.00,
+                withdrawalHistory: [],
+                joinedAt: new Date().toISOString(),
+                lastCheckIn: null,
+                lastTaskReset: null,
+                featuredAdsWatchedToday: 0
+            };
+        }
+
         // Save user data to localStorage
         function saveUserData() {
-            localStorage.setItem('earnMoneyUserData', JSON.stringify(userData));
+            // Create a comprehensive data object
+            const dataToSave = {
+                id: userData.id,
+                name: userData.name,
+                photo: userData.photo,
+                balance: userData.balance,
+                tasksDoneToday: userData.tasksDoneToday,
+                clicks: userData.clicks,
+                totalEarning: userData.totalEarning,
+                totalRefers: userData.totalRefers,
+                hasWithdrawnBefore: userData.hasWithdrawnBefore,
+                completedTasks: userData.completedTasks,
+                referralCode: userData.referralCode,
+                referredBy: userData.referredBy,
+                referralEarnings: userData.referralEarnings,
+                withdrawalHistory: userData.withdrawalHistory,
+                joinedAt: userData.joinedAt,
+                lastCheckIn: userData.lastCheckIn,
+                lastTaskReset: userData.lastTaskReset,
+                featuredAdsWatchedToday: userData.featuredAdsWatchedToday
+            };
+            
+            localStorage.setItem('earnMoneyUserData', JSON.stringify(dataToSave));
         }
 
         // Update UI with user data
         function updateUI() {
-            document.getElementById('userName').textContent = userData.name;
-            document.getElementById('userAvatar').src = userData.photo;
-            document.getElementById('userBalance').textContent = userData.balance.toFixed(2);
-            document.getElementById('tasksDone').textContent = userData.tasksDoneToday;
-            document.getElementById('clicks').textContent = userData.clicks;
-            document.getElementById('totalEarning').textContent = userData.totalEarning.toFixed(2);
-            document.getElementById('totalRefers').textContent = userData.totalRefers;
-            document.getElementById('currentBalance').textContent = userData.balance.toFixed(2);
-            document.getElementById('referralCount').textContent = userData.totalRefers;
-            document.getElementById('referralEarnings').textContent = userData.referralEarnings.toFixed(2);
-            
-            // Update referral requirement
-            if (userData.hasWithdrawnBefore) {
-                document.getElementById('referralRequirement').textContent = 'No referral requirement';
-            } else {
-                document.getElementById('referralRequirement').textContent = `${userData.totalRefers}/30 referrals needed`;
-            }
-            
-            // Update withdraw button
-            updateWithdrawButton();
+            // Use requestAnimationFrame for smoother UI updates
+            requestAnimationFrame(() => {
+                document.getElementById('userName').textContent = userData.name;
+                document.getElementById('userAvatar').src = userData.photo;
+                document.getElementById('userBalance').textContent = userData.balance.toFixed(2);
+                document.getElementById('tasksDone').textContent = userData.tasksDoneToday;
+                document.getElementById('clicks').textContent = userData.clicks;
+                document.getElementById('totalEarning').textContent = userData.totalEarning.toFixed(2);
+                document.getElementById('totalRefers').textContent = userData.totalRefers;
+                document.getElementById('currentBalance').textContent = userData.balance.toFixed(2);
+                document.getElementById('referralCount').textContent = userData.totalRefers;
+                document.getElementById('referralEarnings').textContent = userData.referralEarnings.toFixed(2);
+                
+                // Update referral requirement
+                if (userData.hasWithdrawnBefore) {
+                    document.getElementById('referralRequirement').textContent = 'No referral requirement';
+                } else {
+                    document.getElementById('referralRequirement').textContent = `${userData.totalRefers}/30 referrals needed`;
+                }
+                
+                // Update withdraw button
+                updateWithdrawButton();
+            });
         }
 
         // Update task limit progress
@@ -1729,7 +1887,6 @@
             const progressFill = document.getElementById('taskProgress');
             const taskLimitText = document.getElementById('taskLimitText');
             const countdownContainer = document.getElementById('countdownContainer');
-            const countdown = document.getElementById('countdown');
             
             // Update progress
             const progress = (userData.tasksDoneToday / 35) * 100;
@@ -1740,20 +1897,7 @@
             if (userData.tasksDoneToday >= 35) {
                 // Show countdown
                 countdownContainer.style.display = 'block';
-                
-                // Calculate remaining time until midnight
-                const now = new Date();
-                const midnight = new Date();
-                midnight.setHours(24, 0, 0, 0); // Set to midnight tonight
-                const remaining = midnight - now;
-                
-                if (remaining > 0) {
-                    const hours = Math.floor(remaining / (1000 * 60 * 60));
-                    const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
-                    
-                    countdown.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                }
+                updateCountdown();
                 
                 // Disable all task buttons that aren't completed
                 disableLimitedTaskButtons();
@@ -1763,6 +1907,25 @@
                 
                 // Enable all task buttons that aren't completed
                 enableTaskButtons();
+            }
+        }
+
+        // Update countdown timer
+        function updateCountdown() {
+            const countdown = document.getElementById('countdown');
+            
+            // Calculate remaining time until midnight
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0); // Set to midnight tonight
+            const remaining = midnight - now;
+            
+            if (remaining > 0) {
+                const hours = Math.floor(remaining / (1000 * 60 * 60));
+                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+                
+                countdown.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
         }
 
@@ -1788,14 +1951,7 @@
             });
             
             // Link task buttons
-            for (let i = 1; i <= 5; i++) {
-                const taskId = `link-task-${i}`;
-                const button = document.getElementById(`${taskId}Btn`);
-                if (button && !userData.completedTasks.includes(taskId)) {
-                    button.disabled = true;
-                    button.textContent = 'Limit Reached';
-                }
-            }
+            updateLinkTaskButtons();
         }
 
         // Enable task buttons that aren't completed
@@ -1849,17 +2005,8 @@
         // Update link task buttons based on completion status
         function updateLinkTaskButtons() {
             for (let i = 1; i <= 5; i++) {
-                const taskId = `link-task-${i}`;
-                const button = document.getElementById(`${taskId}Btn`);
-                if (button) {
-                    if (userData.completedTasks.includes(taskId)) {
-                        button.disabled = true;
-                        button.textContent = 'Completed';
-                    } else {
-                        button.disabled = false;
-                        button.textContent = 'Open Link';
-                    }
-                }
+                const taskId = `linkTask${i}Btn`;
+                updateLinkTaskButton(taskId);
             }
         }
 
@@ -2057,14 +2204,36 @@
             });
         });
 
+        // Set up link task buttons with proper event listeners
+        function setupLinkTaskButtons() {
+            for (let i = 1; i <= 5; i++) {
+                const buttonId = `linkTask${i}Btn`;
+                const button = document.getElementById(buttonId);
+                
+                if (button) {
+                    // Remove any existing event listeners
+                    button.replaceWith(button.cloneNode(true));
+                    
+                    // Get the fresh button reference
+                    const freshButton = document.getElementById(buttonId);
+                    
+                    // Add event listener
+                    freshButton.addEventListener('click', () => {
+                        openLinkTask(buttonId, linkTaskUrls[buttonId]);
+                    });
+                }
+            }
+        }
+
         // Initialize app
         window.onload = function() {
             loadUserData();
+            setupLinkTaskButtons();
             
             // Update countdown every second
             setInterval(() => {
                 if (userData.tasksDoneToday >= 35) {
-                    updateTaskLimit();
+                    updateCountdown();
                 }
             }, 1000);
         };
