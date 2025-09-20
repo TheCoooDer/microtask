@@ -483,12 +483,12 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Social Media Cards - NEW THEME */
-        .social-task {
-            background: linear-gradient(135deg, var(--social), #9b59b6);
+        /* YouTube and Telegram Tasks - NEW DESIGN */
+        .youtube-task {
+            background: linear-gradient(135deg, var(--youtube), #cc0000);
             border-radius: 12px;
             padding: 15px;
-            box-shadow: 0 8px 20px rgba(142, 68, 173, 0.15);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.15);
             color: white;
             position: relative;
             overflow: hidden;
@@ -497,89 +497,103 @@
             justify-content: space-between;
         }
 
-        .social-task::before {
+        .youtube-task::before {
             content: '';
             position: absolute;
             top: -50%;
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
             transform: rotate(45deg);
         }
 
-        .social-left {
+        .telegram-task {
+            background: linear-gradient(135deg, var(--telegram), #006699);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.15);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .telegram-task::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(45deg);
+        }
+
+        .task-left {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .social-icon {
-            font-size: 28px;
+        .task-icon {
+            font-size: 32px;
             color: rgba(255, 255, 255, 0.9);
         }
 
-        .social-info {
+        .task-info {
             text-align: left;
         }
 
-        .social-title {
-            font-size: 16px;
+        .task-title {
+            font-size: 18px;
             font-weight: 700;
             margin-bottom: 4px;
         }
 
-        .social-description {
+        .task-description {
             font-size: 12px;
             opacity: 0.9;
             margin-bottom: 6px;
         }
 
-        .social-reward {
-            font-size: 13px;
+        .task-reward {
+            font-size: 14px;
             font-weight: 700;
             color: var(--warning);
         }
 
-        .social-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            align-items: flex-end;
-        }
-
-        .social-btn {
-            padding: 8px 14px;
-            border-radius: 18px;
-            font-size: 12px;
-            font-weight: 600;
+        .task-btn {
+            background: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             white-space: nowrap;
+            position: relative;
+            z-index: 1;
         }
 
-        .open-social-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        .youtube-task .task-btn {
+            color: var(--youtube);
         }
 
-        .open-social-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
+        .telegram-task .task-btn {
+            color: var(--telegram);
         }
 
-        .complete-social-btn {
-            background: white;
-            color: var(--social);
+        .task-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .complete-social-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .complete-social-btn:disabled {
+        .task-btn:disabled {
             background: rgba(255, 255, 255, 0.5);
             cursor: not-allowed;
             transform: none;
@@ -1165,48 +1179,38 @@
                         </button>
                     </div>
                     
-                    <!-- YouTube Subscribe Task - NEW THEME -->
-                    <div class="social-task">
-                        <div class="social-left">
-                            <div class="social-icon">
+                    <!-- YouTube Subscribe Task - NEW DESIGN -->
+                    <div class="youtube-task">
+                        <div class="task-left">
+                            <div class="task-icon">
                                 <i class="fab fa-youtube"></i>
                             </div>
-                            <div class="social-info">
-                                <div class="social-title">Subscribe YouTube</div>
-                                <div class="social-description">Subscribe to our channel</div>
-                                <div class="social-reward">Reward: $0.15</div>
+                            <div class="task-info">
+                                <div class="task-title">Subscribe YouTube</div>
+                                <div class="task-description">Subscribe to our channel</div>
+                                <div class="task-reward">Reward: $0.15</div>
                             </div>
                         </div>
-                        <div class="social-buttons">
-                            <button class="social-btn open-social-btn" data-link="https://www.youtube.com/@SufyanCircuit" data-task="youtube-subscribe">
-                                Open
-                            </button>
-                            <button class="social-btn complete-social-btn" data-task="youtube-subscribe" id="youtubeCompleteBtn" disabled>
-                                Done
-                            </button>
-                        </div>
+                        <button class="task-btn" id="youtubeTaskBtn">
+                            Subscribe Now
+                        </button>
                     </div>
                     
-                    <!-- Telegram Join Task - NEW THEME -->
-                    <div class="social-task">
-                        <div class="social-left">
-                            <div class="social-icon">
+                    <!-- Telegram Join Task - NEW DESIGN -->
+                    <div class="telegram-task">
+                        <div class="task-left">
+                            <div class="task-icon">
                                 <i class="fab fa-telegram-plane"></i>
                             </div>
-                            <div class="social-info">
-                                <div class="social-title">Join Telegram</div>
-                                <div class="social-description">Join our channel</div>
-                                <div class="social-reward">Reward: $0.05</div>
+                            <div class="task-info">
+                                <div class="task-title">Join Telegram</div>
+                                <div class="task-description">Join our channel</div>
+                                <div class="task-reward">Reward: $0.05</div>
                             </div>
                         </div>
-                        <div class="social-buttons">
-                            <button class="social-btn open-social-btn" data-link="https://t.me/EarnOnlineWithSufyan" data-task="telegram-join">
-                                Open
-                            </button>
-                            <button class="social-btn complete-social-btn" data-task="telegram-join" id="telegramCompleteBtn" disabled>
-                                Done
-                            </button>
-                        </div>
+                        <button class="task-btn" id="telegramTaskBtn">
+                            Join Now
+                        </button>
                     </div>
                     
                     <!-- Link Tasks -->
@@ -1507,6 +1511,12 @@
             'linkTask5Btn': 'https://www.revenuecpmgate.com/ebpv48yuy?key=ec6b3137e555bdf5c6d2e3664ce83ed0'
         };
 
+        // Social task URLs
+        const socialTaskUrls = {
+            'youtubeTaskBtn': 'https://www.youtube.com/@SufyanCircuit',
+            'telegramTaskBtn': 'https://t.me/EarnOnlineWithSufyan'
+        };
+
         // Function to get all users data
         function getAllUsersData() {
             const allUsersData = localStorage.getItem('allUsersData');
@@ -1608,6 +1618,9 @@
             
             // Update link task buttons
             updateLinkTaskButtons();
+            
+            // Update social task buttons
+            updateSocialTaskButtons();
             
             updateUI();
             updateTaskLimit();
@@ -1777,6 +1790,59 @@
             }
         }
 
+        // Function to open social task (YouTube/Telegram)
+        function openSocialTask(taskId, link, reward) {
+            // Check if task is already completed
+            if (userData.completedTasks.includes(taskId)) {
+                showNotification('You have already completed this task.', 'error');
+                return;
+            }
+            
+            // Check daily task limit
+            if (userData.tasksDoneToday >= 35) {
+                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
+                return;
+            }
+            
+            // Get the button element
+            const button = document.getElementById(taskId);
+            
+            // Show loading state
+            button.disabled = true;
+            button.textContent = 'Opening...';
+            
+            // Open the link in Telegram
+            try {
+                tg.openLink(link);
+                
+                // Add reward and mark task as completed
+                userData.balance += reward;
+                userData.totalEarning += reward;
+                userData.tasksDoneToday++;
+                userData.clicks++;
+                userData.completedTasks.push(taskId);
+                
+                saveUserData();
+                updateUI();
+                updateSocialTaskButton(taskId);
+                updateTaskLimit();
+                
+                showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
+                
+                // Check if user completed 5 tasks and was referred
+                if (userData.tasksDoneToday === 5 && userData.referredBy) {
+                    setTimeout(() => {
+                        showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
+                    }, 1000);
+                }
+            } catch (error) {
+                console.error('Error opening link:', error);
+                showNotification('Failed to open link. Please try again.', 'error');
+                button.disabled = false;
+                button.textContent = taskId === 'youtubeTaskBtn' ? 'Subscribe Now' : 'Join Now';
+            }
+        }
+
         // Function to update a specific link task button
         function updateLinkTaskButton(taskId) {
             const button = document.getElementById(taskId);
@@ -1790,6 +1856,23 @@
                 } else {
                     button.disabled = false;
                     button.textContent = 'Open Link';
+                }
+            }
+        }
+
+        // Function to update a specific social task button
+        function updateSocialTaskButton(taskId) {
+            const button = document.getElementById(taskId);
+            if (button) {
+                if (userData.completedTasks.includes(taskId)) {
+                    button.disabled = true;
+                    button.textContent = 'Completed';
+                } else if (userData.tasksDoneToday >= 35) {
+                    button.disabled = true;
+                    button.textContent = 'Limit Reached';
+                } else {
+                    button.disabled = false;
+                    button.textContent = taskId === 'youtubeTaskBtn' ? 'Subscribe Now' : 'Join Now';
                 }
             }
         }
@@ -1926,12 +2009,7 @@
             updateFeaturedAdButton();
             
             // Social task buttons
-            document.querySelectorAll('.complete-social-btn').forEach(btn => {
-                if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
-                    btn.disabled = true;
-                    btn.textContent = 'Limit Reached';
-                }
-            });
+            updateSocialTaskButtons();
             
             // Link task buttons
             updateLinkTaskButtons();
@@ -1951,12 +2029,7 @@
             updateFeaturedAdButton();
             
             // Social task buttons
-            document.querySelectorAll('.complete-social-btn').forEach(btn => {
-                if (!userData.completedTasks.includes(btn.getAttribute('data-task'))) {
-                    btn.disabled = false;
-                    btn.textContent = 'Done';
-                }
-            });
+            updateSocialTaskButtons();
             
             // Link task buttons
             updateLinkTaskButtons();
@@ -1964,25 +2037,7 @@
 
         // Update task buttons based on completion status
         function updateTaskButtons() {
-            // YouTube task
-            const youtubeCompleteBtn = document.getElementById('youtubeCompleteBtn');
-            if (userData.completedTasks.includes('youtube-subscribe')) {
-                youtubeCompleteBtn.disabled = true;
-                youtubeCompleteBtn.textContent = 'Completed';
-            } else {
-                youtubeCompleteBtn.disabled = false;
-                youtubeCompleteBtn.textContent = 'Done';
-            }
-            
-            // Telegram task
-            const telegramCompleteBtn = document.getElementById('telegramCompleteBtn');
-            if (userData.completedTasks.includes('telegram-join')) {
-                telegramCompleteBtn.disabled = true;
-                telegramCompleteBtn.textContent = 'Completed';
-            } else {
-                telegramCompleteBtn.disabled = false;
-                telegramCompleteBtn.textContent = 'Done';
-            }
+            // This function is now handled by individual update functions
         }
 
         // Update link task buttons based on completion status
@@ -1991,6 +2046,12 @@
                 const taskId = `linkTask${i}Btn`;
                 updateLinkTaskButton(taskId);
             }
+        }
+
+        // Update social task buttons based on completion status
+        function updateSocialTaskButtons() {
+            updateSocialTaskButton('youtubeTaskBtn');
+            updateSocialTaskButton('telegramTaskBtn');
         }
 
         // Show notification
@@ -2037,33 +2098,6 @@
             if (clickedNavItem) {
                 clickedNavItem.classList.add('active');
             }
-        }
-
-        // Complete social media task
-        function completeSocialTask(taskId, reward) {
-            if (userData.completedTasks.includes(taskId)) {
-                showNotification('You have already completed this task.', 'error');
-                return;
-            }
-            
-            // Check daily task limit
-            if (userData.tasksDoneToday >= 35) {
-                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
-                return;
-            }
-            
-            userData.balance += reward;
-            userData.totalEarning += reward;
-            userData.tasksDoneToday++;
-            userData.clicks++;
-            userData.completedTasks.push(taskId);
-            
-            saveUserData();
-            updateUI();
-            updateTaskButtons();
-            updateTaskLimit();
-            
-            showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
         }
 
         // Update withdraw button
@@ -2157,36 +2191,6 @@
             });
         });
 
-        // Open social media button click
-        document.querySelectorAll('.open-social-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const link = e.target.getAttribute('data-link');
-                const taskId = e.target.getAttribute('data-task');
-                
-                // Open the link
-                window.open(link, '_blank');
-                
-                // Enable the complete button
-                const completeBtn = document.querySelector(`.complete-social-btn[data-task="${taskId}"]`);
-                completeBtn.disabled = false;
-                
-                showNotification('Channel opened! Complete the action and mark as completed.', 'info');
-            });
-        });
-
-        // Complete social task button click
-        document.querySelectorAll('.complete-social-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const taskId = e.target.getAttribute('data-task');
-                
-                if (taskId === 'youtube-subscribe') {
-                    completeSocialTask(taskId, 0.15);
-                } else if (taskId === 'telegram-join') {
-                    completeSocialTask(taskId, 0.05);
-                }
-            });
-        });
-
         // Set up link task buttons with proper event listeners
         function setupLinkTaskButtons() {
             for (let i = 1; i <= 5; i++) {
@@ -2208,10 +2212,34 @@
             }
         }
 
+        // Set up social task buttons with proper event listeners
+        function setupSocialTaskButtons() {
+            // YouTube button
+            const youtubeBtn = document.getElementById('youtubeTaskBtn');
+            if (youtubeBtn) {
+                youtubeBtn.replaceWith(youtubeBtn.cloneNode(true));
+                const freshYoutubeBtn = document.getElementById('youtubeTaskBtn');
+                freshYoutubeBtn.addEventListener('click', () => {
+                    openSocialTask('youtubeTaskBtn', socialTaskUrls['youtubeTaskBtn'], 0.15);
+                });
+            }
+            
+            // Telegram button
+            const telegramBtn = document.getElementById('telegramTaskBtn');
+            if (telegramBtn) {
+                telegramBtn.replaceWith(telegramBtn.cloneNode(true));
+                const freshTelegramBtn = document.getElementById('telegramTaskBtn');
+                freshTelegramBtn.addEventListener('click', () => {
+                    openSocialTask('telegramTaskBtn', socialTaskUrls['telegramTaskBtn'], 0.05);
+                });
+            }
+        }
+
         // Initialize app
         window.onload = function() {
             loadUserData();
             setupLinkTaskButtons();
+            setupSocialTaskButtons();
             
             // Update countdown every second
             setInterval(() => {
