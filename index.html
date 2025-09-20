@@ -1507,6 +1507,112 @@
             'linkTask5Btn': 'https://www.revenuecpmgate.com/ebpv48yuy?key=ec6b3137e555bdf5c6d2e3664ce83ed0'
         };
 
+        // Function to get all users data
+        function getAllUsersData() {
+            const allUsersData = localStorage.getItem('allUsersData');
+            if (allUsersData) {
+                try {
+                    return JSON.parse(allUsersData);
+                } catch (error) {
+                    console.error('Error parsing allUsersData:', error);
+                    return {};
+                }
+            } else {
+                return {};
+            }
+        }
+
+        // Function to save all users data
+        function saveAllUsersData(data) {
+            localStorage.setItem('allUsersData', JSON.stringify(data));
+        }
+
+        // Modified saveUserData function
+        function saveUserData() {
+            // Get all users data
+            let allUsers = getAllUsersData();
+            
+            // Update or add current user
+            allUsers[userData.id] = userData;
+            
+            // Save back to localStorage
+            saveAllUsersData(allUsers);
+        }
+
+        // Helper function to initialize default user data
+        function initializeDefaultUserData() {
+            userData = {
+                id: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 12345,
+                name: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : 'User',
+                photo: tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url ? tg.initDataUnsafe.user.photo_url : 'https://randomuser.me/api/portraits/men/1.jpg',
+                balance: 0.00,
+                tasksDoneToday: 0,
+                clicks: 0,
+                totalEarning: 0.00,
+                totalRefers: 0,
+                hasWithdrawnBefore: false,
+                completedTasks: [],
+                referralCode: '',
+                referredBy: '',
+                referralEarnings: 0.00,
+                withdrawalHistory: [],
+                joinedAt: new Date().toISOString(),
+                lastCheckIn: null,
+                lastTaskReset: null,
+                featuredAdsWatchedToday: 0
+            };
+        }
+
+        // Modified loadUserData function
+        function loadUserData() {
+            // Get all users data
+            const allUsers = getAllUsersData();
+            
+            // Check if current user exists
+            if (allUsers[userData.id]) {
+                // Load existing user data
+                userData = allUsers[userData.id];
+            } else {
+                // Initialize default user data for new user
+                initializeDefaultUserData();
+                // Save the new user
+                saveUserData();
+            }
+            
+            // Check for referral
+            checkReferral();
+            
+            // Check if task limit needs to be reset
+            checkTaskLimitReset();
+            
+            // Generate referral code if not exists
+            generateReferralCode();
+            
+            // Update referral link with your bot username
+            const botUsername = 'looking_money_ads_bot';
+            document.getElementById('referralLink').textContent = `https://t.me/${botUsername}?start=${userData.referralCode}`;
+            
+            // Update last updated date
+            const now = new Date();
+            const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+            document.getElementById('lastUpdated').textContent = formattedDate;
+            
+            // Update task completion status
+            updateTaskButtons();
+            
+            // Update check-in button
+            updateCheckInButton();
+            
+            // Update featured ad button
+            updateFeaturedAdButton();
+            
+            // Update link task buttons
+            updateLinkTaskButtons();
+            
+            updateUI();
+            updateTaskLimit();
+        }
+
         // Daily Check In function
         function dailyCheckIn() {
             const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
@@ -1730,129 +1836,6 @@
                 return true;
             }
             return false;
-        }
-
-        // Load user data from localStorage
-        function loadUserData() {
-            const savedData = localStorage.getItem('earnMoneyUserData');
-            if (savedData) {
-                try {
-                    const parsedData = JSON.parse(savedData);
-                    
-                    // Merge saved data with default values to ensure all properties exist
-                    userData = {
-                        id: parsedData.id || (tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 12345),
-                        name: parsedData.name || (tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : 'User'),
-                        photo: parsedData.photo || (tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url ? tg.initDataUnsafe.user.photo_url : 'https://randomuser.me/api/portraits/men/1.jpg'),
-                        balance: parsedData.balance || 0.00,
-                        tasksDoneToday: parsedData.tasksDoneToday || 0,
-                        clicks: parsedData.clicks || 0,
-                        totalEarning: parsedData.totalEarning || 0.00,
-                        totalRefers: parsedData.totalRefers || 0,
-                        hasWithdrawnBefore: parsedData.hasWithdrawnBefore || false,
-                        completedTasks: parsedData.completedTasks || [],
-                        referralCode: parsedData.referralCode || '',
-                        referredBy: parsedData.referredBy || '',
-                        referralEarnings: parsedData.referralEarnings || 0.00,
-                        withdrawalHistory: parsedData.withdrawalHistory || [],
-                        joinedAt: parsedData.joinedAt || new Date().toISOString(),
-                        lastCheckIn: parsedData.lastCheckIn || null,
-                        lastTaskReset: parsedData.lastTaskReset || null,
-                        featuredAdsWatchedToday: parsedData.featuredAdsWatchedToday || 0
-                    };
-                } catch (error) {
-                    console.error('Error parsing saved data:', error);
-                    // If there's an error, use default values
-                    initializeDefaultUserData();
-                }
-            } else {
-                // If no saved data, initialize with default values
-                initializeDefaultUserData();
-            }
-            
-            // Check for referral
-            checkReferral();
-            
-            // Check if task limit needs to be reset
-            checkTaskLimitReset();
-            
-            // Generate referral code if not exists
-            generateReferralCode();
-            
-            // Update referral link with your bot username
-            const botUsername = 'looking_money_ads_bot';
-            document.getElementById('referralLink').textContent = `https://t.me/${botUsername}?start=${userData.referralCode}`;
-            
-            // Update last updated date
-            const now = new Date();
-            const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
-            document.getElementById('lastUpdated').textContent = formattedDate;
-            
-            // Update task completion status
-            updateTaskButtons();
-            
-            // Update check-in button
-            updateCheckInButton();
-            
-            // Update featured ad button
-            updateFeaturedAdButton();
-            
-            // Update link task buttons
-            updateLinkTaskButtons();
-            
-            updateUI();
-            updateTaskLimit();
-        }
-
-        // Helper function to initialize default user data
-        function initializeDefaultUserData() {
-            userData = {
-                id: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 12345,
-                name: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : 'User',
-                photo: tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url ? tg.initDataUnsafe.user.photo_url : 'https://randomuser.me/api/portraits/men/1.jpg',
-                balance: 0.00,
-                tasksDoneToday: 0,
-                clicks: 0,
-                totalEarning: 0.00,
-                totalRefers: 0,
-                hasWithdrawnBefore: false,
-                completedTasks: [],
-                referralCode: '',
-                referredBy: '',
-                referralEarnings: 0.00,
-                withdrawalHistory: [],
-                joinedAt: new Date().toISOString(),
-                lastCheckIn: null,
-                lastTaskReset: null,
-                featuredAdsWatchedToday: 0
-            };
-        }
-
-        // Save user data to localStorage
-        function saveUserData() {
-            // Create a comprehensive data object
-            const dataToSave = {
-                id: userData.id,
-                name: userData.name,
-                photo: userData.photo,
-                balance: userData.balance,
-                tasksDoneToday: userData.tasksDoneToday,
-                clicks: userData.clicks,
-                totalEarning: userData.totalEarning,
-                totalRefers: userData.totalRefers,
-                hasWithdrawnBefore: userData.hasWithdrawnBefore,
-                completedTasks: userData.completedTasks,
-                referralCode: userData.referralCode,
-                referredBy: userData.referredBy,
-                referralEarnings: userData.referralEarnings,
-                withdrawalHistory: userData.withdrawalHistory,
-                joinedAt: userData.joinedAt,
-                lastCheckIn: userData.lastCheckIn,
-                lastTaskReset: userData.lastTaskReset,
-                featuredAdsWatchedToday: userData.featuredAdsWatchedToday
-            };
-            
-            localStorage.setItem('earnMoneyUserData', JSON.stringify(dataToSave));
         }
 
         // Update UI with user data
