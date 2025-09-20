@@ -2248,6 +2248,316 @@
                 }
             }, 1000);
         };
+        // Add these functions to your main app's JavaScript
+
+// Get task configurations
+function getTaskConfigs() {
+    const taskConfigsData = localStorage.getItem('taskConfigs');
+    if (taskConfigsData) {
+        try {
+            return JSON.parse(taskConfigsData);
+        } catch (error) {
+            console.error('Error parsing taskConfigs:', error);
+            return {};
+        }
+    }
+    return {};
+}
+
+// Generate tasks dynamically
+function generateTasks() {
+    const taskConfigs = getTaskConfigs();
+    const taskList = document.getElementById('taskList');
+    taskList.innerHTML = ''; // Clear existing tasks
+
+    // Define task order
+    const taskOrder = ['checkin', 'featured', 'youtube', 'telegram'];
+    const linkTasks = [];
+
+    // First, add tasks in the defined order
+    taskOrder.forEach(taskId => {
+        if (taskConfigs[taskId]) {
+            renderTask(taskConfigs[taskId], taskList);
+        }
+    });
+
+    // Then add link tasks
+    for (const taskId in taskConfigs) {
+        if (taskConfigs[taskId].type === 'link' && !taskOrder.includes(taskId)) {
+            linkTasks.push(taskConfigs[taskId]);
+        }
+    }
+
+    // Sort link tasks by ID
+    linkTasks.sort((a, b) => a.id.localeCompare(b.id));
+    
+    // Render link tasks
+    linkTasks.forEach(task => {
+        renderTask(task, taskList);
+    });
+}
+
+// Render individual task
+function renderTask(task, container) {
+    let taskElement;
+
+    switch (task.type) {
+        case 'checkin':
+            taskElement = createCheckinTask(task);
+            break;
+        case 'featured':
+            taskElement = createFeaturedTask(task);
+            break;
+        case 'youtube':
+            taskElement = createYouTubeTask(task);
+            break;
+        case 'telegram':
+            taskElement = createTelegramTask(task);
+            break;
+        case 'link':
+            taskElement = createLinkTask(task);
+            break;
+        default:
+            return;
+    }
+
+    container.appendChild(taskElement);
+}
+
+// Create check-in task element
+function createCheckinTask(task) {
+    const div = document.createElement('div');
+    div.className = 'checkin-task';
+    div.innerHTML = `
+        <div class="checkin-left">
+            <div class="checkin-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="checkin-info">
+                <div class="checkin-title">${task.name}</div>
+                <div class="checkin-description">${task.description}</div>
+                <div class="checkin-reward">Reward: $${task.reward.toFixed(2)}</div>
+            </div>
+        </div>
+        <button onclick="dailyCheckIn()" class="checkin-btn" id="checkinBtn">
+            Check In
+        </button>
+    `;
+    return div;
+}
+
+// Create featured ad task element
+function createFeaturedTask(task) {
+    const div = document.createElement('div');
+    div.className = 'featured-task';
+    div.innerHTML = `
+        <div class="featured-left">
+            <div class="featured-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="featured-info">
+                <div class="featured-title">${task.name}</div>
+                <div class="featured-description">${task.description}</div>
+                <div class="featured-reward">Reward: $${task.reward.toFixed(2)}</div>
+            </div>
+        </div>
+        <button onclick="Watched()" class="featured-btn" id="featuredAdBtn">
+            Watch Now (0/30)
+        </button>
+    `;
+    return div;
+}
+
+// Create YouTube task element
+function createYouTubeTask(task) {
+    const div = document.createElement('div');
+    div.className = 'youtube-task';
+    div.innerHTML = `
+        <div class="task-left">
+            <div class="task-icon">
+                <i class="fab fa-youtube"></i>
+            </div>
+            <div class="task-info">
+                <div class="task-title">${task.name}</div>
+                <div class="task-description">${task.description}</div>
+                <div class="task-reward">Reward: $${task.reward.toFixed(2)}</div>
+            </div>
+        </div>
+        <button class="task-btn" id="youtubeTaskBtn" onclick="openSocialTask('youtubeTaskBtn', '${task.url}', ${task.reward})">
+            Subscribe Now
+        </button>
+    `;
+    return div;
+}
+
+// Create Telegram task element
+function createTelegramTask(task) {
+    const div = document.createElement('div');
+    div.className = 'telegram-task';
+    div.innerHTML = `
+        <div class="task-left">
+            <div class="task-icon">
+                <i class="fab fa-telegram-plane"></i>
+            </div>
+            <div class="task-info">
+                <div class="task-title">${task.name}</div>
+                <div class="task-description">${task.description}</div>
+                <div class="task-reward">Reward: $${task.reward.toFixed(2)}</div>
+            </div>
+        </div>
+        <button class="task-btn" id="telegramTaskBtn" onclick="openSocialTask('telegramTaskBtn', '${task.url}', ${task.reward})">
+            Join Now
+        </button>
+    `;
+    return div;
+}
+
+// Create link task element
+function createLinkTask(task) {
+    const div = document.createElement('div');
+    div.className = 'link-task';
+    div.innerHTML = `
+        <div class="link-left">
+            <div class="link-icon">
+                <i class="fas fa-link"></i>
+            </div>
+            <div class="link-info">
+                <div class="link-title">${task.name}</div>
+                <div class="link-description">${task.description}</div>
+                <div class="link-reward">Reward: $${task.reward.toFixed(2)}</div>
+            </div>
+        </div>
+        <button class="link-btn" id="${task.id}Btn" onclick="openLinkTask('${task.id}Btn', '${task.url}')">
+            Open Link
+        </button>
+    `;
+    return div;
+}
+
+// Modify the openSocialTask function to accept reward as parameter
+function openSocialTask(taskId, link, reward) {
+    // Check if task is already completed
+    if (userData.completedTasks.includes(taskId)) {
+        showNotification('You have already completed this task.', 'error');
+        return;
+    }
+    
+    // Check daily task limit
+    if (userData.tasksDoneToday >= 35) {
+        showNotification('Daily task limit reached. Try again tomorrow.', 'error');
+        return;
+    }
+    
+    // Get the button element
+    const button = document.getElementById(taskId);
+    
+    // Show loading state
+    button.disabled = true;
+    button.textContent = 'Opening...';
+    
+    // Open the link in Telegram
+    try {
+        tg.openLink(link);
+        
+        // Add reward and mark task as completed
+        userData.balance += reward;
+        userData.totalEarning += reward;
+        userData.tasksDoneToday++;
+        userData.clicks++;
+        userData.completedTasks.push(taskId);
+        
+        saveUserData();
+        updateUI();
+        updateSocialTaskButton(taskId);
+        updateTaskLimit();
+        
+        showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
+        
+        // Check if user completed 5 tasks and was referred
+        if (userData.tasksDoneToday === 5 && userData.referredBy) {
+            setTimeout(() => {
+                showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
+            }, 1000);
+        }
+    } catch (error) {
+        console.error('Error opening link:', error);
+        showNotification('Failed to open link. Please try again.', 'error');
+        button.disabled = false;
+        button.textContent = taskId === 'youtubeTaskBtn' ? 'Subscribe Now' : 'Join Now';
+    }
+}
+
+// Modify the openLinkTask function to accept reward from task configs
+function openLinkTask(taskId, link) {
+    // Check if task is already completed
+    if (userData.completedTasks.includes(taskId)) {
+        showNotification('You have already completed this task.', 'error');
+        return;
+    }
+    
+    // Check daily task limit
+    if (userData.tasksDoneToday >= 35) {
+        showNotification('Daily task limit reached. Try again tomorrow.', 'error');
+        return;
+    }
+    
+    // Get the button element
+    const button = document.getElementById(taskId);
+    
+    // Show loading state
+    button.disabled = true;
+    button.textContent = 'Opening...';
+    
+    // Open the link in Telegram
+    try {
+        tg.openLink(link);
+        
+        // Get reward from task configs
+        const taskConfigs = getTaskConfigs();
+        const task = Object.values(taskConfigs).find(t => t.id === taskId.replace('Btn', ''));
+        const reward = task ? task.reward : 0.06;
+        
+        // Add reward and mark task as completed
+        userData.balance += reward;
+        userData.totalEarning += reward;
+        userData.tasksDoneToday++;
+        userData.clicks++;
+        userData.completedTasks.push(taskId);
+        
+        saveUserData();
+        updateUI();
+        updateLinkTaskButton(taskId);
+        updateTaskLimit();
+        
+        showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
+        
+        // Check if user completed 5 tasks and was referred
+        if (userData.tasksDoneToday === 5 && userData.referredBy) {
+            setTimeout(() => {
+                showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
+            }, 1000);
+        }
+    } catch (error) {
+        console.error('Error opening link:', error);
+        showNotification('Failed to open link. Please try again.', 'error');
+        button.disabled = false;
+        button.textContent = 'Open Link';
+    }
+}
+
+// Modify the window.onload function to generate tasks dynamically
+window.onload = function() {
+    loadUserData();
+    generateTasks(); // Generate tasks dynamically
+    
+    // Update countdown every second
+    setInterval(() => {
+        if (userData.tasksDoneToday >= 35) {
+            updateCountdown();
+        }
+    }, 1000);
+};
     </script>
 </body>
 </html>
+
