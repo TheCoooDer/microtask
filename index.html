@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* All your existing CSS styles remain the same */
+        /* All your existing CSS remains the same */
         :root {
             --primary: #4361ee;
             --secondary: #3f37c9;
@@ -1017,21 +1017,6 @@
             color: var(--primary);
         }
 
-        /* Loading Spinner */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         /* Responsive */
         @media (max-width: 500px) {
             .app-container {
@@ -1443,26 +1428,18 @@
     </div>
 
     <script>
-        // Google Sheets Configuration
-        const SHEET_ID = '1GXsWvNejxBw1MQuqlbPZsP9NVmzSzma4GuSLJSNiT90'; // Replace with your Google Sheet ID
-        const API_KEY = 'AIzaSyCW8u7-BEDXTB22aBml0HMfAGLVAYFTIUY'; // Replace with your API key (if needed)
-        
-        // Google Sheets API endpoints
-        const SHEET_USERS_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Users!A1:Z1000?key=${API_KEY}`;
-        const SHEET_TASKS_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Tasks!A1:Z1000?key=${API_KEY}`;
-        const SHEET_WITHDRAWALS_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Withdrawals!A1:Z1000?key=${API_KEY}`;
-        const SHEET_REFERRALS_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Referrals!A1:Z1000?key=${API_KEY}`;
-        
+        // Google Apps Script Configuration
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwtXCrfWDXGfta84sPdi7pRLMjFgs3yo5So0PaKh_i64dZWMOu2z_dcrtyCXk42m4oo/exec"; // Replace with your deployed Apps Script URL
+
         // Initialize Telegram Web App
         let tg = window.Telegram.WebApp;
         tg.expand();
-        
+
         // User data
         let userData = {
-            id: null,
-            telegram_id: null,
-            name: '',
-            photo: 'https://randomuser.me/api/portraits/men/1.jpg',
+            id: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 12345,
+            name: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : 'User',
+            photo: tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url ? tg.initDataUnsafe.user.photo_url : 'https://randomuser.me/api/portraits/men/1.jpg',
             balance: 0.00,
             tasksDoneToday: 0,
             clicks: 0,
@@ -1478,257 +1455,44 @@
             lastCheckIn: null,
             lastTaskReset: null,
             featuredAdsWatchedToday: 0,
-            phoneNumber: '',
-            isAuthenticated: false
+            phoneNumber: ''
         };
-        
-        // Google Sheets API Helper Functions
-        async function fetchSheetData(url) {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                return data.values || [];
-            } catch (error) {
-                console.error('Error fetching sheet data:', error);
-                return [];
-            }
-        }
-        
-        async function updateSheetData(range, values) {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}:append?valueInputOption=USER_ENTERED&key=${API_KEY}`;
-            
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        values: [values]
-                    })
-                });
-                
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error('Error updating sheet data:', error);
-                throw error;
-            }
-        }
-        
-        // Authentication
-        async function authenticateUser() {
-            try {
-                if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
-                    showNotification('Please open this app from Telegram', 'error');
-                    return false;
-                }
-                
-                const telegramUser = tg.initDataUnsafe.user;
-                userData.id = telegramUser.id;
-                userData.telegram_id = telegramUser.id;
-                userData.name = telegramUser.first_name;
-                userData.photo = telegramUser.photo_url || userData.photo;
-                
-                // Check if user exists in Google Sheets
-                const usersData = await fetchSheetData(SHEET_USERS_URL);
-                let userExists = false;
-                
-                // Skip header row
-                for (let i = 1; i < usersData.length; i++) {
-                    const row = usersData[i];
-                    if (row[0] == userData.id) {
-                        // User exists, load data
-                        userData.balance = parseFloat(row[4]) || 0;
-                        userData.tasksDoneToday = parseInt(row[5]) || 0;
-                        userData.clicks = parseInt(row[6]) || 0;
-                        userData.totalEarning = parseFloat(row[7]) || 0;
-                        userData.totalRefers = parseInt(row[8]) || 0;
-                        userData.hasWithdrawnBefore = row[9] === 'TRUE';
-                        userData.completedTasks = row[10] ? row[10].split(',') : [];
-                        userData.referralCode = row[11] || '';
-                        userData.referredBy = row[12] || '';
-                        userData.referralEarnings = parseFloat(row[13]) || 0;
-                        userData.lastCheckIn = row[14] ? new Date(row[14]) : null;
-                        userData.lastTaskReset = row[15] ? new Date(row[15]) : new Date();
-                        userData.featuredAdsWatchedToday = parseInt(row[16]) || 0;
-                        userData.phoneNumber = row[17] || '';
-                        userData.isAuthenticated = true;
-                        userExists = true;
-                        break;
-                    }
-                }
-                
-                // If user doesn't exist, create a new user
-                if (!userExists) {
-                    userData.referralCode = generateReferralCode();
-                    userData.isAuthenticated = true;
-                    
-                    // Save new user to Google Sheets
-                    const newUserRow = [
-                        userData.id,
-                        userData.telegram_id,
-                        userData.name,
-                        userData.photo,
-                        userData.balance,
-                        userData.tasksDoneToday,
-                        userData.clicks,
-                        userData.totalEarning,
-                        userData.totalRefers,
-                        userData.hasWithdrawnBefore,
-                        userData.completedTasks.join(','),
-                        userData.referralCode,
-                        userData.referredBy,
-                        userData.referralEarnings,
-                        userData.lastCheckIn ? userData.lastCheckIn.toISOString() : '',
-                        userData.lastTaskReset.toISOString(),
-                        userData.featuredAdsWatchedToday,
-                        userData.phoneNumber,
-                        userData.isAuthenticated,
-                        userData.joinedAt
-                    ];
-                    
-                    await updateSheetData('Users!A1', newUserRow);
-                }
-                
-                // Update referral link
-                const botUsername = 'looking_money_ads_bot';
-                document.getElementById('referralLink').textContent = `https://t.me/${botUsername}?start=${userData.referralCode}`;
-                
-                // Update last updated date
-                const now = new Date();
-                const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
-                document.getElementById('lastUpdated').textContent = formattedDate;
-                
-                // Update UI
-                updateUI();
-                updateTaskButtons();
-                updateCheckInButton();
-                updateFeaturedAdButton();
-                updateLinkTaskButtons();
-                updateTaskLimit();
-                
-                return true;
-            } catch (error) {
-                console.error('Authentication failed:', error);
-                showNotification('Authentication failed. Please try again.', 'error');
-                return false;
-            }
-        }
-        
-        // Generate a random referral code
-        function generateReferralCode() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let code = '';
-            for (let i = 0; i < 10; i++) {
-                code += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return code;
-        }
-        
-        // Update user data in Google Sheets
-        async function updateUserData() {
-            try {
-                const usersData = await fetchSheetData(SHEET_USERS_URL);
-                let rowIndex = -1;
-                
-                // Find user row
-                for (let i = 1; i < usersData.length; i++) {
-                    if (usersData[i][0] == userData.id) {
-                        rowIndex = i + 1; // +1 because sheets are 1-indexed
-                        break;
-                    }
-                }
-                
-                if (rowIndex === -1) {
-                    console.error('User not found in sheet');
-                    return false;
-                }
-                
-                // Update user row
-                const updatedRow = [
-                    userData.id,
-                    userData.telegram_id,
-                    userData.name,
-                    userData.photo,
-                    userData.balance,
-                    userData.tasksDoneToday,
-                    userData.clicks,
-                    userData.totalEarning,
-                    userData.totalRefers,
-                    userData.hasWithdrawnBefore,
-                    userData.completedTasks.join(','),
-                    userData.referralCode,
-                    userData.referredBy,
-                    userData.referralEarnings,
-                    userData.lastCheckIn ? userData.lastCheckIn.toISOString() : '',
-                    userData.lastTaskReset.toISOString(),
-                    userData.featuredAdsWatchedToday,
-                    userData.phoneNumber,
-                    userData.isAuthenticated,
-                    userData.joinedAt
-                ];
-                
-                // Update the row in Google Sheets
-                const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Users!A${rowIndex}:Z${rowIndex}?valueInputOption=USER_ENTERED&key=${API_KEY}`;
-                
-                await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        values: [updatedRow]
-                    })
-                });
-                
-                return true;
-            } catch (error) {
-                console.error('Error updating user data:', error);
-                return false;
-            }
-        }
-        
+
         // Daily Check In function
         async function dailyCheckIn() {
-            if (!userData.isAuthenticated) {
-                showNotification('Please authenticate first', 'error');
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (userData.lastCheckIn === today) {
+                showNotification('You have already checked in today. Come back tomorrow!', 'error');
                 return;
             }
             
-            const today = new Date().toDateString();
-            
-            if (userData.lastCheckIn && new Date(userData.lastCheckIn).toDateString() === today) {
-                showNotification('You have already checked in today!', 'error');
+            if (userData.tasksDoneToday >= 35) {
+                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
             }
             
             const reward = 0.10;
             userData.balance += reward;
-            userData.tasksDoneToday++;
-            userData.clicks++;
             userData.totalEarning += reward;
-            userData.lastCheckIn = new Date();
+            userData.clicks++;
+            userData.tasksDoneToday++;
+            userData.lastCheckIn = today;
             
-            // Update Google Sheets
-            const success = await updateUserData();
+            await saveUserData();
+            updateUI();
+            updateCheckInButton();
+            updateTaskLimit();
             
-            if (success) {
-                updateUI();
-                updateCheckInButton();
-                updateTaskLimit();
-                showNotification('Check-in successful! You earned $0.10', 'success');
-            } else {
-                showNotification('Failed to update data. Please try again.', 'error');
-            }
+            showNotification(`Daily check-in successful! $${reward.toFixed(2)} added to your balance.`);
         }
-        
+
         // Update check-in button based on whether user has checked in today
         function updateCheckInButton() {
             const checkInBtn = document.getElementById('checkinBtn');
-            const today = new Date().toDateString();
+            const today = new Date().toISOString().split('T')[0];
             
-            if (userData.lastCheckIn && new Date(userData.lastCheckIn).toDateString() === today) {
+            if (userData.lastCheckIn === today) {
                 checkInBtn.disabled = true;
                 checkInBtn.textContent = 'Checked In';
             } else {
@@ -1736,39 +1500,35 @@
                 checkInBtn.textContent = 'Check In';
             }
         }
-        
+
         // Featured Ad function
         async function watchFeaturedAd() {
-            if (!userData.isAuthenticated) {
-                showNotification('Please authenticate first', 'error');
-                return;
-            }
-            
             if (userData.featuredAdsWatchedToday >= 30) {
-                showNotification('You have reached the daily limit for featured ads!', 'error');
+                showNotification('You have reached the daily limit of 30 featured ads. Try again tomorrow.', 'error');
                 return;
             }
             
-            const reward = 0.08;
-            userData.balance += reward;
-            userData.tasksDoneToday++;
-            userData.clicks++;
-            userData.totalEarning += reward;
-            userData.featuredAdsWatchedToday++;
+            if (userData.tasksDoneToday >= 35) {
+                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
+                return;
+            }
             
-            // Update Google Sheets
-            const success = await updateUserData();
-            
-            if (success) {
-                updateUI();
+            try {
+                // Rewarded interstitial
+                if (typeof show_9891560 === 'function') {
+                    await show_9891560();
+                }
+                
+                userData.featuredAdsWatchedToday++;
+                addReward(0.08, 'featured-ad');
                 updateFeaturedAdButton();
-                updateTaskLimit();
-                showNotification('Featured ad watched! You earned $0.08', 'success');
-            } else {
-                showNotification('Failed to update data. Please try again.', 'error');
+                showNotification('Congratulations! You have earned $0.08', 'success');
+            } catch (error) {
+                showNotification('Failed to load ad. Please try again later.', 'error');
+                console.error('Ad error:', error);
             }
         }
-        
+
         // Update featured ad button text and state
         function updateFeaturedAdButton() {
             const featuredBtn = document.getElementById('featuredAdBtn');
@@ -1782,54 +1542,57 @@
                 featuredBtn.textContent = `Watch Now (${watchedCount}/30)`;
             }
         }
-        
-        // Complete social media task
-        async function completeSocialTask(taskType, reward) {
-            if (!userData.isAuthenticated) {
-                showNotification('Please authenticate first', 'error');
-                return;
-            }
-            
-            if (userData.completedTasks.includes(taskType)) {
-                showNotification('You have already completed this task.', 'error');
-                return;
-            }
-            
-            userData.balance += reward;
+
+        // Function to add reward and update UI
+        async function addReward(amount, taskType = 'general') {
+            userData.balance += amount;
+            userData.totalEarning += amount;
             userData.tasksDoneToday++;
             userData.clicks++;
-            userData.totalEarning += reward;
-            userData.completedTasks.push(taskType);
             
-            // Update Google Sheets
-            const success = await updateUserData();
+            // Add to completed tasks if not already there
+            if (!userData.completedTasks.includes(taskType)) {
+                userData.completedTasks.push(taskType);
+            }
             
-            if (success) {
-                updateUI();
-                updateTaskButtons();
-                updateTaskLimit();
-                showNotification(`Task completed! You earned $${reward.toFixed(2)}`, 'success');
-                
-                // Check if user completed 5 tasks and was referred
-                if (userData.tasksDoneToday === 5 && userData.referredBy) {
-                    setTimeout(() => {
-                        processReferralReward();
-                    }, 1000);
-                }
-            } else {
-                showNotification('Failed to update data. Please try again.', 'error');
+            await saveUserData();
+            updateUI();
+            updateTaskLimit();
+            
+            // Check if user completed 5 tasks and was referred
+            if (userData.tasksDoneToday === 5 && userData.referredBy) {
+                setTimeout(() => {
+                    showNotification(`Congratulations! You've completed 5 tasks. Your referrer (${userData.referredBy}) will receive $0.50!`, 'success');
+                    processReferralReward();
+                }, 1000);
             }
         }
-        
+
+        // Process referral reward
+        async function processReferralReward() {
+            try {
+                const response = await fetch(`${SCRIPT_URL}?action=processReferral&referralCode=${userData.referredBy}&userId=${userData.id}`);
+                const result = await response.json();
+                
+                if (result.status === 200) {
+                    showNotification('Referrer reward processed!', 'success');
+                } else {
+                    console.error('Error processing referral reward:', result.message);
+                }
+            } catch (error) {
+                console.error('Error processing referral reward:', error);
+            }
+        }
+
         // Function to open link task
         async function openLinkTask(taskId, link) {
-            if (!userData.isAuthenticated) {
-                showNotification('Please authenticate first', 'error');
+            if (userData.completedTasks.includes(taskId)) {
+                showNotification('You have already completed this task.', 'error');
                 return;
             }
             
-            if (userData.completedTasks.includes(taskId)) {
-                showNotification('You have already completed this task.', 'error');
+            if (userData.tasksDoneToday >= 35) {
+                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
                 return;
             }
             
@@ -1837,32 +1600,12 @@
             tg.openLink(link);
             
             const reward = 0.06;
-            userData.balance += reward;
-            userData.tasksDoneToday++;
-            userData.clicks++;
-            userData.totalEarning += reward;
-            userData.completedTasks.push(taskId);
+            await addReward(reward, taskId);
+            updateLinkTaskButton(taskId);
             
-            // Update Google Sheets
-            const success = await updateUserData();
-            
-            if (success) {
-                updateUI();
-                updateLinkTaskButton(taskId);
-                updateTaskLimit();
-                showNotification(`Link task completed! You earned $${reward.toFixed(2)}`, 'success');
-                
-                // Check if user completed 5 tasks and was referred
-                if (userData.tasksDoneToday === 5 && userData.referredBy) {
-                    setTimeout(() => {
-                        processReferralReward();
-                    }, 1000);
-                }
-            } else {
-                showNotification('Failed to update data. Please try again.', 'error');
-            }
+            showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
         }
-        
+
         // Function to update a specific link task button
         function updateLinkTaskButton(taskId) {
             const button = document.getElementById(`${taskId}Btn`);
@@ -1876,123 +1619,147 @@
                 }
             }
         }
-        
-        // Process referral reward
-        async function processReferralReward() {
-            if (!userData.referredBy) return;
+
+        // Generate smart referral code
+        function generateReferralCode() {
+            if (!userData.referralCode) {
+                const timestamp = Date.now().toString(36);
+                const randomStr = Math.random().toString(36).substring(2, 6);
+                const userId = userData.id.toString().slice(-4);
+                userData.referralCode = `EM${userId}${timestamp}${randomStr}`.toUpperCase();
+                saveUserData();
+            }
+            return userData.referralCode;
+        }
+
+        // Check if user was referred
+        function checkReferral() {
+            if (tg.initDataUnsafe && tg.initDataUnsafe.start_param) {
+                const referralCode = tg.initDataUnsafe.start_param;
+                if (referralCode && !userData.referredBy) {
+                    userData.referredBy = referralCode;
+                    saveUserData();
+                    
+                    setTimeout(() => {
+                        showNotification(`Welcome! You were referred by ${referralCode}`, 'info');
+                    }, 1000);
+                }
+            }
+        }
+
+        // Check if task limit needs to be reset
+        function checkTaskLimitReset() {
+            const today = new Date().toISOString().split('T')[0];
             
+            if (userData.lastTaskReset !== today) {
+                userData.tasksDoneToday = 0;
+                userData.featuredAdsWatchedToday = 0;
+                userData.lastTaskReset = today;
+                saveUserData();
+                return true;
+            }
+            return false;
+        }
+
+        // Load user data from Google Apps Script
+        async function loadUserData() {
             try {
-                // Get referrer data
-                const usersData = await fetchSheetData(SHEET_USERS_URL);
-                let referrerIndex = -1;
-                let referrerData = null;
+                // Try to get user data from Apps Script
+                const response = await fetch(`${SCRIPT_URL}?action=getUser&userId=${userData.id}`);
+                const result = await response.json();
                 
-                for (let i = 1; i < usersData.length; i++) {
-                    if (usersData[i][11] === userData.referredBy) {
-                        referrerIndex = i + 1;
-                        referrerData = usersData[i];
-                        break;
-                    }
+                if (result.status === 200) {
+                    // Parse user data from response
+                    userData = JSON.parse(result.message);
+                } else {
+                    // User not found, create new user
+                    await saveUserData();
                 }
                 
-                if (referrerIndex === -1) {
-                    console.error('Referrer not found');
-                    return;
-                }
+                // Check for referral
+                checkReferral();
                 
-                // Update referrer data
-                const referrerReward = 0.50;
-                const updatedReferrerBalance = parseFloat(referrerData[4]) + referrerReward;
-                const updatedReferrerEarnings = parseFloat(referrerData[7]) + referrerReward;
-                const updatedReferrerReferralEarnings = parseFloat(referrerData[13]) + referrerReward;
+                // Check if task limit needs to be reset
+                checkTaskLimitReset();
                 
-                // Update referrer row
-                const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Users!E${referrerIndex}:E${referrerIndex}?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+                // Generate referral code if not exists
+                generateReferralCode();
                 
-                await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        values: [[updatedReferrerBalance]]
-                    })
-                });
+                // Update referral link
+                const botUsername = 'looking_money_ads_bot';
+                document.getElementById('referralLink').textContent = `https://t.me/${botUsername}?start=${userData.referralCode}`;
                 
-                // Update total earnings
-                const earningsUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Users!H${referrerIndex}:H${referrerIndex}?valueInputOption=USER_ENTERED&key=${API_KEY}`;
+                // Update last updated date
+                const now = new Date();
+                const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+                document.getElementById('lastUpdated').textContent = formattedDate;
                 
-                await fetch(earningsUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        values: [[updatedReferrerEarnings]]
-                    })
-                });
+                // Update task completion status
+                updateTaskButtons();
+                updateCheckInButton();
+                updateFeaturedAdButton();
+                updateLinkTaskButtons();
                 
-                // Update referral earnings
-                const referralEarningsUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Users!N${referrerIndex}:N${referrerIndex}?valueInputOption=USER_ENTERED&key=${API_KEY}`;
-                
-                await fetch(referralEarningsUrl, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        values: [[updatedReferrerReferralEarnings]]
-                    })
-                });
-                
-                // Add referral record
-                const referralRecord = [
-                    userData.referredBy,
-                    userData.id,
-                    referrerReward,
-                    'completed',
-                    new Date().toISOString()
-                ];
-                
-                await updateSheetData('Referrals!A1', referralRecord);
-                
-                showNotification(`Congratulations! You've completed 5 tasks. Your referrer will receive $0.50!`, 'success');
+                updateUI();
+                updateTaskLimit();
             } catch (error) {
-                console.error('Referral reward processing failed:', error);
+                console.error('Error loading user data:', error);
+                // Fallback to localStorage if Apps Script fails
+                const savedData = localStorage.getItem('earnMoneyUserData');
+                if (savedData) {
+                    userData = JSON.parse(savedData);
+                }
+                
+                checkReferral();
+                checkTaskLimitReset();
+                generateReferralCode();
+                
+                const botUsername = 'looking_money_ads_bot';
+                document.getElementById('referralLink').textContent = `https://t.me/${botUsername}?start=${userData.referralCode}`;
+                
+                const now = new Date();
+                const formattedDate = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+                document.getElementById('lastUpdated').textContent = formattedDate;
+                
+                updateTaskButtons();
+                updateCheckInButton();
+                updateFeaturedAdButton();
+                updateLinkTaskButtons();
+                
+                updateUI();
+                updateTaskLimit();
             }
         }
-        
-        // Update task buttons based on completion status
-        function updateTaskButtons() {
-            // YouTube task
-            const youtubeCompleteBtn = document.getElementById('youtubeCompleteBtn');
-            if (userData.completedTasks.includes('youtube-subscribe')) {
-                youtubeCompleteBtn.disabled = true;
-                youtubeCompleteBtn.textContent = 'Completed';
-            } else {
-                youtubeCompleteBtn.disabled = false;
-                youtubeCompleteBtn.textContent = 'Done';
-            }
-            
-            // Telegram task
-            const telegramCompleteBtn = document.getElementById('telegramCompleteBtn');
-            if (userData.completedTasks.includes('telegram-join')) {
-                telegramCompleteBtn.disabled = true;
-                telegramCompleteBtn.textContent = 'Completed';
-            } else {
-                telegramCompleteBtn.disabled = false;
-                telegramCompleteBtn.textContent = 'Done';
-            }
-        }
-        
-        // Update link task buttons based on completion status
-        function updateLinkTaskButtons() {
-            for (let i = 1; i <= 5; i++) {
-                const taskId = `link-task-${i}`;
-                updateLinkTaskButton(taskId);
+
+        // Save user data to Google Apps Script
+        async function saveUserData() {
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'saveUser',
+                        userData: userData
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.status !== 200) {
+                    console.error('Error saving user data:', result.message);
+                }
+                
+                // Also save to localStorage as backup
+                localStorage.setItem('earnMoneyUserData', JSON.stringify(userData));
+            } catch (error) {
+                console.error('Error saving user data:', error);
+                // Fallback to localStorage
+                localStorage.setItem('earnMoneyUserData', JSON.stringify(userData));
             }
         }
-        
+
         // Update UI with user data
         function updateUI() {
             document.getElementById('userName').textContent = userData.name;
@@ -2016,7 +1783,7 @@
             // Update withdraw button
             updateWithdrawButton();
         }
-        
+
         // Update task limit progress
         function updateTaskLimit() {
             const progressFill = document.getElementById('taskProgress');
@@ -2058,16 +1825,13 @@
                 enableTaskButtons();
             }
         }
-        
+
         // Disable limited task buttons
         function disableLimitedTaskButtons() {
             // Check-in button
             const checkInBtn = document.getElementById('checkinBtn');
-            const today = new Date().toDateString();
-            if (userData.lastCheckIn && new Date(userData.lastCheckIn).toDateString() === today) {
-                checkInBtn.disabled = true;
-                checkInBtn.textContent = 'Checked In';
-            } else {
+            const today = new Date().toISOString().split('T')[0];
+            if (userData.lastCheckIn !== today) {
                 checkInBtn.disabled = true;
                 checkInBtn.textContent = 'Limit Reached';
             }
@@ -2093,16 +1857,13 @@
                 }
             }
         }
-        
+
         // Enable task buttons that aren't completed
         function enableTaskButtons() {
             // Check-in button
             const checkInBtn = document.getElementById('checkinBtn');
-            const today = new Date().toDateString();
-            if (userData.lastCheckIn && new Date(userData.lastCheckIn).toDateString() === today) {
-                checkInBtn.disabled = true;
-                checkInBtn.textContent = 'Checked In';
-            } else {
+            const today = new Date().toISOString().split('T')[0];
+            if (userData.lastCheckIn !== today) {
                 checkInBtn.disabled = false;
                 checkInBtn.textContent = 'Check In';
             }
@@ -2121,7 +1882,47 @@
             // Link task buttons
             updateLinkTaskButtons();
         }
-        
+
+        // Update task buttons based on completion status
+        function updateTaskButtons() {
+            // YouTube task
+            const youtubeCompleteBtn = document.getElementById('youtubeCompleteBtn');
+            if (userData.completedTasks.includes('youtube-subscribe')) {
+                youtubeCompleteBtn.disabled = true;
+                youtubeCompleteBtn.textContent = 'Completed';
+            } else {
+                youtubeCompleteBtn.disabled = false;
+                youtubeCompleteBtn.textContent = 'Done';
+            }
+            
+            // Telegram task
+            const telegramCompleteBtn = document.getElementById('telegramCompleteBtn');
+            if (userData.completedTasks.includes('telegram-join')) {
+                telegramCompleteBtn.disabled = true;
+                telegramCompleteBtn.textContent = 'Completed';
+            } else {
+                telegramCompleteBtn.disabled = false;
+                telegramCompleteBtn.textContent = 'Done';
+            }
+        }
+
+        // Update link task buttons based on completion status
+        function updateLinkTaskButtons() {
+            for (let i = 1; i <= 5; i++) {
+                const taskId = `link-task-${i}`;
+                const button = document.getElementById(`${taskId}Btn`);
+                if (button) {
+                    if (userData.completedTasks.includes(taskId)) {
+                        button.disabled = true;
+                        button.textContent = 'Completed';
+                    } else {
+                        button.disabled = false;
+                        button.textContent = 'Open Link';
+                    }
+                }
+            }
+        }
+
         // Show notification
         function showNotification(message, type = 'success') {
             const notification = document.getElementById('notification');
@@ -2143,7 +1944,7 @@
                 notification.classList.remove('show');
             }, 3000);
         }
-        
+
         // Tab switching function
         function openTab(tabName) {
             // Hide all tab contents
@@ -2167,7 +1968,25 @@
                 clickedNavItem.classList.add('active');
             }
         }
-        
+
+        // Complete social media task
+        async function completeSocialTask(taskId, reward) {
+            if (userData.completedTasks.includes(taskId)) {
+                showNotification('You have already completed this task.', 'error');
+                return;
+            }
+            
+            if (userData.tasksDoneToday >= 35) {
+                showNotification('Daily task limit reached. Try again tomorrow.', 'error');
+                return;
+            }
+            
+            await addReward(reward, taskId);
+            updateTaskButtons();
+            
+            showNotification(`Task completed! $${reward.toFixed(2)} added to your balance.`);
+        }
+
         // Open social media link
         function openSocialLink(link, taskId) {
             window.open(link, '_blank');
@@ -2178,7 +1997,7 @@
             
             showNotification('Channel opened! Complete the action and mark as completed.', 'info');
         }
-        
+
         // Update withdraw button
         function updateWithdrawButton() {
             const withdrawBtn = document.getElementById('withdrawBtn');
@@ -2198,15 +2017,10 @@
                 withdrawBtn.textContent = 'Withdraw Funds';
             }
         }
-        
+
         // Handle withdraw form submission
         document.getElementById('withdrawForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            if (!userData.isAuthenticated) {
-                showNotification('Please authenticate first', 'error');
-                return;
-            }
             
             const method = document.getElementById('withdrawMethod').value;
             const accountNumber = document.getElementById('accountNumber').value;
@@ -2222,43 +2036,35 @@
                 return;
             }
             
-            try {
-                // Create withdrawal record
-                const withdrawalRecord = [
-                    userData.id,
-                    amount,
-                    method,
-                    accountNumber,
-                    'pending',
-                    new Date().toISOString(),
-                    ''
-                ];
-                
-                // Add to Google Sheets
-                await updateSheetData('Withdrawals!A1', withdrawalRecord);
-                
-                // Update user balance
-                userData.balance -= amount;
-                userData.hasWithdrawnBefore = true;
-                
-                // Update user data in Google Sheets
-                await updateUserData();
-                
-                // Reset form
-                document.getElementById('withdrawForm').reset();
-                updateWithdrawButton();
-                updateUI();
-                
-                showNotification('Withdrawal request submitted successfully! It will be processed within 48 hours.', 'success');
-            } catch (error) {
-                console.error('Withdrawal failed:', error);
-                showNotification('Failed to submit withdrawal request. Please try again.', 'error');
-            }
+            // Process withdrawal
+            userData.balance -= amount;
+            userData.hasWithdrawnBefore = true;
+            
+            // Add to withdrawal history
+            const withdrawal = {
+                id: Date.now(),
+                amount: amount,
+                method: method,
+                accountNumber: accountNumber,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            userData.withdrawalHistory.push(withdrawal);
+            
+            await saveUserData();
+            updateUI();
+            
+            // Reset form
+            document.getElementById('withdrawForm').reset();
+            updateWithdrawButton();
+            
+            showNotification(`Withdrawal request of $${amount.toFixed(2)} submitted! It will be processed within 48 hours.`);
         });
-        
+
         // Update withdrawal button when amount changes
         document.getElementById('withdrawAmount').addEventListener('input', updateWithdrawButton);
-        
+
         // BINANCE UID FUNCTIONALITY
         document.getElementById('withdrawMethod').addEventListener('change', function() {
             const accountLabel = document.getElementById('accountLabel');
@@ -2272,7 +2078,7 @@
                 accountInput.placeholder = 'Enter your account number';
             }
         });
-        
+
         // Copy referral link
         function copyReferralLink() {
             const referralLink = document.getElementById('referralLink').textContent;
@@ -2282,26 +2088,18 @@
                 showNotification('Failed to copy referral link.', 'error');
             });
         }
-        
+
         // Initialize app
-        window.onload = async function() {
-            // Authenticate user first
-            const isAuthenticated = await authenticateUser();
+        window.onload = function() {
+            loadUserData();
             
-            if (isAuthenticated) {
-                // Update countdown every second
-                setInterval(() => {
-                    if (userData.tasksDoneToday >= 35) {
-                        updateTaskLimit();
-                    }
-                }, 1000);
-            } else {
-                showNotification('Failed to authenticate. Please try again.', 'error');
-            }
+            // Update countdown every second
+            setInterval(() => {
+                if (userData.tasksDoneToday >= 35) {
+                    updateTaskLimit();
+                }
+            }, 1000);
         };
     </script>
 </body>
 </html>
-
-
-
